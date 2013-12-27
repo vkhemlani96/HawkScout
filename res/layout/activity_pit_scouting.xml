@@ -1,0 +1,131 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PitScouting">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"
+	    android:paddingTop="@dimen/activity_vertical_margin"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:id="@+id/pit_scouting_wrapper"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+    	<requestFocus />
+<!--         <TextView -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:textSize="25sp" -->
+<!--             android:textStyle="bold" -->
+<!--             android:text="Pit Scouting Form" -->
+<!--             android:layout_gravity="center_horizontal"/> -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:padding="4dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:text="TEAM INFO"
+            android:textColor="@color/red" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/red"/>
+        <EditText
+            android:id="@+id/team_name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:hint="Team Name"
+            android:singleLine="false"
+            android:capitalize="words"
+            android:layout_marginBottom="4dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+	        <AutoCompleteTextView
+	            android:id="@+id/team_number_edittext"
+	            android:layout_width="match_parent"
+	            android:layout_height="40dp"
+	            android:layout_marginTop="4dp"
+	            android:layout_marginBottom="4dp"
+	            android:hint="Team Number"
+	            android:completionThreshold="1"
+	            android:layout_weight="1"
+           		android:textStyle="bold"
+	            android:maxLength="4"
+	            android:inputType="number"/>
+	        <EditText
+	            android:id="@+id/pit_number_edittext"
+	            android:layout_width="match_parent"
+	            android:layout_height="40dp"
+	            android:layout_marginTop="4dp"
+	            android:layout_marginBottom="4dp"
+	            android:hint="Pit Number"
+            	android:textStyle="bold"
+	            android:layout_weight="1"
+	            android:maxLength="3"
+	            android:inputType="number"/>
+	    </LinearLayout>
+        <EditText
+            android:id="@+id/scouter_name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="40dp"
+            android:layout_marginTop="4dp"
+            android:hint="Scouted By"
+            android:capitalize="sentences"
+            android:singleLine="true"
+            android:layout_marginBottom="4dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:padding="4dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:text="MEDIA"
+            android:textColor="@color/red" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp" 
+            android:background="@color/red"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:textColor="#808080"
+            android:text="No Pictures or Videos Taken"
+            android:textSize="18sp"/>
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:id="@+id/add_a_picture"
+                android:onClick="onClick"
+                android:text="Add a Picture" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:id="@+id/add_a_video"
+                android:onClick="onClick"
+                android:text="Add a Video" />
+        </LinearLayout>
+	</LinearLayout>
+</ScrollView>

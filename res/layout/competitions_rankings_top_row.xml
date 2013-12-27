@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:id="@+id/header"
+    android:clickable="false"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin">
+    <AutoCompleteTextView 
+        android:id="@+id/team_input"
+        android:layout_width="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:completionThreshold="1"
+        android:inputType="number"
+        android:hint="Team #"
+        android:gravity="center"
+        android:drawableLeft="@drawable/menu_search_gray"/>
+    <View
+        android:layout_width="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"/>
+    <Spinner 
+        android:id="@+id/category_spinner"
+        android:layout_width="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"/>
+</LinearLayout>

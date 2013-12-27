@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="3"
+        android:icon="@drawable/menu_refresh_icon"
+        android:showAsAction="always"
+        android:title="Refresh"/>
+    <item
+        android:id="@+id/action_add_person"
+        android:orderInCategory="2"
+        android:icon="@drawable/menu_add_person_icon"
+        android:showAsAction="ifRoom"
+        android:title="Invite Member"/>
+    <item
+        android:id="@+id/action_messages"
+        android:orderInCategory="1"
+        android:icon="@drawable/menu_messages_icon"
+        android:showAsAction="ifRoom"
+        android:title="View Team Conversation"/>
+
+</menu>

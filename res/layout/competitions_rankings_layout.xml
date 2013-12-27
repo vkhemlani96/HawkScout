@@ -1,0 +1,154 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:background="@android:color/white">
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="7"
+       		android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="TEAM"
+    	    android:id="@+id/team_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:clickable="true"
+    	    android:onClick="sortRankings" />
+<!--     	<View  -->
+<!--     	    android:layout_width="2px" -->
+<!--     	    android:layout_height="match_parent" -->
+<!--     	    android:background="@android:color/darker_gray"/> -->
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="8"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="QP"
+    	    android:id="@+id/qp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:drawableBottom="@drawable/rankings_sort_ascending"
+    	    android:clickable="true"
+    	    android:onClick="sortRankings" />
+<!--     	<View  -->
+<!--     	    android:layout_width="2px" -->
+<!--     	    android:layout_height="match_parent" -->
+<!--     	    android:background="@android:color/darker_gray"/> -->
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="AP"
+    	    android:id="@+id/ap_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:clickable="true"
+    	    android:onClick="sortRankings"  />
+<!--     	<View  -->
+<!--     	    android:layout_width="2px" -->
+<!--     	    android:layout_height="match_parent" -->
+<!--     	    android:background="@android:color/darker_gray"/> -->
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="CP"
+    	    android:id="@+id/cp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:clickable="true"
+    	    android:onClick="sortRankings"  />
+<!--     	<View  -->
+<!--     	    android:layout_width="2px" -->
+<!--     	    android:layout_height="match_parent" -->
+<!--     	    android:background="@android:color/darker_gray"/> -->
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="TP"
+    	    android:id="@+id/tp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:clickable="true"
+    	    android:onClick="sortRankings"  />
+    </LinearLayout>
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="?android:attr/listDivider"/>
+    <ListView
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:fadingEdgeLength="6px"
+        android:id="@+id/rankings"
+        android:fastScrollEnabled="true" />
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/red"/>
+   	<LinearLayout
+   	    android:layout_width="match_parent"
+   	    android:layout_height="48dp"
+   	    android:orientation="horizontal"
+   	    android:id="@+id/header"
+   	    android:background="@color/action_bar_black"
+   	    android:paddingLeft="@dimen/activity_horizontal_margin"
+   	    android:paddingRight="@dimen/activity_horizontal_margin">
+	   <AutoCompleteTextView 
+	       android:id="@+id/team_input"
+	       android:layout_width="0dp"
+	       android:layout_marginTop="4dp"
+	       android:layout_marginBottom="4dp"
+	       android:layout_height="40dp"
+	       android:layout_weight="1"
+	       android:textColor="@android:color/white"
+	       android:completionThreshold="1"
+	       android:background="@drawable/edit_text_holo_light"
+	       android:gravity="center"
+	       android:inputType="number"
+	       android:hint="Team #"
+	       android:drawableLeft="@drawable/ic_action_search"/>
+	   <RelativeLayout
+	       android:layout_width="@dimen/activity_horizontal_margin"
+	       android:layout_height="match_parent">
+	       <View 
+	           android:background="@android:color/white"
+	           android:alpha=".15"
+	           android:layout_width="1px"
+	           android:layout_height="match_parent"
+	           android:layout_marginTop="12dp"
+	           android:layout_marginBottom="12dp"
+	           android:layout_centerHorizontal="true"
+	           android:layout_centerVertical="true"/>
+	   </RelativeLayout>
+	   <Spinner
+	       android:layout_width="0dp"
+	       android:background="@drawable/spinner_background_dark"
+	       android:layout_marginTop="4dp"
+	       android:layout_marginBottom="4dp"
+	       android:layout_height="40dp"
+	       android:id="@+id/rankings_type"
+	       android:entries="@array/rankings_spinner_categories"
+	       android:layout_weight="1"/>
+	</LinearLayout>
+</LinearLayout>

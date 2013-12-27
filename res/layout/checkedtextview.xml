@@ -1,0 +1,11 @@
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:textSize="18sp"
+    android:checkMark="@drawable/btn_check_holo_light"
+    android:ellipsize="marquee"
+    style="?android:attr/spinnerDropDownItemStyle"
+    android:singleLine="true"
+    android:background="@drawable/crimson_background"
+/>

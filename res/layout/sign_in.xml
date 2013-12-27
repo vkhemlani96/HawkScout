@@ -1,0 +1,326 @@
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sign_in_flipper"
+    tools:context=".SignIn">
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="?android:attr/progressBarStyle"
+        android:visibility="invisible" />
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:id="@+id/login"
+	    android:focusable="true"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin"
+	    android:paddingLeft="@dimen/activity_horizontal_margin">
+	    <requestFocus />
+
+	    <TextView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textStyle="bold"
+	        android:textAppearance="@style/textAppearanceHeader"
+	        android:text="Log-in with Google"
+		    android:paddingBottom="10dp"
+	        android:id="@+id/login_with_google"/>
+	    
+	    <TextView
+	        android:layout_below="@+id/login_with_google"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/text"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:text="Choose a valid Google account to use with HawkScout. If you have been added to a HawkScout team, be sure use the email associated with that account." />
+	    
+	    <RadioGroup
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/text"
+		    android:paddingTop="10dp"
+		    android:paddingBottom="10dp"
+	        android:id="@+id/radio_group" />
+	    
+	    <CheckBox
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+			android:layout_above="@+id/continue_login"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:id="@+id/remember_me"
+	        android:text="Remember Me"
+	        android:layout_gravity="bottom" />
+	        
+	    <Button
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	   		android:layout_marginTop="5dp"
+			android:layout_marginBottom="5dp"
+	        android:id="@+id/continue_login"
+	        android:text="Continue"
+	        android:onClick="flipView" />
+	
+	</RelativeLayout>
+	
+	<ViewFlipper
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:id="@+id/competition_flipper">
+	    
+		<RelativeLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:paddingRight="@dimen/activity_horizontal_margin"
+		    android:paddingTop="@dimen/activity_vertical_margin"
+		    android:paddingLeft="@dimen/activity_horizontal_margin">
+		    
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:textAppearance="@style/textAppearanceHeader"
+			    android:paddingBottom="10dp"
+			    android:id="@+id/create_your_team"
+		        android:text="Create Your Team"/>
+		    
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+			    android:paddingBottom="10dp"
+			    android:textAppearance="?android:attr/textAppearanceMedium"
+			    android:id="@+id/create_description"
+			    android:layout_below="@+id/create_your_team"
+			    android:text="In order to effectively sync data over multiple devices, you must create an invite-only team account for your entire team to use."/>
+		    
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+			    android:layout_below="@+id/create_description"
+			    android:id="@+id/team"
+		        android:orientation="horizontal">
+		    
+			    <TextView
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textAppearance="?android:attr/textAppearanceMedium"
+			        android:textStyle="bold"
+			        android:paddingRight="@dimen/activity_horizontal_margin"
+			    	android:text="Team Number:"/>
+			    
+			    <EditText
+			        android:id="@+id/team_number"
+			        android:layout_width="80dp"
+			        android:layout_height="wrap_content"
+			        android:gravity="center"
+			        android:textAppearance="?android:attr/textAppearanceMedium"
+			      	android:inputType="number"
+					android:maxLength="4"
+			      	android:digits="0123456789"
+			      	android:imeOptions="actionDone"
+			        android:singleLine="true" />
+			    
+			</LinearLayout>
+			
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="Competitions:"
+		        android:textStyle="bold"
+		        android:id="@+id/competitions"
+		        android:layout_below="@+id/team"
+		        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    
+		    <TextView
+				style="@style/thin_seperator"
+		        android:layout_below="@+id/competitions"
+		        android:layout_height="1px"
+		        android:background="@color/gray"/>
+			
+		    <ScrollView
+			    android:overScrollMode="never"
+		       	android:layout_height="wrap_content"
+		        android:layout_width="match_parent"
+				android:layout_below="@+id/competitions"
+				android:layout_marginBottom="60dp">
+			    <LinearLayout
+		       		android:layout_height="wrap_content"
+		        	android:layout_width="match_parent"
+		        	android:orientation="vertical">
+				    <LinearLayout
+				        android:layout_marginTop="1dp"
+				        android:layout_height="wrap_content"
+				        android:layout_width="match_parent"
+				        android:orientation="vertical"
+				        android:id="@+id/selected_competitions" />
+				
+				    <RelativeLayout
+				        android:layout_width="match_parent"
+				        android:layout_height="48dp"
+				        android:orientation="horizontal"
+				        android:clickable="true"
+				        android:onClick="flipView"
+				        android:id="@+id/select_competitions"
+					    android:layout_below="@+id/selected_competitions"
+				        android:background="@drawable/crimson_background">
+					    <TextView
+					        android:layout_width="wrap_content"
+					        android:layout_height="wrap_content"
+							android:drawableStart="@drawable/new_icon"
+					        android:background="@color/transparent"
+					        android:textColor="@color/gray"
+					        android:textAppearance="?android:attr/textAppearanceMedium"
+					        android:layout_centerInParent="true"
+					        android:gravity="center"
+					        android:text="Add a Competition" />
+					</RelativeLayout>
+				</LinearLayout>
+			</ScrollView>
+			
+			<View style="@style/thin_seperator"
+			    android:layout_height="3dp"
+			    android:layout_above="@+id/continue_competitions"/>
+			
+		    <Button
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+	   			android:layout_marginTop="5dp"
+			    android:layout_marginBottom="5dp"
+		        android:text="Continue"
+	        	android:layout_alignParentBottom="true"
+		        android:onClick="flipView"
+		        android:id="@+id/continue_competitions" />
+			
+		</RelativeLayout>
+		
+		<RelativeLayout
+		    android:layout_height="match_parent"
+		    android:layout_width="match_parent"
+		    android:id="@+id/competition_chooser"
+		    android:background="@color/white_background">
+			<ScrollView
+			    android:layout_height="fill_parent"
+			    android:layout_width="match_parent"
+			    android:layout_marginBottom="60dp">
+				<LinearLayout
+				    android:layout_height="wrap_content"
+				    android:layout_width="match_parent"
+				    android:id="@+id/competition_list"
+				    android:orientation="vertical"/>
+			</ScrollView>
+			<View style="@style/thin_seperator"
+			    android:layout_height="3dp"
+			    android:layout_above="@+id/finish_select_competitions"/>
+			<Button 
+			    android:layout_height="wrap_content"
+			    android:layout_width="match_parent"
+			    android:id="@+id/finish_select_competitions"
+			    android:onClick="flipView"
+	        	android:layout_alignParentBottom="true"
+	   			android:layout_marginTop="5dp"
+			    android:layout_marginBottom="5dp"
+	   			android:layout_marginLeft="@dimen/activity_horizontal_margin"
+			    android:layout_marginRight="@dimen/activity_horizontal_margin"
+			    android:text="Done"/>
+		</RelativeLayout>
+	</ViewFlipper>
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/add_members"
+	    android:paddingRight="@dimen/activity_horizontal_margin"
+	    android:paddingTop="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
+	    
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invite Team Members"
+            android:id="@+id/invite_team_title"
+            android:paddingBottom="10dp"
+            android:textAppearance="@style/textAppearanceHeader" />
+        
+        	<ScrollView
+        	    android:layout_width="match_parent"
+		    	android:layout_height="0dp"
+		    	android:layout_weight="1">
+	    
+		        <LinearLayout
+		            android:layout_width="match_parent"
+			    	android:layout_height="wrap_content"
+		            android:orientation="vertical">
+			        
+					<TextView
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:id="@+id/invite_description"
+				        android:textAppearance="?android:attr/textAppearanceMedium"
+				        android:text="HawkScout teams are invite-only. To invite users to your team: enter their Google username below or enter the email address of a Google Group to invite everyone in it." />
+					        
+				    <TextView
+			            android:layout_marginTop="4dp"
+			            android:layout_marginBottom="4dp"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:textAppearance="?android:attr/textAppearanceMedium"
+			        	android:textStyle="bold"
+				        android:text="Invite User:" />
+			    
+			        <com.steelhawks.hawkscout.util.ContactsAutoComplete
+			            android:imeOptions="actionDone"
+			            android:inputType="textEmailAddress"
+			            android:ellipsize="end"
+			            android:id="@+id/default_email"
+			            android:hint="Enter Google Email Address"
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"/>
+					        
+				    <TextView
+			            android:layout_marginTop="4dp"
+			            android:layout_marginBottom="4dp"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:textAppearance="?android:attr/textAppearanceMedium"
+			        	android:textStyle="bold"
+				        android:text="Invite Google Group:" />
+						    
+			        <com.steelhawks.hawkscout.util.ContactsAutoComplete
+			            android:layout_marginBottom="4dp"
+			            android:imeOptions="actionDone"
+			            android:inputType="textEmailAddress"
+			            android:ellipsize="end"
+			            android:id="@+id/default_group" 
+			            android:hint="Enter Google Group Email"
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content"/>
+				    
+				    <TextView
+			            android:layout_marginBottom="4dp"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_marginLeft="8dp"
+				        android:textSize="15sp"
+				        android:text="Separate addresses with commas" />
+			
+				</LinearLayout>
+			
+			</ScrollView>
+		
+    	<View style="@style/thin_seperator"
+			    android:layout_height="3dp"/>
+		<Button 
+		    android:layout_height="wrap_content"
+		    android:layout_width="match_parent"
+		    android:id="@+id/finish_invite_members"
+		    android:onClick="flipView"
+   			android:layout_marginTop="5dp"
+		    android:layout_marginBottom="5dp"
+		    android:text="Finish"/>
+    </LinearLayout>
+	
+</ViewFlipper>

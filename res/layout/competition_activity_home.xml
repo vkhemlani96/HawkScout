@@ -1,0 +1,261 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true">
+    
+    <requestFocus />
+    
+    <LinearLayout android:orientation="vertical"
+	    android:id="@+id/wrapper"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	   	android:paddingRight="@dimen/activity_horizontal_margin"
+	   	android:paddingTop="@dimen/activity_vertical_margin"
+	   	android:paddingBottom="@dimen/activity_vertical_margin"
+	    android:paddingLeft="@dimen/activity_horizontal_margin">
+		
+	    <LinearLayout 
+	        android:orientation="vertical"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/card_background"
+	   		android:layout_marginBottom="@dimen/activity_vertical_margin">
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="25sp"
+	            android:textStyle="bold"
+	            android:layout_gravity="center_horizontal"
+	            android:id="@+id/title"
+			  	android:paddingRight="@dimen/activity_horizontal_margin"
+			  	android:paddingTop="@dimen/activity_vertical_margin"
+			  	android:paddingLeft="@dimen/activity_horizontal_margin"  />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textAppearance="?android:attr/textAppearanceSmall"
+	            android:textColor="@android:color/darker_gray"
+	            android:layout_gravity="center_horizontal"
+			   	android:paddingRight="@dimen/activity_horizontal_margin"
+		   		android:paddingBottom="@dimen/activity_vertical_margin"
+			    android:paddingLeft="@dimen/activity_horizontal_margin" 
+	            android:id="@+id/location" />
+	        <View 
+	            style="@style/red_seperator"/>
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+	            <LinearLayout
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:orientation="vertical"
+		   			android:paddingTop="5dp"
+		   			android:paddingBottom="5dp">
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	                    android:textAppearance="?android:attr/textAppearanceSmall"
+	                    android:scaleX="0.9"
+	          			android:textStyle="bold"
+	                    android:textColor="@color/gray"
+	                    android:text="LEADER" />
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	          			android:textSize="22sp"	
+	          			android:textStyle="bold"
+	                    android:id="@+id/leader"/>
+	            </LinearLayout>
+	<!-- 	        <View  -->
+	<!-- 	            style="@style/white_seperator" -->
+	<!-- 	            android:background="@color/red" -->
+	<!-- 	            android:layout_width="2dp" -->
+	<!-- 	            android:layout_height="match_parent" /> -->
+	            <LinearLayout
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:orientation="vertical"
+		   			android:paddingTop="5dp"
+		   			android:paddingBottom="5dp">
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	                    android:textAppearance="?android:attr/textAppearanceSmall"
+	                    android:scaleX="0.9"
+	          			android:textStyle="bold"
+	                    android:textColor="@color/gray"
+	                    android:text="LAST MATCH" />
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	          			android:textSize="22sp"	
+	          			android:textStyle="bold"
+	                    android:id="@+id/number"/>
+	            </LinearLayout>
+	      
+	        </LinearLayout>
+	        
+	        <View 
+	            style="@style/red_seperator"
+	            android:background="@color/red"/>
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal">
+	            <LinearLayout
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:orientation="vertical"
+		   			android:paddingTop="5dp"
+		   			android:paddingBottom="5dp">
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	                    android:textAppearance="?android:attr/textAppearanceSmall"
+	                    android:scaleX="0.9"
+	          			android:textStyle="bold"
+	                    android:textColor="@color/gray"
+	                    android:text="PITS SCOUTED" />
+	                <!-- 			            style="@android:style/Widget.ProgressBar.Horizontal" -->
+	                
+			        <ProgressBar 
+			            style="@style/Widget.PullToRefresh.ProgressBar.Horizontal.Center"
+			            android:indeterminateOnly="true"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:id="@+id/pits_progress"/>
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center"
+	          			android:textSize="22sp"	
+	          			android:visibility="gone"
+	          			android:textStyle="bold"
+	                    android:id="@+id/pits_text"/>
+	            </LinearLayout>
+	<!-- 	        <View  -->
+	<!-- 	            style="@style/white_seperator" -->
+	<!-- 	            android:background="@color/red" -->
+	<!-- 	            android:layout_width="2dp" -->
+	<!-- 	            android:layout_height="match_parent" /> -->
+	            <LinearLayout
+	                android:layout_width="0dp"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1"
+	                android:orientation="vertical"
+		   			android:paddingTop="5dp"
+		   			android:paddingBottom="5dp">
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	                    android:textAppearance="?android:attr/textAppearanceSmall"
+	                    android:scaleX="0.9"
+	          			android:textStyle="bold"
+	                    android:textColor="@color/gray"
+	                    android:text="MATCHES SCOUTED" />
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	          			android:textSize="22sp"	
+	          			android:textStyle="bold"
+	          			android:text="0 / 100"/>
+	<!--                     android:id="@+id/number"/> -->
+	            </LinearLayout>
+	      
+	        </LinearLayout>
+	        
+	        <View 
+	            style="@style/red_seperator"/>
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	   			android:paddingTop="5dp"
+	   			android:paddingBottom="5dp"
+	  			android:layout_marginLeft="@dimen/activity_horizontal_margin"
+	  			android:layout_marginRight="@dimen/activity_horizontal_margin">
+		        <TextView
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center_horizontal"
+		            android:textAppearance="?android:attr/textAppearanceSmall"
+		            android:scaleX="0.9"
+		  			android:textStyle="bold"
+		            android:textColor="@color/gray"
+		            android:text="VIEW DATA" />
+		        <LinearLayout
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:orientation="horizontal">
+	                <Spinner 
+	                    android:layout_width="0dp"
+	       				android:layout_height="40dp"
+	                    android:layout_weight="2"
+		      			android:textSize="18sp"	
+		                android:layout_marginRight="16dp"
+	                    android:id="@+id/rankings_home_spinner"/>
+		            <AutoCompleteTextView 
+	                    android:id="@+id/rankings_home_edit"
+		                android:layout_weight="2"
+		                android:singleLine="true"
+		                android:hint="#"
+		                android:completionThreshold="1"
+		                android:maxLength="4"
+		                android:gravity="center"
+		                android:layout_height="40dp"
+		                android:layout_width="0dp"
+		                android:layout_marginRight="16dp"
+		                android:inputType="number"
+		      			android:textSize="18sp"	/>
+		            <Button 
+		                android:layout_width="0dp"
+		                android:layout_height="wrap_content"
+		                android:layout_weight="1"
+		                android:text="Go"
+		                android:id="@+id/rankings_home_go"/>
+	            </LinearLayout>
+	        </LinearLayout>
+	    </LinearLayout>
+	        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:drawableStart="@drawable/ic_match_scouting"
+                android:text="Scout a Match"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:onClick="onClick"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/start_match"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:drawableStart="@drawable/ic_pit_scouting"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:onClick="onClick"
+                android:text="Scout a Pit"
+                android:id="@+id/start_pit"/>
+        </LinearLayout>
+	    
+	</LinearLayout>
+</ScrollView>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="HawkScoutTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:selectableItemBackground">@drawable/crimson_background</item>
+        <item name="android:actionBarItemBackground">@drawable/crimson_background</item>
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Holo_light</item>
+        <item name="android:windowBackground">@color/lighter_gray</item>
+	    <item name="android:radioButtonStyle">@style/RadioButtonThemed</item>
+	    <item name="android:buttonStyle">@style/ButtonThemed</item>
+	    <item name="android:imageButtonStyle">@style/ImageButtonThemed</item>
+    	<item name="android:checkboxStyle">@style/CheckBoxThemed</item>
+		<item name="android:editTextStyle">@style/EditTextAppTheme</item>
+		<item name="android:autoCompleteTextViewStyle">@style/EditTextAppTheme</item>
+	 	<item name="android:spinnerStyle">@style/Spinner</item>
+	    <item name="android:dropDownSpinnerStyle">@style/Spinner.DropDown</item>
+	    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
+	    <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_background</item>
+	    <item name="android:fastScrollThumbDrawable">@drawable/fastscroll_thumb_holo</item>
+    	<item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+    	<item name="android:popupMenuStyle">@style/popupMenuStyle</item>
+    </style>
+
+    <style name="CustomActionBar" parent="@android:style/Widget.Holo.ActionBar">
+		<item name="android:background">@drawable/ab_background2</item>
+        <item name="android:backgroundStacked">@color/action_bar_black</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Holo_light" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_holo_light</item>
+    </style>
+    
+    <style name="textAppearanceHeader" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/crimson</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="red_seperator">
+        <item name="android:layout_height">2px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/red</item>
+    </style>
+    
+    <style name="section_title">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+    </style>
+    
+    <style name="list_item_title" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    
+    <style name="match_scouting_review_title" parent="@style/list_item_title">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="match_scouting_result_edittable">
+		<item name="android:layout_width">192dp</item>	                
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:minHeight">40dp</item>
+		<item name="android:paddingLeft">4dp</item>       
+		<item name="android:paddingRight">4dp</item>       
+		<item name="android:paddingTop">4dp</item>       
+		<item name="android:paddingBottom">4dp</item>          
+		<item name="android:inputType">number</item>                
+		<item name="android:gravity">center</item>     
+		<item name="android:layout_alignParentRight">true</item>             
+		<item name="android:layout_centerVertical">true</item>
+    </style>
+    
+    <style name="match_scouting_result_unedittable" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">192dp</item>
+        <item name="android:layout_height">wrap_content</item>            
+		<item name="android:layout_centerVertical">true</item> 
+		<item name="android:gravity">center</item>          
+		<item name="android:textStyle">bold</item>
+		<item name="android:layout_alignParentRight">true</item>
+    </style>
+    
+    <style name="match_scouting_result_edittable_stat" parent="@style/match_scouting_result_edittable">
+		<item name="android:layout_width">96dp</item>	
+		<item name="android:layout_marginRight">48dp</item>
+    </style>
+    
+    <style name="match_scouting_increment" parent="@android:style/TextAppearance.Medium">
+		<item name="android:layout_width">48dp</item>	                
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:text">+</item>       
+		<item name="android:textStyle">bold</item>    
+		<item name="android:gravity">center</item>                
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:onClick">editMatchScoutingReview</item>
+		<item name="android:layout_alignParentRight">true</item>
+		<item name="android:layout_marginRight">144dp</item>    
+		<item name="android:background">@drawable/crimson_background</item>
+    </style>
+    
+    <style name="match_scouting_decrement" parent="@android:style/TextAppearance.Medium">
+		<item name="android:layout_width">48dp</item>	                
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:text">-</item>
+		<item name="android:layout_alignParentRight">true</item>         
+		<item name="android:textStyle">bold</item>   
+		<item name="android:gravity">center</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:onClick">editMatchScoutingReview</item>
+		<item name="android:background">@drawable/crimson_background</item>
+    </style>
+
+    <style name="thin_seperator">
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@android:drawable/divider_horizontal_bright</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
+<!--         <item name="android:windowContentOverlay">@null</item> -->
+<!--         <item name="android:windowBackground">@null</item> -->
+<!--         <item name="buttonBarStyle">@style/ButtonBar</item> -->
+<!--         <item name="buttonBarButtonStyle">@style/ButtonBarButton</item> -->
+    </style>
+
+    <style name="ButtonBar">
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:background">@android:drawable/bottom_bar</item>
+    </style>
+
+	<style name="RadioButtonThemed" parent="android:Widget.CompoundButton.RadioButton">
+      	<item name="android:button">@drawable/btn_radio_holo_light</item>
+ 	</style>
+
+  	<style name="ButtonThemed" parent="android:Widget.Button">
+	  	<item name="android:background">@drawable/btn_default_holo_light</item>
+	  	<item name="android:minHeight">48dip</item>
+	  	<item name="android:minWidth">64dip</item>
+	  	<item name="android:textColor">#FFFFFF</item>
+  	</style>
+  	
+  	<style name="popupMenuStyle" parent="android:style/Widget.Holo.Light.ListPopupWindow">
+	  	<item name="android:popupBackground">@drawable/crimson_white_background</item>
+  	</style>
+
+  	<style name="ImageButtonThemed" parent="android:Widget.ImageButton">
+	  	<item name="android:background">@drawable/btn_default_holo_light</item>
+  	</style>
+
+	<style name="CheckBoxThemed" parent="android:Widget.CompoundButton.CheckBox">
+	  	<item name="android:button">@drawable/btn_check_holo_light</item>
+	</style>
+    
+	<style name="EditTextAppTheme" parent="android:Widget.EditText">
+	  <item name="android:background">@drawable/edit_text_holo_light</item>
+	  <item name="android:textColor">#000000</item>
+  	</style>
+
+  	<style name="Spinner" parent="android:Widget.Spinner">
+      <item name="android:background">@drawable/spinner_background_holo_light</item>
+      <item name="android:dropDownSelector">@drawable/crimson_gray_background</item>
+      <item name="android:popupBackground">@drawable/crimson_gray_background</item>
+	  <item name="android:spinnerMode">dropdown</item>
+	</style>
+	
+	<style name="Spinner.DropDown" parent="android:Theme.Dialog">
+	    <item name="android:listSelector">@drawable/list_selector_background</item> 
+	</style>
+	
+	<style name="SpinnerDropDownItem" parent="android:Widget.DropDownItem.Spinner">
+	    <item name="android:checkMark">@drawable/crimson_white_background</item>
+	    <item name="android:paddingRight">4dp</item>
+	</style>
+
+    <style name="ButtonBarButton" />
+    
+	<style name="ProgressBarAppTheme" parent="android:Widget.ProgressBar.Horizontal">
+	    <item name="android:progressDrawable">@drawable/progress_horizontal_holo_light</item>
+	    <item name="android:indeterminateDrawable">@drawable/progress_indeterminate_horizontal_holo_light</item>
+	    <item name="android:minHeight">16dip</item>
+	    <item name="android:maxHeight">16dip</item>
+	</style>
+
+</resources>

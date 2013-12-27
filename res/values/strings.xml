@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HawkScout</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_hawk_scout">HawkScout</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="vertical">vertical</string>
+    <string name="horizontal">horizontal</string>
+    <string name="delete_view">delete_view</string>
+
+    <string-array name="competitions">
+        <item>BAE Systems Granite State Regional</item>
+        <item>Finger Lakes Regional</item>
+        <item>Palmetto Regional</item>
+        <item>Hub City Regional</item>
+        <item>Central Valley Regional</item>
+        <item>Kettering University FIRST Robotics District Competition</item>
+        <item>Traverse City FIRST Robotics District Competition</item>
+        <item>Hatboro-Horsham FIRST Robotics District Competition</item>
+        <item>San Diego Regional</item>
+        <item>Orlando Regional</item>
+        <item>WPI Regional</item>
+        <item>Lake Superior Regional</item>
+        <item>Northern Lights Regional</item>
+        <item>New York City Regional</item>
+        <item>Greater Toronto East Regional</item>
+        <item>Autodesk Oregon Regional</item>
+        <item>Lone Star Regional</item>
+        <item>Gull Lake FIRST Robotics District Competition</item>
+        <item>Waterford FIRST Robotics District Competition</item>
+        <item>Israel Regional</item>
+        <item>Peachtree Regional</item>
+        <item>Boilermaker Regional</item>
+        <item>Greater Kansas City Regional</item>
+        <item>St. Louis Regional</item>
+        <item>North Carolina Regional</item>
+        <item>Pittsburgh Regional</item>
+        <item>Festival de Robotique FRC a Montreal Regional</item>
+        <item>Virginia Regional</item>
+        <item>Detroit FIRST Robotics District Competition</item>
+        <item>St Joseph FIRST Robotics District Competition</item>
+        <item>TCNJ FIRST Robotics District Competition</item>
+        <item>Springside - Chestnut Hill FIRST Robotics District Competition</item>
+        <item>Phoenix Regional</item>
+        <item>Los Angeles Regional</item>
+        <item>Sacramento Regional</item>
+        <item>Bayou Regional</item>
+        <item>Boston Regional</item>
+        <item>Queen City Regional</item>
+        <item>Waterloo Regional</item>
+        <item>Dallas Regional</item>
+        <item>Utah Regional sponsored by NASA</item>
+        <item>Central Washington Regional</item>
+        <item>Wisconsin Regional</item>
+        <item>Grand Blanc FIRST Robotics District Competition</item>
+        <item>West Michigan FIRST Robotics District Competition</item>
+        <item>Mount Olive FIRST Robotics District Competition</item>
+        <item>Lenape Seneca FIRST Robotics District Competition</item>
+        <item>Inland Empire Regional</item>
+        <item>Connecticut Regional sponsored by UTC</item>
+        <item>Washington DC Regional</item>
+        <item>South Florida Regional</item>
+        <item>Minnesota 10000 Lakes Regional</item>
+        <item>Minnesota North Star Regional</item>
+        <item>Buckeye Regional</item>
+        <item>Oklahoma Regional</item>
+        <item>Greater Toronto West Regional</item>
+        <item>Smoky Mountains Regional</item>
+        <item>Alamo Regional sponsored by Rackspace Hosting</item>
+        <item>Seattle Regional</item>
+        <item>Livonia FIRST Robotics District Competition</item>
+        <item>Troy FIRST Robotics District Competition</item>
+        <item>Western Canadian FRC Regional</item>
+        <item>Razorback Regional</item>
+        <item>Silicon Valley Regional</item>
+        <item>Colorado Regional</item>
+        <item>Hawaii Regional sponsored by BAE Systems</item>
+        <item>Midwest Regional</item>
+        <item>Crossroads Regional</item>
+        <item>Pine Tree Regional</item>
+        <item>Las Vegas Regional</item>
+        <item>SBPLI Long Island Regional</item>
+        <item>Spokane Regional</item>
+        <item>Bedford FIRST Robotics District Competition</item>
+        <item>Bridgewater-Raritan FIRST Robotics District Competition</item>
+        <item>Chesapeake Regional</item>
+        <item>Michigan FRC State Championship</item>
+        <item>Mid-Atlantic Robotics FRC Region Championship</item>
+        <item>Archimedes Division</item>
+        <item>Curie Division</item>
+        <item>Galileo Division</item>
+        <item>Newton Division</item>
+        <!-- <item>Einstein Field</item> -->
+    </string-array>
+    <string-array name="comp_week">
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 6</item>
+        <item>Week 7</item>
+        <item>Week 7</item>
+        <item>Week 7</item>
+        <!-- Week 8 = Championship -->
+        <item>Week 8</item>
+        <item>Week 8</item>
+        <item>Week 8</item>
+        <item>Week 8</item>
+        <!-- <item>Week 8</item> -->
+    </string-array>
+    <string-array name="comp_code">
+        <item>NHMA</item>
+        <item>NYRO</item>
+        <item>SCMB</item>
+        <item>TXLU</item>
+        <item>CAMA</item>
+        <item>MIKET</item>
+        <item>MITVC</item>
+        <item>PAHAT</item>
+        <item>CASD</item>
+        <item>FLOR</item>
+        <item>MAWO</item>
+        <item>MNDU</item>
+        <item>MNDU2</item>
+        <item>NYNY</item>
+        <item>ONTO</item>
+        <item>ORPO</item>
+        <item>TXHO</item>
+        <item>MIGUL</item>
+        <item>MIWFD</item>
+        <item>ISTA</item>
+        <item>GADU</item>
+        <item>INWL</item>
+        <item>MOKC</item>
+        <item>MOSL</item>
+        <item>NCRE</item>
+        <item>PAPI</item>
+        <item>QCMO</item>
+        <item>VARI</item>
+        <item>MIDET</item>
+        <item>MISJO</item>
+        <item>NJEWN</item>
+        <item>PAPHI</item>
+        <item>AZCH</item>
+        <item>CALB</item>
+        <item>CASA</item>
+        <item>LAKE</item>
+        <item>MABO</item>
+        <item>OHIC</item>
+        <item>ONWA</item>
+        <item>TXDA</item>
+        <item>UTWV</item>
+        <item>WASE2</item>
+        <item>WIMI</item>
+        <item>MIGBL</item>
+        <item>MIWMI</item>
+        <item>NJFLA</item>
+        <item>NJLEN</item>
+        <item>CASB</item>
+        <item>CTHA</item>
+        <item>DCWA</item>
+        <item>FLBR</item>
+        <item>MNMI</item>
+        <item>MNMI2</item>
+        <item>OHCL</item>
+        <item>OKOK</item>
+        <item>ONTO2</item>
+        <item>TNKN</item>
+        <item>TXSA</item>
+        <item>WASE</item>
+        <item>MILIV</item>
+        <item>MITRY</item>
+        <item>ABCA</item>
+        <item>ARFA</item>
+        <item>CASJ</item>
+        <item>CODE</item>
+        <item>HIHO</item>
+        <item>ILCH</item>
+        <item>INTH</item>
+        <item>MELE</item>
+        <item>NVLV</item>
+        <item>NYLI</item>
+        <item>WACH</item>
+        <item>MIBED</item>
+        <item>NJBRG</item>
+        <item>MDBA</item>
+        <item>MICMP</item>
+        <item>MRCMP</item>
+        <item>Archimedes</item>
+        <item>Curie</item>
+        <item>Galileo</item>
+        <item>Newton</item>
+        <!-- <item>EIN</item> -->
+    </string-array>
+    <string-array name="comp_location">
+        <item>Manchester, NH</item>
+        <item>Rochester, NY</item>
+        <item>North Charleston, SC</item>
+        <item>Lubbock, TX</item>
+        <item>Maderna, CA</item>
+        <item>Flint, MI</item>
+        <item>Traverse City, MI</item>
+        <item>Horsham, PA</item>
+        <item>San Diego, CA</item>
+        <item>Orlando, FL</item>
+        <item>Worcester, MA</item>
+        <item>Duluth, MN</item>
+        <item>Duluth, MN</item>
+        <item>New York, NY</item>
+        <item>Oshawa, ON (Canada)</item>
+        <item>Portland, OR</item>
+        <item>Houston, TX</item>
+        <item>Richland, MI</item>
+        <item>Waterford, MI</item>
+        <item>Tel Aviv, IS (Isreal)</item>
+        <item>Duluth, GA</item>
+        <item>West Lafayette, IN</item>
+        <item>Kansas City, MO</item>
+        <item>St. Louis, MO</item>
+        <item>Raleigh, NC</item>
+        <item>Pittsburgh, PA</item>
+        <item>Montreal, QC (Canada)</item>
+        <item>Richmond, VA</item>
+        <item>Center Line, MI</item>
+        <item>St Joseph FIRST Robotics District, MI</item>
+        <item>Ewing, NJ</item>
+        <item>Philadelphia, PA</item>
+        <item>Chandler, AZ</item>
+        <item>Long Beach, CA</item>
+        <item>Davis, CA</item>
+        <item>Kenner, LA</item>
+        <item>Boston, MA</item>
+        <item>Cincinnati, OH</item>
+        <item>Waterloo, ON (Canada)</item>
+        <item>Irving, TX</item>
+        <item>West Valley City, UT</item>
+        <item>Ellensburg, WA</item>
+        <item>Milwaukee, WI</item>
+        <item>Grand Blanc, MI</item>
+        <item>Allendale, MI</item>
+        <item>Flanders, NJ</item>
+        <item>Tabernacle, NJ</item>
+        <item>San Bernardino, CA</item>
+        <item>Hartford, CA</item>
+        <item>Washington, D.C.</item>
+        <item>Fort Lauderdale, FL</item>
+        <item>Minneapolis, MN</item>
+        <item>Minneapolis, MN</item>
+        <item>Cleveland, OH</item>
+        <item>Oklahoma City, OK</item>
+        <item>Mississauga, ON (Canada)</item>
+        <item>Knoxville, TN</item>
+        <item>San Antonio, TX</item>
+        <item>Seattle, WA</item>
+        <item>Livonia, MI</item>
+        <item>Troy, MI</item>
+        <item>Calgary, AB (Canada)</item>
+        <item>Fayetteville, AR</item>
+        <item>San Jose, CA</item>
+        <item>Denver, CO</item>
+        <item>Honolulu, HI</item>
+        <item>Chicago, IL</item>
+        <item>Terre Haute, IN</item>
+        <item>Lewiston, ME</item>
+        <item>Las Vegas, NV</item>
+        <item>Hempstead, NY</item>
+        <item>Cheney, WA</item>
+        <item>Temperance, MI</item>
+        <item>Bridgewater, NJ</item>
+        <item>Baltimore, MD</item>
+        <item>Ypsilanti, MI</item>
+        <item>Bethlehem, PA</item>
+        <item>St. Louis, MO</item>
+        <item>St. Louis, MO</item>
+        <item>St. Louis, MO</item>
+        <item>St. Louis, MO</item>
+        <!-- <item>St. Louis, MO</item> -->
+    </string-array>
+    <string-array name="comp_date">
+        <item>2/28to3/02</item>
+        <item>2/28to3/02</item>
+        <item>2/28to3/02</item>
+        <item>2/28to3/02</item>
+        <item>3/01to3/03</item>
+        <item>3/01to3/02</item>
+        <item>3/01to3/02</item>
+        <item>3/02to3/03</item>
+        <item>3/07to3/09</item>
+        <item>3/07to3/09</item>
+        <item>3/07to3/09</item>
+        <item>3/07to3/09</item>
+        <item>3/07to3/09</item>
+        <item>3/07to12/09</item>
+        <item>3/07to3/09</item>
+        <item>3/07to3/09</item>
+        <item>3/07to3/09</item>
+        <item>3/08to3/09</item>
+        <item>3/08to3/09</item>
+        <item>3/10to3/12</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/14to3/16</item>
+        <item>3/15to3/16</item>
+        <item>3/15to3/16</item>
+        <item>3/15to3/16</item>
+        <item>3/15to3/16</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/21to3/23</item>
+        <item>3/22to3/23</item>
+        <item>3/22to3/23</item>
+        <item>3/22to3/23</item>
+        <item>3/22to3/23</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/28to3/30</item>
+        <item>3/29to3/30</item>
+        <item>3/29to3/30</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/04to4/06</item>
+        <item>4/05to4/06</item>
+        <item>4/06to4/07</item>
+        <item>4/11to4/13</item>
+        <item>4/11to4/13</item>
+        <item>4/11to4/13</item>
+        <item>4/24to4/27</item>
+        <item>4/24to4/27</item>
+        <item>4/24to4/27</item>
+        <item>12/24to12/27</item>
+        <!-- <item>12/27to12/27</item> -->
+    </string-array>
+    <string-array name="rankings_spinner_categories">
+        <item>Rankings</item>
+        <item>Offense</item>
+        <item>Defense</item>
+        <item>Metrics</item>
+    </string-array>
+    <string-array name="rankings_home_spinner">
+        <item>Team</item>
+        <item>Matches</item>
+    </string-array>
+
+    <string name="title_activity_competition_menu">Competition</string>
+    <string name="title_activity_competition">Competition</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_pit_scouting">Pit Scouting</string>
+    <string name="title_activity_team">Team</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_fullscreen_image">FullscreenImageActivity</string>
+    <string name="title_activity_match_scouting">MatchScouting</string>
+    <string name="match_scouting_note">Note: The match timer will begin as soon as you press \&quot;Start Match\&quot;.</string>
+    <string name="start_match">Start Match</string>
+    <string name="scouted_by">Scouted By</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="tele_operated">Tele-Operated</string>
+    <string name="end_game_climb">End Game / Climb</string>
+    <string name="missed_shot">Missed Shot</string>
+    <string name="missed_shots">Missed Shots</string>
+    <string name="block">Block</string>
+    <string name="blocks">Blocks</string>
+    <string name="three_point_penalty">3 Point Penalty</string>
+    <string name="twenty_point_penalty">20 Point Penalty</string>
+    <string name="thirty_point_penalty">30 Point Penalty</string>
+    <string name="three_point_penalties">3 Point Penalties</string>
+    <string name="twenty_point_penalties">20 Point Penalties</string>
+    <string name="thirty_point_penalties">30 Point Penalties</string>
+    <string name="pyramid_goal">Pyramid Goal</string>
+    <string name="top_goal">Top Goal</string>
+    <string name="middle_goal">Middle Goal</string>
+    <string name="bottom_goal">Bottom Goal</string>
+    <string name="three_point_penalty_break">3 Point\nPenalty</string>
+    <string name="start_climbing">Start Climbing</string>
+    <string name="skip_to_tele">Skip to Tele-Op</string>
+    <string name="level_3">Level 3</string>
+    <string name="level_2">Level 2</string>
+    <string name="level_1">Level 1</string>
+    <string name="level_0">Level 0</string>
+    <string name="pre_match_info">Pre-Match Information</string>
+    <string name="post_match_review">Post-Match Review</string>
+    <string name="match_info">Match Info</string>
+    <string name="match_number">Match Number</string>
+    <string name="team_number">Team Number</string>
+    <string name="alliance">Alliance</string>
+    <string name="final_climb">Final Climb Level</string>
+    <string name="climb_time">Total Climb Time (s)</string>
+    <string name="level_splits">Climb Level Splits</string>
+    <string name="pre_match_notes">Pre-Match Notes</string>
+    <string name="penalties">Penalties</string>
+    <string name="notes">Notes</string>
+    <string name="total_points_scored">Total Points Scored</string>
+    <string name="total_penalties_accumulated">Total Penalties Accumulated</string>
+    <string name="net_point_contribution">Net Points Contributed</string>
+    <string name="valid_climb">Valid Climb?</string>
+	<string-array name="alliances">
+        <item>Blue</item>
+        <item>Red</item>
+    </string-array>
+	<string-array name="climb_levels">
+        <item>Level 3</item>
+        <item>Level 2</item>
+        <item>Level 1</item>
+        <item>Level 0</item>
+    </string-array>
+
+</resources>

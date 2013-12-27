@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory 
+        android:title="General"
+        android:key="com.hawkscout.steelhawks.general">
+        <EditTextPreference
+            android:key="com.hawkscout.steelhawks.generel.name"
+            android:summary="Name to be used for scouting and messaging"
+            android:title="Name"/>
+    </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="Network"
+        android:key="com.hawkscout.steelhawks.network">
+        <CheckBoxPreference
+            android:key="com.hawkscout.steelhawks.network.mobile"
+            android:summary="Use a mobile data connection when Wi-Fi is unavailable"
+            android:title="Use mobile network"
+            android:defaultValue="true"/>
+        <ListPreference 
+            android:key="com.hawkscout.steelhawks.network.mobile_limit"
+            android:summary="Determine how much mobile data is used to pre-load scouting statics and reports."
+            android:title="Background data usage"/>
+    </PreferenceCategory>
+</PreferenceScreen>
