@@ -129,7 +129,7 @@
 	                <!-- 			            style="@android:style/Widget.ProgressBar.Horizontal" -->
 	                
 			        <ProgressBar 
-			            style="@style/Widget.PullToRefresh.ProgressBar.Horizontal.Center"
+			            style="@android:style/Widget.ProgressBar.Horizontal"
 			            android:indeterminateOnly="true"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"

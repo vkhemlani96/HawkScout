@@ -506,5 +506,22 @@
         <item>Level 1</item>
         <item>Level 0</item>
     </string-array>
-
+	<string name="high_goal">High Goal</string>
+	<string name="foul">Foul</string>
+	<string name="technical_foul">Technical Foul</string>
+	<string name="forward_movement" >Forward Movement?</string>
+	<string name="picked_up_ball">Picked Up Ball</string>
+	<string name="low_goal">Low Goal</string>
+	<string name="moved_forward">Moved Forward!</string>
+	<string name="picked_up_stray_ball">Picked Up Stray Ball</string>
+	<string name="received_pass_from_robot">Received Pass From Robot</string>
+	<string name="received_pass_from_human_player">Received Ball from Human Player</string>
+	<string name="made_pass_to_robot">Made Pass to Robot</string>
+	<string name="lost_ball">Lost Ball</string>
+	<string name="made_pass_to_human_player">Made Pass To Human Player</string>
+	<string name="threw_over_truss">Threw Over Truss</string>
+	<string name="deflection">Deflection</string><string name="blocked_shot">Blocked Shot</string>
+	<string name="caught_ball">Caught Ball</string>
+	
+	<string name="has_possession">Has Possession?</string>
 </resources>

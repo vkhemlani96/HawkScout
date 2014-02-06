@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,8 +22,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.renderscript.ProgramVertexFixedFunction.Constants;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils.TruncateAt;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,6 +45,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.ProgressBar;
@@ -168,46 +169,6 @@ public class CompetitionMenu extends FragmentActivity implements
 				break;
 			case R.id.action_settings:
 				startActivity(new Intent(CompetitionMenu.this, com.steelhawks.hawkscout.Settings.class));
-//				isInviteShown = true;
-//				container.setLayoutParams(new ScrollView.LayoutParams(
-//						LayoutParams.MATCH_PARENT, inviteLayout.getHeight() + main.getHeight()));
-//				TranslateAnimation anim = new TranslateAnimation(0, 0, 0, inviteLayout.getHeight());
-//					anim.setDuration(400);
-//					anim.setAnimationListener(new AnimationListener() {
-//
-//						@Override
-//						public void onAnimationEnd(Animation arg0) {
-////							removeCompList();
-////							createCompList(teamPosition);
-//						}
-//
-//						@Override
-//						public void onAnimationRepeat(Animation arg0) {}
-//
-//						@Override
-//						public void onAnimationStart(Animation arg0) {
-//							AlphaAnimation alphaAnim = new AlphaAnimation (0.0f, 1.0f);
-//								alphaAnim.setDuration(400);
-//								alphaAnim.setFillAfter(true);
-//							inviteLayout.setAlpha(1.0f);
-//							inviteLayout.startAnimation(alphaAnim);
-//							for (int x=0; x<main.getChildCount(); x++) {
-//								main.getChildAt(x).setEnabled(false);
-//							}
-//							for (int x=0; x<inviteLayout.getChildCount(); x++) {
-//								inviteLayout.getChildAt(x).setEnabled(true);
-//							}
-//						}
-//						
-//					});
-//				AlphaAnimation mainAnim = new AlphaAnimation (1.0f, 0.4f);
-//					mainAnim.setDuration(400);
-//					mainAnim.setFillAfter(true);
-//				AnimationSet setAnim = new AnimationSet(true);
-//					setAnim.addAnimation(anim);
-//					setAnim.setFillAfter(true);
-//					setAnim.addAnimation(mainAnim);
-//					main.startAnimation(setAnim);
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
