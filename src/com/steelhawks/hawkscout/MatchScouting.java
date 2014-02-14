@@ -45,6 +45,7 @@ public class MatchScouting extends Activity implements OnClickListener, OnLongCl
 	private static final int TELEOP_NO_POSSESSION = 2;
 	private static int CURRENT_GAME_MODE = AUTON;
 	public static final int SECONDS = 1000;
+	private static String ALLIANCE = "";
 	
 	class UndoKeys {
 		public static final int AUTON_BALL_PICKUP = R.id.auton_ball_pickup;
@@ -255,16 +256,24 @@ public class MatchScouting extends Activity implements OnClickListener, OnLongCl
 		final ImageView pyramidView = (ImageView) findViewById(R.id.pyramid);
 		final View robotView = findViewById(R.id.robot);
 		pyramidView.setOnTouchListener(new OnTouchListener(){
-	
+			private final int VERTICAL_PADDING = PX(250-182)/2;
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (robotView.getVisibility() == View.GONE) robotView.setVisibility(View.VISIBLE);
-				int x = (int) event.getX() - (PX(50)/2);
+				System.out.println("X: " + event.getX() + " Y: " + event.getY());
+				int x = (int) event.getX() - (PX(20)/2);
 					if (x<0) x=0;
-					if (x>PX(300)-PX(50)) x=PX(300)-PX(50);
-				int y = (int) event.getY() - (PX(50)/2);
-					if (y<0) y=0;
-					if (y>PX(300)-PX(50)) y = PX(300)-PX(50);
+					if (x>PX(400)-PX(20)) x=PX(400)-PX(20);
+				int y = (int) event.getY() - (PX(20)/2);
+					if (y<VERTICAL_PADDING) y=VERTICAL_PADDING;
+					if (y>PX(250)-VERTICAL_PADDING) y=PX(250)-VERTICAL_PADDING-PX(20);
+				if ((ALLIANCE.equals("Red") && ((x>PX(20) && x<PX(400)/2) || x>PX(400)/3*2)) 
+						|| (ALLIANCE.equals("Blue") && (x<PX(400)/3 || (x>PX(400)/2 && x<PX(400)-PX(20))))) return true;
+				if ((x>PX(20) && x<PX(400/3)) ||
+						(x>PX(400/3*2) && x<PX(400/20)) ||
+						(ALLIANCE.equals("Red") && ((x>PX(400/3) && x<PX(400/2)) || x>PX(400-20))) ||
+						(ALLIANCE.equals("Blue") && ((x<PX(20)) || (x>PX(400/2) && x<PX(400/3*2))))
+						) return true;
 				robotView.setX(x);
 				robotView.setY(y);
 				Utilities.closeKeyboard(MatchScouting.this);
@@ -284,10 +293,12 @@ public class MatchScouting extends Activity implements OnClickListener, OnLongCl
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				if (arg2 == 0) {
-					pyramidView.setImageResource(R.drawable.ic_content_pyramid_blue);
+//					pyramidView.setImageResource(R.drawable.ic_content_pyramid_blue);
+					ALLIANCE = "Blue";
 					robotView.setBackgroundColor(Color.parseColor("#500000cc"));
 				} else {
-					pyramidView.setImageResource(R.drawable.ic_content_pyramid_red);
+//					pyramidView.setImageResource(R.drawable.ic_content_pyramid_red);
+					ALLIANCE = "Red";
 					robotView.setBackgroundColor(Color.parseColor("#50cc0000"));
 				}
 			}
@@ -492,6 +503,7 @@ public class MatchScouting extends Activity implements OnClickListener, OnLongCl
 	}
 	
 	private void undo() {
+		if (undoList.size() == 0) return;
 		int key = undoList.get(undoList.size()-1);
 		View view;
 		if (key == UndoKeys.FOUL || key == UndoKeys.AUTON_FOUL)
@@ -624,13 +636,13 @@ public class MatchScouting extends Activity implements OnClickListener, OnLongCl
 		((Spinner) findViewById(R.id.alliance_review)).setSelection(1);
 		if (position == 0) {
 			((Spinner) findViewById(R.id.alliance_review)).setSelection(0);
-			((ImageView) findViewById(R.id.pyramid_review)).setImageDrawable(
-					getResources().getDrawable(R.drawable.ic_content_pyramid_blue));
+//			((ImageView) findViewById(R.id.pyramid_review)).setImageDrawable(
+//					getResources().getDrawable(R.drawable.ic_content_pyramid_blue));
 			findViewById(R.id.robot_review).setBackgroundColor(Color.parseColor("#500000cc"));
 		} else {
 			
-			((ImageView) findViewById(R.id.pyramid_review)).setImageDrawable(
-					getResources().getDrawable(R.drawable.ic_content_pyramid_red));
+//			((ImageView) findViewById(R.id.pyramid_review)).setImageDrawable(
+//					getResources().getDrawable(R.drawable.ic_content_pyramid_red));
 			findViewById(R.id.robot_review).setBackgroundColor(Color.parseColor("#50cc0000"));
 		}
 

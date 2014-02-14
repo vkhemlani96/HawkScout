@@ -135,21 +135,22 @@
 		            android:layout_height="wrap_content"
 		            android:minHeight="48dp"/>
 		        <FrameLayout
-		            android:layout_height="300dp"
-		            android:layout_width="300dp"
+		            android:layout_height="250dp"
+		            android:layout_width="wrap_content"
 		            android:id="@+id/pyramid_grid">
+			        <ImageView 
+			            android:layout_width="400dp"
+			            android:layout_height="wrap_content"
+			            android:scaleType="centerCrop"
+			            android:id="@+id/pyramid"
+			            android:src="@drawable/ic_field_drawing"
+			            android:contentDescription="black pyramid outline"/>
 		            <View 
-		                android:layout_height="50dp"
-		                android:layout_width="50dp"
+		                android:layout_height="20dp"
+		                android:layout_width="20dp"
 		                android:background="#50000000"
 		                android:id="@+id/robot"
 		                android:visibility="gone"/>
-			        <ImageView 
-			            android:layout_height="300dp"
-			            android:layout_width="300dp"
-			            android:id="@+id/pyramid"
-			            android:src="@drawable/ic_content_pyramid_black"
-			            android:contentDescription="black pyramid outline"/>
 		        </FrameLayout>
 			    <Button
 			        android:layout_height="40dp"
@@ -619,8 +620,8 @@
 		                android:layout_weight="1"/>
 		        </LinearLayout>
 		        <FrameLayout
-		            android:layout_height="300dp"
-		            android:layout_width="300dp"
+		            android:layout_height="400dp"
+		            android:layout_width="400dp"
 		            android:gravity="center">
 		            <View 
 		                android:layout_height="50dp"
@@ -628,10 +629,10 @@
 		                android:background="#50000000"
 		                android:id="@+id/robot_review"/>
 			        <ImageView 
-			            android:layout_height="300dp"
-			            android:layout_width="300dp"
+			            android:layout_height="400dp"
+			            android:layout_width="wrap_content"
 			            android:id="@+id/pyramid_review"
-			            android:src="@drawable/ic_content_pyramid_black"
+			            android:src="@drawable/ic_field_drawing"
 			            android:contentDescription="black pyramid outline"/>
 		        </FrameLayout>
 		        
