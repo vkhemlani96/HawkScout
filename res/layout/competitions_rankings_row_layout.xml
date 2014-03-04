@@ -28,7 +28,7 @@
         android:layout_height="48dp"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_weight="8"
+        android:layout_weight="3.4"
         android:id="@+id/qp"/>
 	<View 
 	    android:layout_width="1px"
@@ -39,7 +39,7 @@
         android:layout_height="48dp"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_weight="3"
+        android:layout_weight="3.4"
         android:id="@+id/ap"/>
 	<View 
 	    android:layout_width="1px"
@@ -50,8 +50,8 @@
         android:layout_height="48dp"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_weight="3"
-        android:id="@+id/cp"/>
+        android:layout_weight="3.4"
+        android:id="@+id/autonp"/>
 	<View 
 	    android:layout_width="1px"
 	    android:layout_height="48dp"
@@ -61,7 +61,18 @@
         android:layout_height="48dp"
         android:textSize="20dp"
         android:gravity="center"
-        android:layout_weight="3"
+        android:layout_weight="3.4"
+        android:id="@+id/trussp"/>
+	<View 
+	    android:layout_width="1px"
+	    android:layout_height="48dp"
+	    android:background="@android:color/darker_gray"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_weight="3.4"
         android:id="@+id/tp"/>
 <!-- 	<View  -->
 <!-- 	    android:layout_width="1px" -->

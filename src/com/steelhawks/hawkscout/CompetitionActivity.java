@@ -342,7 +342,7 @@ public class CompetitionActivity extends FragmentActivity implements
 				v.setTag(ASCENDING);
 			}
 			break;
-		case R.id.cp_header:
+		case R.id.assistp_header:
 			if(adapter.sort == SortBy.CLIMB) {
 				listView.setAdapter(adapter.reverse());
 				if ((Boolean) v.getTag() == ASCENDING) {
@@ -402,7 +402,7 @@ public class CompetitionActivity extends FragmentActivity implements
 			break;
 		case SortBy.CLIMB:
 			System.out.println("Still clearing climb");
-			tv = (TextView) ((LinearLayout)v.getParent()).findViewById(R.id.cp_header);
+			tv = (TextView) ((LinearLayout)v.getParent()).findViewById(R.id.assistp_header);
 			tv.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 			break;
 		case SortBy.TELE:
@@ -766,7 +766,7 @@ public class CompetitionActivity extends FragmentActivity implements
 				TextView ap = (TextView) rootView.findViewById(R.id.ap);
 				ap.setBackgroundColor(getColor(team.getAutonPoints(), autonMax, autonMin));
 				ap.setText(String.valueOf(team.getAutonPoints()));
-				TextView cp = (TextView) rootView.findViewById(R.id.cp);
+				TextView cp = (TextView) rootView.findViewById(R.id.truss);
 				cp.setText(String.valueOf(team.getClimbPoints()));
 				cp.setBackgroundColor(getColor(team.getClimbPoints(), climbMax, climbMin));
 				TextView tp = (TextView) rootView.findViewById(R.id.tp);

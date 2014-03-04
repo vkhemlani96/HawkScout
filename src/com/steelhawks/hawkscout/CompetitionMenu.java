@@ -58,9 +58,9 @@ import android.widget.ViewFlipper;
 import com.google.api.services.drive.model.Permission;
 import com.steelhawks.hawkscout.Globals.Competition;
 import com.steelhawks.hawkscout.Globals.UserTeam;
-import com.steelhawks.hawkscout.dialogs.AddCompetitionFragment;
-import com.steelhawks.hawkscout.dialogs.AddMemberFragment;
 import com.steelhawks.hawkscout.dialogs.SimpleTextFragment;
+import com.steelhawks.hawkscout.dialogs.competitionmenu.AddCompetitionFragment;
+import com.steelhawks.hawkscout.dialogs.competitionmenu.AddMemberFragment;
 import com.steelhawks.hawkscout.util.ContactsAutoComplete;
 
 public class CompetitionMenu extends FragmentActivity implements

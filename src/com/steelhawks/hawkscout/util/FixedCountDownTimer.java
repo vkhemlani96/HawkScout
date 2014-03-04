@@ -60,6 +60,8 @@ public abstract class FixedCountDownTimer {
     private long mStopTimeInFuture;
     
     private long mNextTime;
+    
+    private int secondsLeft;
 
     /**
      * @param millisInFuture The number of millis in the future from the call
@@ -70,6 +72,7 @@ public abstract class FixedCountDownTimer {
      */
     public FixedCountDownTimer(long millisInFuture, long countDownInterval) {
         mMillisInFuture = millisInFuture;
+        secondsLeft = (int) millisInFuture / 1000;
         mCountdownInterval = countDownInterval;
     }
 
@@ -124,7 +127,8 @@ public abstract class FixedCountDownTimer {
         public void handleMessage(Message msg) {
             synchronized (FixedCountDownTimer.this) {
                 final long millisLeft = mStopTimeInFuture - SystemClock.uptimeMillis();
-
+                secondsLeft = (int) ((millisLeft/1000) - (millisLeft % 1000 == 0 ? 1 : 0));
+                
                 if (millisLeft <= 0) {
                     onFinish();
                 } else {
@@ -146,4 +150,8 @@ public abstract class FixedCountDownTimer {
             }
         }
     };
+
+	public int getSecondsLeft() {
+		return secondsLeft;
+	}
 }

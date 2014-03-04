@@ -5,9 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +21,12 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import com.steelhawks.hawkscout.PitScouting;
 import com.steelhawks.hawkscout.R;
-import com.steelhawks.hawkscout.dialogs.EditTextFragment;
+import com.steelhawks.hawkscout.dialogs.pitscouting.EditTextFragment;
 
 public class NoDefaultSpinner extends Spinner implements DialogInterface.OnClickListener {
 	
-	PitScouting c;
+	FragmentActivity c;
 	ArrayAdapter<String> adapter;
 	CharSequence prompt;
 	CharSequence displayedText;
@@ -40,9 +41,9 @@ public class NoDefaultSpinner extends Spinner implements DialogInterface.OnClick
         super(context, mode);
     }
 	
-	public NoDefaultSpinner(Context context, int mode, List<String> list) {
+	public NoDefaultSpinner(FragmentActivity context, int mode, List<String> list) {
         super(context, mode);
-        c = (PitScouting) context;
+        c = context;
         this.list = list;
         OnItemSelectedListener listener = new OnItemSelectedListener() {
 
@@ -75,10 +76,9 @@ public class NoDefaultSpinner extends Spinner implements DialogInterface.OnClick
     	System.out.println("Called");
     	EditText e = frag.getCustomView();
     	list.add(list.size()-1, e.getText().toString());
-    	setAdapter(new ArrayAdapter<String>((Context) c, R.layout.simple_spinner_dropdown_item, list));
+    	setAdapter(new ArrayAdapter<String>((Context) c, R.layout.simple_spinner_dropdown_item_gray, list));
 		dialog.cancel();
 		setSelection(list.size()-2);
-//		performClick();
 	}
     
     public CharSequence getPrompt() {
@@ -164,7 +164,6 @@ public class NoDefaultSpinner extends Spinner implements DialogInterface.OnClick
 
         protected View getView(int position, View convertView, ViewGroup parent) 
           throws IllegalAccessException {
-
             if( position<0 ) {
                 final TextView v = 
                   (TextView) ((LayoutInflater)getContext().getSystemService(
@@ -177,6 +176,8 @@ public class NoDefaultSpinner extends Spinner implements DialogInterface.OnClick
                 return v;
             }
             TextView t = (TextView) obj.getView(position, convertView, parent);
+            t.setBackgroundColor(Color.BLACK);
+            System.out.println("Set Stuff");
             t.setTextSize(18);
             return t;
         }

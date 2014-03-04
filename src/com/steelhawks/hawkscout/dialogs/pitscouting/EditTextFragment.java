@@ -1,4 +1,4 @@
-package com.steelhawks.hawkscout.dialogs;
+package com.steelhawks.hawkscout.dialogs.pitscouting;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

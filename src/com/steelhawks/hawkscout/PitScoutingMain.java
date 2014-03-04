@@ -62,11 +62,12 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.ListFeed;
-import com.steelhawks.hawkscout.Globals.Competition;
 import com.steelhawks.hawkscout.asynctasks.UpdatePitData;
+import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Parameter;
 import com.steelhawks.hawkscout.data.ScoutingParameters;
 import com.steelhawks.hawkscout.dialogs.SimpleTextFragment;
@@ -77,18 +78,19 @@ import com.steelhawks.hawkscout.util.NoDefaultSpinner;
 import com.steelhawks.hawkscout.util.ProgressLayout;
 import com.steelhawks.hawkscout.util.Utilities;
 
-public class PitScouting extends FragmentActivity {
+public class PitScoutingMain extends FragmentActivity {
 	
 	public Globals app;
 	Competition currentComp;
-	Intent data;
 	private static final int MEDIA_TYPE_IMAGE = 1;
 	private static final int MEDIA_TYPE_VIDEO = 2;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
+	private static final String ACTIVITY_INTENT_1 = "com.steelhawks.hawkscout.TEAM_NUMBER";
+	private static final String ACTIVITY_INTENT_2 = "com.steelhawks.hawkscout.DATA";
 	int picIndex = -1;
 	int vidIndex = -1;
-	HashMap<String, String> editMap = null;
+	String[] data;
 
 	LinearLayout wrapper;
 	List<File> mediaFiles = new ArrayList<File>();
@@ -110,50 +112,14 @@ public class PitScouting extends FragmentActivity {
 		
 		app = (Globals) getApplicationContext();
 		
-		data = new Intent();
-		
 		maxMediaPerRow = (getResources().getDisplayMetrics().widthPixels - PX(32)) / PX(158);
 
-		currentComp = app.getTeams().get(getIntent().getExtras().getInt("com.steelhawks.hawkscout.TEAM_INDEX_PARAMETERS"))
-				.getCompetitions().get(getIntent().getExtras().getInt("com.steelhawks.hawkscout.COMPETITION_INDEX"));
-
-		final ScoutingParameters test = app.getTeams().get(getIntent().getExtras()
-				.getInt("com.steelhawks.hawkscout.TEAM_INDEX_PARAMETERS")).getScoutingParams();
-		if (test.getParameterTask().getStatus() != AsyncTask.Status.FINISHED) {
-			setContentView(new ProgressLayout(this));
-			
-			Runnable r = new Runnable () {
-				public void run() {
-					if (test.getParameterTask().getStatus() == Status.FINISHED) {
-						createScoutingLayout();
-					} else {
-						new Handler().postDelayed(this, 100);
-					}
-				}
-			};
-			new Handler().post(r);
-		} else {
-			createScoutingLayout();
-		}	
+		data = getIntent().getStringArrayExtra(ACTIVITY_INTENT_2);
+		System.out.println("Data is null: " + String.valueOf(data==null));
 		
+		currentComp = new Competition(this, "SCMB");
+		createScoutingLayout();
 		setupActionBar();
-		
-		//Check for Internet connection.
-		System.out.println(Utilities.isNetworkConnecting(this));
-		if (!Utilities.isNetworkConnecting(this)) {
-			new SimpleTextFragment().newInstance("Internet Unavailable",
-					"You are currently not connected to the Internet. " +
-					"Make sure you have an active Internet connection before submitting this form.",
-					"OK",
-					new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-						
-					}, false).show(getSupportFragmentManager(), "CONNECTION_CHECK");
-		}
 	}
 
 	@Override
@@ -189,7 +155,22 @@ public class PitScouting extends FragmentActivity {
 	    }
 	}
 
+	//Media button onClick Listeners
 	public void onClick(View v) {
+		if (!isRequiredComplete()){
+    		new SimpleTextFragment().newInstance("Required Information Missing!",
+    				"You need to complete the \"Team Info\" section before adding Media.",
+    				"OK",
+    				new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+						
+					}, false).show(getSupportFragmentManager(), "TEAM_INFO");
+			return;
+		}
 		switch(v.getId()) {
 		case R.id.add_a_picture:
 			Intent pic = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -197,13 +178,18 @@ public class PitScouting extends FragmentActivity {
 			startActivityForResult(pic, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 			break;
 		case R.id.add_a_video:
-			Intent vid = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-			vid.putExtra(MediaStore.EXTRA_OUTPUT, getIntialMediaUri(MEDIA_TYPE_VIDEO));
-			startActivityForResult(vid, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
+			try {
+				Intent vid = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+				vid.putExtra(MediaStore.EXTRA_OUTPUT, getIntialMediaUri(MEDIA_TYPE_VIDEO));
+				startActivityForResult(vid, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
+			} catch (Exception e){
+				Toast.makeText(this, "An error occured. Please try again.", Toast.LENGTH_LONG);
+			}
 			break;
 		}
 	}
 
+	//Creates Initial Uri for Media File
 	private Uri getIntialMediaUri(int type) {
 
 		File mediaStorageDir = type == MEDIA_TYPE_IMAGE ?
@@ -229,23 +215,14 @@ public class PitScouting extends FragmentActivity {
 		return Uri.fromFile(new File(path));
 	}
 
+	//Creates Final file for Media
 	private File getFinalMediaFile(int type) {
-
-		File mediaStorageDir = new File(this.getExternalFilesDir(
-	              Environment.DIRECTORY_PICTURES), "Pit Scouting");
-		
-		if (! mediaStorageDir.exists()){
-	        if (! mediaStorageDir.mkdirs()){
-	            Log.d("HawkScout", "failed to create directory");
-	            return null;
-	        }
-	    }
 
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
 			.format(new Date());
 		String extension = type == MEDIA_TYPE_IMAGE ? ".jpg" : ".mp4";
 		
-		String path = mediaStorageDir.getPath() + File.separator + currentComp.getCompCode() + "_" +
+		String path = Competition.MEDIA_PATH + currentComp.getCompCode() + "_" +
 				teamNumber.getText().toString() + "_" + timeStamp + extension;
 		
 		return new File(path);
@@ -268,6 +245,7 @@ public class PitScouting extends FragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	//Add Media View after media has been captured
 	public void addMediaView(int mediaType) {
 		if (currentMediaInRow == 0) wrapper.removeViewAt(wrapper.getChildCount()-2);
 		currentMediaInRow++;
@@ -304,39 +282,39 @@ public class PitScouting extends FragmentActivity {
 			cursor.close();
 		}
 		
-//		Uri uri;
-//		if (mediaType == MEDIA_TYPE_IMAGE) uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
-//	            Environment.DIRECTORY_PICTURES));
-//		else uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
-//	            Environment.DIRECTORY_MOVIES));
-//		
-//		Cursor cursor = new CursorLoader(this, uri, projection, null, null,
-//	    		MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC").loadInBackground();
-//		if (cursor.getCount() == 0) {
-//			uri = mediaType == MEDIA_TYPE_IMAGE ? MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-//					: MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-//		    cursor = new CursorLoader(this, uri, projection, null, null,
-//		    		MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC").loadInBackground();
-//		}
-//		if (cursor.getCount() == 0) {
-//			switch (mediaType) {
-//			case MEDIA_TYPE_IMAGE: uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
-//		            Environment.DIRECTORY_PICTURES));
-//			case MEDIA_TYPE_VIDEO: uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
-//		            Environment.DIRECTORY_MOVIES));
-//			}
-//			cursor = new CursorLoader(this, uri, projection, null, null,
-//		    		MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC").loadInBackground();
-//		}
-//		if (cursor.getCount() == 0) {
-//			System.out.println("Cursor is 0");
-//			return;
-//		}
-//		else {
-//		    cursor.moveToFirst();
-//		    System.out.println(cursor.getString(0));
-//		}
-	    
+/*		Uri uri;
+		if (mediaType == MEDIA_TYPE_IMAGE) uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
+	            Environment.DIRECTORY_PICTURES));
+		else uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
+	            Environment.DIRECTORY_MOVIES));
+		
+		Cursor cursor = new CursorLoader(this, uri, projection, null, null,
+	    		MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC").loadInBackground();
+		if (cursor.getCount() == 0) {
+			uri = mediaType == MEDIA_TYPE_IMAGE ? MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+					: MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+		    cursor = new CursorLoader(this, uri, projection, null, null,
+		    		MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC").loadInBackground();
+		}
+		if (cursor.getCount() == 0) {
+			switch (mediaType) {
+			case MEDIA_TYPE_IMAGE: uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
+		            Environment.DIRECTORY_PICTURES));
+			case MEDIA_TYPE_VIDEO: uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(
+		            Environment.DIRECTORY_MOVIES));
+			}
+			cursor = new CursorLoader(this, uri, projection, null, null,
+		    		MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC").loadInBackground();
+		}
+		if (cursor.getCount() == 0) {
+			System.out.println("Cursor is 0");
+			return;
+		}
+		else {
+		    cursor.moveToFirst();
+		    System.out.println(cursor.getString(0));
+		}
+*/	    
 	    //Move file to HawkScout folder
 	    
 	    final File oldFile = new File(filePath);
@@ -358,6 +336,7 @@ public class PitScouting extends FragmentActivity {
 			e.printStackTrace();
 		} finally {
 			try {
+				oldFile.delete();
 				inChannel.close();
 				outChannel.close();
 			} catch (IOException e) {
@@ -373,7 +352,7 @@ public class PitScouting extends FragmentActivity {
 				Intent intent = new Intent();
 				intent.setAction(Intent.ACTION_VIEW);
 				intent.setDataAndType(Uri.parse("file://" + newFile.getAbsolutePath()), "image/*");
-				PitScouting.this.startActivity(intent);
+				PitScoutingMain.this.startActivity(intent);
 			}
 		};
 		
@@ -383,7 +362,7 @@ public class PitScouting extends FragmentActivity {
 				Intent intent = new Intent();
 				intent.setAction(Intent.ACTION_VIEW);
 				intent.setDataAndType(Uri.parse("file://" + newFile.getAbsolutePath()), "video/*");
-				PitScouting.this.startActivity(intent);
+				PitScoutingMain.this.startActivity(intent);
 			}
 		};
 		
@@ -463,16 +442,18 @@ public class PitScouting extends FragmentActivity {
 		
 	}
 
+	//Creates Scouting Layout
+	//TODO adjust the way the map it uses
 	@SuppressWarnings("unchecked")
 	private void createScoutingLayout() {
 		setContentView(R.layout.activity_pit_scouting);
 		
-		if (getIntent().getExtras().containsKey("com.steelhawks.hawkscout.EDIT_DETAILS")) {
-			editMap = (HashMap<String, String>) getIntent().getExtras()
-					.getSerializable("com.steelhawks.hawkscout.EDIT_DETAILS");
-		} else {
-			System.out.println("editmap not found");
-		}
+//		if (getIntent().getExtras().containsKey("com.steelhawks.hawkscout.EDIT_DETAILS")) {
+//			editMap = (HashMap<String, String>) getIntent().getExtras()
+//					.getSerializable("com.steelhawks.hawkscout.EDIT_DETAILS");
+//		} else {
+//			System.out.println("editmap not found");
+//		}
 		
 		
 		wrapper = (LinearLayout) findViewById(R.id.pit_scouting_wrapper);
@@ -481,15 +462,15 @@ public class PitScouting extends FragmentActivity {
 		pitNumber = ((EditText) findViewById(R.id.pit_number_edittext));
 		scoutName = ((EditText) findViewById(R.id.scouter_name_edittext));
 		teamNumber = ((AutoCompleteTextView) findViewById(R.id.team_number_edittext));
-			if (editMap != null) {
-				teamName.setText(editMap.get("teamname") == null ? "" : editMap.get("teamname"));
-				pitNumber.setText(editMap.get("pitnumber") == null ? "" : editMap.get("pitnumber"));
-				scoutName.setText(editMap.get("scoutedby") == null ? "" : editMap.get("scoutedby"));
+		teamNumber.setText(getIntent().getExtras().getString(ACTIVITY_INTENT_1, ""));
+			if (data != null) {
+				teamName.setText(data[1]);
+				pitNumber.setText(data[2]);
+				scoutName.setText(data[3]);
 			}
-			teamNumber.setText(getIntent().getExtras().getString("com.steelhawks.hawkscout.TEAM_SCOUTING",""));
 			final List<String> teamNumbers = new ArrayList<String>();
-			for(int x=0; x<currentComp.getTeamData().size(); x++) {
-				teamNumbers.add(String.valueOf(currentComp.getTeamData().get(x).getTeamNumber()));
+			for(int x=0; x<currentComp.getTeams().length; x++) {
+				teamNumbers.add(String.valueOf(currentComp.getTeams()[x]));
 			}
 			teamNumber.setAdapter(new ArrayAdapter<String>(this,
 					android.R.layout.simple_spinner_dropdown_item, teamNumbers));
@@ -508,8 +489,7 @@ public class PitScouting extends FragmentActivity {
 				}});
 			
 	
-		Map<String, List<Parameter>> params = app.getTeams().get(getIntent().getExtras()
-				.getInt("com.steelhawks.hawkscout.TEAM_INDEX_PARAMETERS")).getScoutingParams().getParameterLists();
+		Map<String, List<Parameter>> params = currentComp.getScoutingParams();
 		Set<String> set = params.keySet();
 		List<String> keys = new ArrayList<String>(set);
 		Collections.reverse(keys);
@@ -540,26 +520,40 @@ public class PitScouting extends FragmentActivity {
 		}
 	}
 
-	public String getExistingValue(String title) {
-		if (editMap == null) return null;
-		Set<String> set = editMap.keySet();
-		List<String> keys = new ArrayList<String>();
-		keys.addAll(set);
-		
-		for (int x = 0; x<editMap.size(); x++) {
-			if (title.equals(keys.get(x))) return editMap.get(keys.get(x));
+	//Checks intent for existing values
+	//TODO adjust intent for String[] 
+//	public String getExistingValue(String title) {
+//		if (true) return null;
+//		if (editMap == null) return null;
+//		Set<String> set = editMap.keySet();
+//		List<String> keys = new ArrayList<String>();
+//		keys.addAll(set);
+//		
+//		for (int x = 0; x<editMap.size(); x++) {
+//			if (title.equals(keys.get(x))) return editMap.get(keys.get(x));
+//		}
+//		return null;
+//	}
+
+	private String getParameterValue(String key) {
+		System.out.println("Data is null? " + String.valueOf(data==null));
+		if (data == null) return null;
+		for (int x=0; x<data.length; x++) {
+			String[] keyAndValue = data[x].split(Competition.PIT_SCOUTING_KEY_SEPARATOR);
+			if (keyAndValue[0].equals(key)) {
+				System.out.println("Found value!");
+				return keyAndValue.length>1 ? keyAndValue[1] : null;
+			}
 		}
+		System.out.println("Didn't find value!");
 		return null;
 	}
 	
-	public String getSpreadsheetString(String s) {
-		return s.replaceAll("[^A-Za-z0-9.]", "")
-				.toLowerCase(Locale.ENGLISH);
-	}
-		
+	//Creates each Scouting view
 	public View getView(String key, Parameter p) {
+		System.out.println("getting view");
 		View v = null;
-		String existingValue = getExistingValue(key + "." + p.getTitle());
+		String existingValue = getParameterValue(key + "." + p.getTitle());
 		if (p.getType().contains(Parameter.FIXED_INPUT)) {
 			List<String> opts = new ArrayList<String>(Arrays.asList(p.getOpts().split("!:!")));
 			if (p.getType().contains(Parameter.OTHER)) opts.add("Other");
@@ -665,6 +659,7 @@ public class PitScouting extends FragmentActivity {
 		return v;
 	}
 	
+	//Checks to see if required fields have been completed
 	boolean isRequiredComplete() {
 		if (teamNumber.getText().toString().equals("") ||
 			teamName.getText().toString().equals("") ||
@@ -672,7 +667,7 @@ public class PitScouting extends FragmentActivity {
 			scoutName.getText().toString().equals("")) return false;
 		else return true;
 	}
-	
+	//Checks to see if everything is filled out
 	boolean isComplete() {
 		int id=0;
 		while(findViewById(id) != null) {
@@ -694,14 +689,9 @@ public class PitScouting extends FragmentActivity {
 	}
 	
 	public int PX (int dp) {
-		final float scale = this.getResources().getDisplayMetrics().density;
-		int px = (int) (dp*scale+0.5f);
-		return px;
+		return Utilities.PX(this, dp);
 	}
-	
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
+
 	private void setupActionBar() {
 	    final LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	    final View customActionBarView = inflater.inflate(
@@ -711,20 +701,6 @@ public class PitScouting extends FragmentActivity {
 	                @Override
 	                public void onClick(View v) {
 	                    // "Done"
-	                	if (!Utilities.isNetworkConnected(PitScouting.this)) {
-	                		new SimpleTextFragment().newInstance("Internet Unavailable!",
-	                				"You need to connect to the Internet to submit this form.",
-	                				"OK",
-	                				new DialogInterface.OnClickListener() {
-	            						
-	            						@Override
-	            						public void onClick(DialogInterface dialog, int which) {
-	            							dialog.cancel();
-	            						}
-	            						
-	            					}, false).show(getSupportFragmentManager(), "NO_INTERNET");
-							return;
-	                	}
 	                	if (!isRequiredComplete()) {
 	                		new SimpleTextFragment().newInstance("Required Information Missing!",
 	                				"You need to complete the \"Team Info\" section before submitting this form.",
@@ -748,13 +724,13 @@ public class PitScouting extends FragmentActivity {
 	            						@Override
 	            						public void onClick(DialogInterface dialog, int which) {
 	            							dialog.cancel();
-	            							update();
+	            							submit();
 	            						}
 	            						
 	            					}, true).show(getSupportFragmentManager(), "FORM_IMCOMPLETE");
 	                		return;
 	                	}
-	                	update();
+	                	submit();
 	                }
 	            });
 	    customActionBarView.findViewById(R.id.actionbar_cancel).setOnClickListener(
@@ -762,6 +738,7 @@ public class PitScouting extends FragmentActivity {
 	                @Override
 	                public void onClick(View v) {
 	                    // "Cancel"
+	                	for (int x=0; x<mediaFiles.size(); x++) mediaFiles.get(x).delete();
 	                	setResult(Activity.RESULT_CANCELED);
 	                    finish();
 	                }
@@ -777,84 +754,52 @@ public class PitScouting extends FragmentActivity {
 	                    ViewGroup.LayoutParams.MATCH_PARENT));
 	}
 
-	private void update() {
-		final ProgressDialog pD = new ProgressDialog(this);
-		pD.setMessage("Uploading Data...");
-		pD.show();
-		pD.setCancelable(false);
-		Runnable update = new Runnable() {
-			public void run() {
-				ListEntry row = null;
-				boolean update = false;
-				try {
-					URL existingRowUrl = new URI(currentComp.getPitScouting().getListFeedUrl().toString() + 
-							"?sq=teamnumber=" + teamNumber.getText().toString()).toURL();
-					ListFeed listFeed = app.getService().getFeed(existingRowUrl, ListFeed.class);
-					List<ListEntry> entries = listFeed.getEntries();
-					if (entries.size()>0) {
-						System.err.println("Found existing row!");
-						row = entries.get(0);
-						update = true;
-					}
-					else row = new ListEntry();
-
-    				row.getCustomElements().setValueLocal("teamnumber", teamNumber.getText().toString());
-    				row.getCustomElements().setValueLocal("teamname", teamName.getText().toString());
-    				row.getCustomElements().setValueLocal("pitnumber", pitNumber.getText().toString());
-    				row.getCustomElements().setValueLocal("scoutedby", scoutName.getText().toString());
-    				int x=0;
-    				while (findViewById(x) != null) {
-    					View v = findViewById(x);
-    					String columnHeader = "";
-						columnHeader = getSpreadsheetString((String) v.getTag());
-//						System.out.println(columnHeader);
-    					String value = "";
-    					if (v instanceof EditText) {
-    						value = ((EditText) v).getText().toString().trim();
-    					} else if (v instanceof NoDefaultSpinner) {
-    						String prompt =(String) ((NoDefaultSpinner) v).getPrompt();
-    						String text = String.valueOf(((NoDefaultSpinner) v).getDisplayedText());
-    						value = prompt.equals(text) ? "" : text;
-    					} else if (v instanceof CheckBox) {
-    						value = ((CheckBox) v).isChecked() ? "Yes" : "No";
-    					} else {
-        					x++;
-    						continue;
-    					}
-    					row.getCustomElements().setValueLocal(columnHeader, value);
-    					x++;
-    				}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				final String n = teamNumber.getEditableText().toString();
-				if (teamNumber == null) System.out.println("THE VIEW IS NULL");
-				else if (teamNumber.getEditableText() == null) System.out.println("THE EDITABLE TEXT IS NULL");
-				else if (teamNumber.getEditableText().toString() == null) System.out.println("THE TEXT IS NUll");
-				else System.out.println("TEXT:" + n);
-				System.out.println(update);
-				System.out.println(editMap == null);
-				if (update && editMap == null) {
-					final ListEntry updateRow = row;
-					runOnUiThread(new Runnable(){
-						public void run() {
-							System.out.println(n);
-							new PitScoutingReplaceFragment().newInstance(PitScouting.this,
-									n, updateRow, currentComp, pD, mediaFiles)
-								.show(getSupportFragmentManager(), "UPDATE_TEAM");
-						}
-					});
-//					app.addToDeleteUri(mediaUris);
-					return;
-				}
-				else if (editMap != null) new UpdatePitData(PitScouting.this, app, currentComp, row, n, pD,
-						mediaFiles).execute();
-				else new UpdatePitData(PitScouting.this, app, currentComp, row, pD,
-						mediaFiles).execute();
-				app.addToDeleteUri(mediaUris);
+	private void submit() {
+		String data = "";
+		
+		data += teamNumber.getText().toString();
+		data += Competition.PIT_SCOUTING_SEPARATOR;
+		data += teamName.getText().toString();
+		data += Competition.PIT_SCOUTING_SEPARATOR;
+		data += pitNumber.getText().toString();
+		data += Competition.PIT_SCOUTING_SEPARATOR;
+		data += scoutName.getText().toString();
+		data += Competition.PIT_SCOUTING_SEPARATOR;
+		
+		int x=0;
+		while(findViewById(x) != null) {
+			View v = findViewById(x);
+			String value = "";
+			if (v instanceof EditText) {
+				value = ((EditText) v).getText().toString().trim();
+			} else if (v instanceof NoDefaultSpinner) {
+				String prompt =(String) ((NoDefaultSpinner) v).getPrompt();
+				String text = String.valueOf(((NoDefaultSpinner) v).getDisplayedText());
+				value = prompt.equals(text) ? "" : text;
+			} else if (v instanceof CheckBox) {
+				value = ((CheckBox) v).isChecked() ? "Yes" : "No";
+			} else {
+				x++;
+				continue;
 			}
-		};
-		new Thread(update).start();
+			data += Competition.PIT_SCOUTING_SEPARATOR;
+			data += (String) v.getTag();
+			data += Competition.PIT_SCOUTING_KEY_SEPARATOR;
+			data += value;
+			x++;
+		}
+		currentComp.addToPitScouting(data);
+		
+	}
+
+	public static void start(Activity activity, String teamNumber) {
+		start(activity, teamNumber, null);
+	}
+	
+	public static void start(Activity activity, String teamNumber, String[] data) {
+		Intent i = new Intent(activity, com.steelhawks.hawkscout.PitScoutingMain.class);
+		i.putExtra(ACTIVITY_INTENT_1, teamNumber);
+		i.putExtra(ACTIVITY_INTENT_2, data);
+		activity.startActivity(i);
 	}
 }

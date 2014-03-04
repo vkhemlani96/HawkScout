@@ -458,6 +458,7 @@
     <string name="scouted_by">Scouted By</string>
     <string name="autonomous">Autonomous</string>
     <string name="tele_operated">Tele-Operated</string>
+    <string name="teleoperated">Teleoperated</string>
     <string name="end_game_climb">End Game / Climb</string>
     <string name="missed_shot">Missed Shot</string>
     <string name="missed_shots">Missed Shots</string>
@@ -492,36 +493,48 @@
     <string name="pre_match_notes">Pre-Match Notes</string>
     <string name="penalties">Penalties</string>
     <string name="notes">Notes</string>
-    <string name="total_points_scored">Total Points Scored</string>
     <string name="total_penalties_accumulated">Total Penalties Accumulated</string>
     <string name="net_point_contribution">Net Points Contributed</string>
     <string name="valid_climb">Valid Climb?</string>
-	<string-array name="alliances">
+
+    <string-array name="alliances">
         <item>Blue</item>
         <item>Red</item>
     </string-array>
-	<string-array name="climb_levels">
+    <string-array name="climb_levels">
         <item>Level 3</item>
         <item>Level 2</item>
         <item>Level 1</item>
         <item>Level 0</item>
     </string-array>
-	<string name="high_goal">High Goal</string>
-	<string name="foul">Foul</string>
-	<string name="technical_foul">Technical Foul</string>
-	<string name="forward_movement" >Forward Movement?</string>
-	<string name="picked_up_ball">Picked Up Ball</string>
-	<string name="low_goal">Low Goal</string>
-	<string name="moved_forward">Moved Forward!</string>
-	<string name="picked_up_stray_ball">Picked Up Stray Ball</string>
-	<string name="received_pass_from_robot">Received Pass From Robot</string>
-	<string name="received_pass_from_human_player">Received Ball from Human Player</string>
-	<string name="made_pass_to_robot">Made Pass to Robot</string>
-	<string name="lost_ball">Lost Ball</string>
-	<string name="made_pass_to_human_player">Made Pass To Human Player</string>
-	<string name="threw_over_truss">Threw Over Truss</string>
-	<string name="deflection">Deflection</string><string name="blocked_shot">Blocked Shot</string>
-	<string name="caught_ball">Caught Ball</string>
-	
-	<string name="has_possession">Has Possession?</string>
+
+    <string name="high_goal">High Goal</string>
+    <string name="foul">Foul</string>
+    <string name="technical_foul">Technical Foul</string>
+    <string name="forward_movement">Forward Movement?</string>
+    <string name="picked_up_ball">Picked Up Ball</string>
+    <string name="low_goal">Low Goal</string>
+    <string name="moved_forward">Moved Forward!</string>
+    <string name="picked_up_stray_ball">Picked Up Stray Ball</string>
+    <string name="received_pass_from_robot">Received Pass From Robot</string>
+    <string name="received_pass_from_human_player">Received Ball from Human Player</string>
+    <string name="made_pass_to_robot">Made Pass to Robot</string>
+    <string name="lost_ball">Lost Ball</string>
+    <string name="made_pass_to_human_player">Made Pass To Human Player</string>
+    <string name="threw_over_truss">Threw Over Truss</string>
+    <string name="deflection">Deflection</string>
+    <string name="blocked_shot">Blocked Shot</string>
+    <string name="caught_ball">Caught Ball</string>
+    <string name="has_possession">Has Possession?</string>
+    <string name="teleop_with_possession">Teleoperated (With Possession)</string>
+    <string name="teleop_without_possession">Teleoperated (Without Possession)</string>
+    <string name="calculations">Calculations</string>
+    <string name="individual_points_scored">Individual Points Scored</string>
+    <string name="had_possession_at_start">Had Possession at Start?</string>
+    <string name="showed_up">Showed Up?</string>
+    <string name="title_activity_competition_test">CompetitionTest</string>
+    <string name="title_activity_competition_main">CompetitionMain</string>
+    <string name="title_activity_pit_scouting_main">PitScoutingMain</string>
+    <string name="title_activity_team_activity_main">TeamActivityMain</string>
+
 </resources>

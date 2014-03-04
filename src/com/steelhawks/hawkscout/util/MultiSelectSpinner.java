@@ -39,7 +39,7 @@ import android.widget.SpinnerAdapter;
 
 import com.steelhawks.hawkscout.PitScouting;
 import com.steelhawks.hawkscout.R;
-import com.steelhawks.hawkscout.dialogs.EditTextFragment;
+import com.steelhawks.hawkscout.dialogs.pitscouting.EditTextFragment;
 
 /**
  * A Spinner view that does not dismiss the dialog displayed when the control is "dropped down"
@@ -107,7 +107,7 @@ public class MultiSelectSpinner extends NoDefaultSpinner implements DialogInterf
             	if (_selection[i]) isTrue = true;
             }
             if (!isTrue) _proxyAdapter = new ArrayAdapter<String>(c, R.layout.spinner_hint_textview);
-            else  _proxyAdapter = new ArrayAdapter<String>(c, R.layout.simple_spinner_dropdown_item);
+            else  _proxyAdapter = new ArrayAdapter<String>(c, R.layout.simple_spinner_dropdown_item_gray);
             _proxyAdapter.clear();
             _proxyAdapter.add(buildSelectedItemString());
             super.setAdapter(_proxyAdapter);

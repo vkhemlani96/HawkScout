@@ -1,4 +1,4 @@
-package com.steelhawks.hawkscout.dialogs;
+package com.steelhawks.hawkscout.dialogs.competitionmenu;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,81 @@
+PitScouting: update() - put data into Pit Scouting Spreadsheet
+//	private void update() {
+//		final ProgressDialog pD = new ProgressDialog(this);
+//		pD.setMessage("Uploading Data...");
+//		pD.show();
+//		pD.setCancelable(false);
+//		Runnable update = new Runnable() {
+//			public void run() {
+//				ListEntry row = null;
+//				boolean update = false;
+//				try {
+//					URL existingRowUrl = new URI(currentComp.getPitScouting().getListFeedUrl().toString() + 
+//							"?sq=teamnumber=" + teamNumber.getText().toString()).toURL();
+//					ListFeed listFeed = app.getService().getFeed(existingRowUrl, ListFeed.class);
+//					List<ListEntry> entries = listFeed.getEntries();
+//					if (entries.size()>0) {
+//						System.err.println("Found existing row!");
+//						row = entries.get(0);
+//						update = true;
+//					}
+//					else row = new ListEntry();
+//
+//    				row.getCustomElements().setValueLocal("teamnumber", teamNumber.getText().toString());
+//    				row.getCustomElements().setValueLocal("teamname", teamName.getText().toString());
+//    				row.getCustomElements().setValueLocal("pitnumber", pitNumber.getText().toString());
+//    				row.getCustomElements().setValueLocal("scoutedby", scoutName.getText().toString());
+//    				int x=0;
+//    				while (findViewById(x) != null) {
+//    					View v = findViewById(x);
+//    					String columnHeader = "";
+//						columnHeader = getSpreadsheetString((String) v.getTag());
+////						System.out.println(columnHeader);
+//    					String value = "";
+//    					if (v instanceof EditText) {
+//    						value = ((EditText) v).getText().toString().trim();
+//    					} else if (v instanceof NoDefaultSpinner) {
+//    						String prompt =(String) ((NoDefaultSpinner) v).getPrompt();
+//    						String text = String.valueOf(((NoDefaultSpinner) v).getDisplayedText());
+//    						value = prompt.equals(text) ? "" : text;
+//    					} else if (v instanceof CheckBox) {
+//    						value = ((CheckBox) v).isChecked() ? "Yes" : "No";
+//    					} else {
+//        					x++;
+//    						continue;
+//    					}
+//    					row.getCustomElements().setValueLocal(columnHeader, value);
+//    					x++;
+//    				}
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//
+//				final String n = teamNumber.getEditableText().toString();
+//				if (teamNumber == null) System.out.println("THE VIEW IS NULL");
+//				else if (teamNumber.getEditableText() == null) System.out.println("THE EDITABLE TEXT IS NULL");
+//				else if (teamNumber.getEditableText().toString() == null) System.out.println("THE TEXT IS NUll");
+//				else System.out.println("TEXT:" + n);
+//				System.out.println(update);
+//				System.out.println(editMap == null);
+//				if (update && editMap == null) {
+//					final ListEntry updateRow = row;
+//					runOnUiThread(new Runnable(){
+//						public void run() {
+//							System.out.println(n);
+////							new PitScoutingReplaceFragment().newInstance(PitScoutingNew.this,
+////									n, updateRow, currentComp, pD, mediaFiles)
+////								.show(getSupportFragmentManager(), "UPDATE_TEAM");
+//						}
+//					});
+////					app.addToDeleteUri(mediaUris);
+//					return;
+//				}
+//				else if (editMap != null) new UpdatePitData(PitScoutingNew.this, app, currentComp, row, n, pD,
+//						mediaFiles).execute();
+//				else new UpdatePitData(PitScoutingNew.this, app, currentComp, row, pD,
+//						mediaFiles).execute();
+//				app.addToDeleteUri(mediaUris);
+//			}
+//		};
+//		new Thread(update).start();
+//	}

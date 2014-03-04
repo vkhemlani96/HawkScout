@@ -28,12 +28,12 @@
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
-    	    android:layout_weight="8"
+    	    android:layout_weight="3.4"
         	android:padding="4dp"
     	    android:gravity="center"
     	    android:textSize="20dp"
     	    android:textStyle="bold"
-    	    android:text="QP"
+    	    android:text="QS"
     	    android:id="@+id/qp_header"
     	    android:background="@drawable/crimson_background"
     	    android:drawableBottom="@drawable/rankings_sort_ascending"
@@ -46,12 +46,29 @@
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
-    	    android:layout_weight="3"
+    	    android:layout_weight="3.4"
         	android:padding="4dp"
     	    android:gravity="center"
     	    android:textSize="20dp"
     	    android:textStyle="bold"
-    	    android:text="AP"
+    	    android:text="ASSIST"
+    	    android:id="@+id/assistp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:clickable="true"
+    	    android:onClick="sortRankings"  />
+<!--     	<View  -->
+<!--     	    android:layout_width="2px" -->
+<!--     	    android:layout_height="match_parent" -->
+<!--     	    android:background="@android:color/darker_gray"/> -->
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="AUTON"
     	    android:id="@+id/ap_header"
     	    android:background="@drawable/crimson_background"
     	    android:clickable="true"
@@ -63,29 +80,25 @@
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
-    	    android:layout_weight="3"
+    	    android:layout_weight="3.4"
         	android:padding="4dp"
     	    android:gravity="center"
     	    android:textSize="20dp"
     	    android:textStyle="bold"
-    	    android:text="CP"
-    	    android:id="@+id/cp_header"
+    	    android:text="TRUSS"
+    	    android:id="@+id/trussp_header"
     	    android:background="@drawable/crimson_background"
     	    android:clickable="true"
     	    android:onClick="sortRankings"  />
-<!--     	<View  -->
-<!--     	    android:layout_width="2px" -->
-<!--     	    android:layout_height="match_parent" -->
-<!--     	    android:background="@android:color/darker_gray"/> -->
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
-    	    android:layout_weight="3"
+    	    android:layout_weight="3.4"
         	android:padding="4dp"
     	    android:gravity="center"
     	    android:textSize="20dp"
     	    android:textStyle="bold"
-    	    android:text="TP"
+    	    android:text="TELE"
     	    android:id="@+id/tp_header"
     	    android:background="@drawable/crimson_background"
     	    android:clickable="true"

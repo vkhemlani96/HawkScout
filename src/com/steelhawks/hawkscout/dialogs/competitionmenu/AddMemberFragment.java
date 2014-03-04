@@ -1,4 +1,4 @@
-package com.steelhawks.hawkscout.dialogs;
+package com.steelhawks.hawkscout.dialogs.competitionmenu;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

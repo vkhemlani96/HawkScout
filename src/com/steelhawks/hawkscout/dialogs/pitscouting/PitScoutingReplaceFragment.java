@@ -1,4 +1,4 @@
-package com.steelhawks.hawkscout.dialogs;
+package com.steelhawks.hawkscout.dialogs.pitscouting;
 
 import java.io.IOException;
 import java.util.Arrays;

@@ -5,987 +5,883 @@
     android:background="@color/lighter_gray"
     android:focusableInTouchMode="true"
     tools:context=".MatchScouting" >
-    	<requestFocus />
 
-    <!--
-         The following child has to use android:fitsSystemWindows="true".
-    -->
+    <requestFocus />
+
+<!--          The following child has to use android:fitsSystemWindows="true". -->
+
     <ViewFlipper
+        android:id="@+id/match_scouting_view_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/match_scouting_view_flipper">
-          	<ScrollView
-          	    android:layout_height="match_parent"
-          	    android:layout_width="match_parent"
-        		android:fitsSystemWindows="true">
-		    <LinearLayout 
-		        android:layout_height="wrap_content"
-		        android:layout_width="match_parent"
-		        android:paddingLeft="@dimen/activity_horizontal_margin"
-		        android:paddingRight="@dimen/activity_horizontal_margin"
-		        android:paddingTop="@dimen/activity_horizontal_margin"
-		        android:paddingBottom="@dimen/activity_horizontal_margin"
-		        android:orientation="vertical"
-		        android:gravity="center">
-	            <TextView
-   	                style="@android:style/TextAppearance.Large"
-   	                android:layout_width="match_parent"
-   	                android:layout_height="48dp"
-   	                android:gravity="center"
-   	                android:text="@string/pre_match_info"
-   	                android:textStyle="bold" />
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:orientation="horizontal">
-			        <TextView 
-			            style="@android:style/TextAppearance.Medium"
-			            android:layout_width="150dp"
-			            android:layout_height="wrap_content"
-			            android:gravity="center_vertical"
-			            android:paddingRight="8dp"
-			            android:text="@string/match_number"
-			            android:textStyle="bold"/>
-			        <EditText
-			            android:layout_width="0dp"
-			            android:layout_height="48dp"
-			            android:layout_weight="1"
-			            android:id="@+id/match_number"
-			            android:gravity="center"
-			            android:inputType="number"
-			            android:maxLength="3"/>
-			    </LinearLayout>
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:orientation="horizontal">
-			        <TextView 
-			            style="@android:style/TextAppearance.Medium"
-			            android:layout_width="150dp"
-			            android:layout_height="48dp"
-			            android:gravity="center_vertical"
-			            android:paddingRight="8dp"
-			            android:text="@string/team_number"
-			            android:textStyle="bold"/>
-			        <EditText
-			            android:id="@+id/team_number"
-			            android:gravity="center"
-			            android:layout_width="0dp"
-			            android:layout_weight="1"
-			            android:layout_height="48dp"
-			            android:inputType="number"
-			            android:maxLength="4"/>
-			    </LinearLayout>
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:orientation="horizontal">
-			        <TextView 
-			            style="@android:style/TextAppearance.Medium"
-			            android:layout_width="150dp"
-			            android:layout_height="48dp"
-			            android:gravity="center_vertical"
-			            android:paddingRight="8dp"
-			            android:text="@string/alliance"
-			            android:textStyle="bold"/>
-			        <com.steelhawks.hawkscout.util.NoDefaultSpinner
-			            android:id="@+id/alliance"
-			            android:gravity="center"
-			            android:layout_width="0dp"
-			            android:layout_weight="1"
-			            android:layout_height="48dp"/>
-			    </LinearLayout>
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:orientation="horizontal">
-			        <TextView 
-			            style="@android:style/TextAppearance.Medium"
-			            android:layout_width="150dp"
-			            android:layout_height="48dp"
-			            android:gravity="center_vertical"
-			            android:paddingRight="8dp"
-			            android:text="@string/scouted_by"
-			            android:textStyle="bold"/>
-			        <EditText
-			            android:gravity="center"
-			            android:id="@+id/scouted_by"
-			            android:inputType="textCapWords"
-			            android:layout_width="0dp"
-			            android:layout_weight="1"
-			            android:layout_height="48dp"/>
-			    </LinearLayout>
-			    <CheckedTextView 
-			        style="@android:style/TextAppearance.Medium"
-			        android:id="@+id/beginning_possession"
-			        android:layout_width="match_parent"
-			        android:layout_height="48dp"
-			        android:checkMark="@drawable/btn_check_holo_light"
-		            android:textStyle="bold"
-		            android:focusable="true"
-		            android:clickable="true"
-		            android:gravity="center_vertical"
-		            android:onClick="onClick"
-			        android:text="@string/has_possession"/>
-		        <EditText
-		            android:id="@+id/notes"
-		            android:inputType="textCapSentences"
-		            android:hint="@string/pre_match_notes"
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:minHeight="48dp"/>
-		        <FrameLayout
-		            android:layout_height="250dp"
-		            android:layout_width="wrap_content"
-		            android:id="@+id/pyramid_grid">
-			        <ImageView 
-			            android:layout_width="400dp"
-			            android:layout_height="wrap_content"
-			            android:scaleType="centerCrop"
-			            android:id="@+id/pyramid"
-			            android:src="@drawable/ic_field_drawing"
-			            android:contentDescription="black pyramid outline"/>
-		            <View 
-		                android:layout_height="20dp"
-		                android:layout_width="20dp"
-		                android:background="#50000000"
-		                android:id="@+id/robot"
-		                android:visibility="gone"/>
-		        </FrameLayout>
-			    <Button
-			        android:layout_height="40dp"
-			        android:layout_width="match_parent"
-			        android:paddingTop="4dp"
-			        android:paddingBottom="4dp"
-			        android:id="@+id/start_match"
-			        android:onClick="onClick"
-			        android:text="@string/start_match"/>
-			    <TextView
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:text="@string/match_scouting_note"
-			        android:gravity="center"
-			        android:textColor="@android:color/secondary_text_light"
-			        style="@android:style/TextAppearance.Small" />
-		    </LinearLayout>
-    	</ScrollView>
-    	<LinearLayout
-    	    android:layout_width="match_parent"
-    	    android:layout_height="match_parent"
-    	    android:orientation="vertical"
-	        android:paddingLeft="@dimen/activity_horizontal_margin"
-	        android:paddingRight="@dimen/activity_horizontal_margin"
-	        android:paddingTop="@dimen/activity_horizontal_margin"
-	        android:paddingBottom="@dimen/activity_horizontal_margin">
-		    <RelativeLayout
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content">
-			    <LinearLayout 
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:orientation="horizontal">
-		    	    <TextView 
-		    	        android:layout_width="0dp"
-		    	        android:layout_weight="1"
-		    	        android:layout_height="wrap_content"
-		    	        android:gravity="center"
-		    	        android:text="9"
-		    	        android:includeFontPadding="false"
-		    	        android:id="@+id/match_scouting_clock"
-		    	        android:textSize="200sp"/>
-		    	    <LinearLayout
-		    	        android:layout_width="0dp"
-		    	        android:layout_height="match_parent"
-		    	        android:orientation="vertical"
-		    	        android:layout_weight="1"
-		    	        android:weightSum="1"
-		    	        android:gravity="center">
-			    	    <TextView 
-			    	        android:layout_width="match_parent"
-			    	        android:layout_height="0dp"
-			    	        android:layout_weight=".2"
-			    	        android:gravity="center"
-			    	        android:id="@+id/auton_text"
-			    	        android:text="@string/autonomous"
-			    	        android:textAllCaps="true"
-			    	        android:textStyle="bold"
-			    	        android:includeFontPadding="false"
-			    	        style="@android:style/TextAppearance.Large"/>
-			    	    <TextView 
-			    	        android:layout_width="match_parent"
-			    	        android:layout_height="0dp"
-			    	        android:layout_weight=".2"
-			    	        android:id="@+id/tele_op_text"
-			    	        android:gravity="center"
-			    	        android:text="@string/tele_operated"
-			    	        android:textAllCaps="true"
-			    	        android:textStyle="bold"
-			    	        android:includeFontPadding="false"
-			    	        android:textColor="@android:color/secondary_text_dark"
-			    	        style="@android:style/TextAppearance.Large"/>
-		    	    </LinearLayout>
-			    </LinearLayout>
-			    <ImageButton 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_alignParentRight="true"
-			        android:layout_alignParentTop="true"
-			        android:src="@drawable/ic_content_undo"
-			        android:background="@drawable/crimson_background"
-			        android:id="@+id/undo"
-			        android:onClick="onClick"/>
-		   	</RelativeLayout>
-		   	<ViewFlipper
-		   	    android:id="@+id/controls_switch"
-		   	    android:layout_width="match_parent"
-		        android:layout_height="0dp"
-		        android:layout_weight="1"
-		        android:baselineAligned="false">
- 			    		 															<!-- AUTONOMOUS START -->
- 			    <LinearLayout
-			        android:layout_width="match_parent"
-			        android:layout_height="match_parent"
-			        android:baselineAligned="false"
-			        android:orientation="vertical">
-		    	    <LinearLayout
-		    	        android:layout_width="match_parent"
-		    	        android:layout_weight="1"
-		    	        android:layout_height="match_parent"
-		    	        android:orientation="horizontal">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-		    	            android:id="@+id/auton_low_goal"
-		    	            android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/low_goal"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                android:text="0 / 0 (0 HOT)"
-		    	                style="@style/match_scouting_button_value"
-		    	                android:layout_alignParentBottom="true"/>
-		    	        </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-		    	            android:id="@+id/auton_high_goal"
-		    	            android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/high_goal"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0 / 0 (0 HOT)"
-		    	                android:layout_alignParentBottom="true"/>
-		    	        </RelativeLayout>
-		    	    </LinearLayout>
-		    	    <LinearLayout
-		    	        android:layout_width="match_parent"
-		    	        android:layout_weight="1"
-		    	        android:layout_height="match_parent"
-		    	        android:baselineAligned="false"
-		    	        android:orientation="horizontal">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:background="@drawable/btn_black_holo_light"
-		    	            android:id="@+id/auton_ball_pickup">
-		    	            <TextView 
-		    	                android:text="@string/picked_up_ball"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-		    	        </RelativeLayout>
-			            <TextView 
-		    	            style="@style/match_scouting_button_name"
-		    	            android:layout_width="0dp"
-		    	            android:layout_height="match_parent"
-		    	            android:layout_weight="1"
-		    	            android:clickable="true"
-		    	            android:id="@+id/auton_forward_movement"
-		    	            android:text="@string/forward_movement"
-		    	            android:background="@drawable/btn_default_holo_light"
-		    	            android:gravity="center" />
-		    	    </LinearLayout>
-		   		</LinearLayout>														<!-- AUTONOMOUS END -->
-		   																			<!-- TELEOP POSSESION -->
-		   		<LinearLayout
-		   		    android:orientation="vertical"
-		   		    android:layout_height="match_parent"
-		   		    android:layout_width="match_parent"
-			        android:baselineAligned="false">
-		   		    <LinearLayout
-		   		        android:orientation="horizontal"
-		   		        android:layout_width="match_parent"
-		   		        android:layout_height="0dp"
-		   		        android:layout_weight="1">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/teleop_low_goal"
-			                android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/low_goal"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0 / 0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/teleop_high_goal"
-			                android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/high_goal"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0 / 0" 
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-		   		    </LinearLayout>
-		   		    <LinearLayout
-		   		        android:orientation="horizontal"
-		   		        android:layout_width="match_parent"
-		   		        android:layout_height="0dp"
-		   		        android:layout_weight="1">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/human_player_pass"
-			                android:background="@drawable/btn_black_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/made_pass_to_human_player"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/robot_pass"
-			                android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/made_pass_to_robot"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-		   		    </LinearLayout>
-		   		    <LinearLayout
-		   		        android:orientation="horizontal"
-		   		        android:layout_width="match_parent"
-		   		        android:layout_height="0dp"
-		   		        android:layout_weight="1">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/lost_ball"
-			                android:background="@drawable/btn_black_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/lost_ball"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/truss"
-			                android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/threw_over_truss"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-		   		    </LinearLayout>
-		   		</LinearLayout>														<!-- AUTONOMOUS END -->
-		   																			<!-- TELEOP POSSESION -->
-		   		<LinearLayout
-		   		    android:orientation="vertical"
-		   		    android:layout_height="match_parent"
-		   		    android:layout_width="match_parent"
-			        android:baselineAligned="false">
-		   		    <LinearLayout
-		   		        android:orientation="horizontal"
-		   		        android:layout_width="match_parent"
-		   		        android:layout_height="0dp"
-		   		        android:layout_weight="1">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/blocked_shot"
-			                android:background="@drawable/btn_black_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/blocked_shot"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/deflection"
-			                android:background="@drawable/btn_black_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/deflection"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-					</LinearLayout>
-		   		    <LinearLayout
-		   		        android:orientation="horizontal"
-		   		        android:layout_width="match_parent"
-		   		        android:layout_height="0dp"
-		   		        android:layout_weight="1">
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/pass_from_human_play"
-			                android:background="@drawable/btn_black_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/received_pass_from_human_player"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/pass_from_robot"
-			                android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/received_pass_from_robot"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			        </LinearLayout>
-		   		    <LinearLayout
-		   		        android:orientation="horizontal"
-		   		        android:layout_width="match_parent"
-		   		        android:layout_height="0dp"
-		   		        android:layout_weight="1">
-			        	<RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/stray_ball"
-			                android:background="@drawable/btn_black_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/picked_up_stray_ball"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-			            <RelativeLayout 
-			                style="@style/match_scouting_button"
-			                android:id="@+id/catches"
-			                android:background="@drawable/btn_default_holo_light">
-		    	            <TextView 
-		    	                android:text="@string/caught_ball"
-		    	                style="@style/match_scouting_button_name"/>
-		    	            <TextView 
-		    	                style="@style/match_scouting_button_value"
-		    	                android:text="0"
-		    	                android:layout_alignParentBottom="true"/>
-			            </RelativeLayout>
-		   		    </LinearLayout>
-		   		</LinearLayout>
-			</ViewFlipper>
-			<LinearLayout
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal">
-			    <LinearLayout
-			        style="@style/match_scouting_foul_button"
-			        android:id="@+id/foul_button">
-    	            <TextView 
-    	                style="@style/match_scouting_button_name"
-    	                android:layout_gravity="center_vertical"
-    	                android:paddingLeft="10dp"
-    	                android:text="@string/foul"/>
-    	            <TextView 
-    	                style="@style/match_scouting_foul_value"
-    	                android:text="0"/>
-    	        </LinearLayout>
-			    <LinearLayout
-			        style="@style/match_scouting_foul_button"
-			        android:id="@+id/technical_foul_button">
-    	            <TextView 
-    	                style="@style/match_scouting_button_name"
-    	                android:layout_gravity="center_vertical"
-    	                android:paddingLeft="10dp"
-    	                android:text="@string/technical_foul"/>
-    	            <TextView 
-    	                style="@style/match_scouting_foul_value"
-    	                android:text="0"/>
-    	        </LinearLayout>
-			 </LinearLayout>
-	    </LinearLayout>
-	    <ScrollView
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-        	android:fitsSystemWindows="true">
-		    <LinearLayout
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:orientation="vertical"
-		        android:paddingLeft="@dimen/activity_horizontal_margin"
-		        android:paddingRight="@dimen/activity_horizontal_margin"
-		        android:paddingTop="@dimen/activity_horizontal_margin"
-		        android:paddingBottom="@dimen/activity_horizontal_margin"
-		        android:gravity="center_horizontal"
-        		android:fitsSystemWindows="true">
-		        <TextView
-		            android:textStyle="bold"
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp"
-		            android:gravity="center"
-		            android:text="@string/post_match_review"
-		            style="@android:style/TextAppearance.Large" />
-		        <TextView
-		            android:text="@string/match_info"
-		            style="@style/section_title" />
-		        <View
-		            style="@style/red_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/match_number"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/match_number_review"
-		                style="@style/match_scouting_result_edittable"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/team_number"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/team_number_review"
-		                style="@style/match_scouting_result_edittable"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/alliance"
-		                style="@style/match_scouting_review_title" />
-		            <Spinner 
-		                style="@style/match_scouting_result_edittable"
-		                android:id="@+id/alliance_review"
-		                android:dropDownSelector="@drawable/crimson_white_background"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/scouted_by"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/scouted_by_review"
-		                style="@style/match_scouting_result_edittable"
-		                android:inputType="textCapWords"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/notes"
-		                android:paddingRight="16dp"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/notes_review"
-		                style="@style/match_scouting_result_edittable"
-		                android:gravity="left"
-		                android:paddingLeft="8dp"
-		                android:layout_width="0dp"
-		                android:layout_weight="1"/>
-		        </LinearLayout>
-		        <FrameLayout
-		            android:layout_height="400dp"
-		            android:layout_width="400dp"
-		            android:gravity="center">
-		            <View 
-		                android:layout_height="50dp"
-		                android:layout_width="50dp"
-		                android:background="#50000000"
-		                android:id="@+id/robot_review"/>
-			        <ImageView 
-			            android:layout_height="400dp"
-			            android:layout_width="wrap_content"
-			            android:id="@+id/pyramid_review"
-			            android:src="@drawable/ic_field_drawing"
-			            android:contentDescription="black pyramid outline"/>
-		        </FrameLayout>
-		        
-		        <TextView
-		            android:text="@string/autonomous"
-		            style="@style/section_title" />
-		        <View
-		            style="@style/red_seperator" />
-		        		        
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/top_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/autonomous_top_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/autonomous_top_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:id="@+id/autonomous_top_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/middle_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/autonomous_middle_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/autonomous_middle_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:id="@+id/autonomous_middle_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/bottom_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/autonomous_bottom_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/autonomous_bottom_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/autonomous_bottom_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/missed_shots"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/autonomous_missed_shots_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/autonomous_missed_shots_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/autonomous_missed_shots_decrease"/>
-		        </RelativeLayout>
-		        
-		        <TextView
-		            android:text="@string/tele_operated"
-		            style="@style/section_title" />
-		        <View
-		            style="@style/red_seperator" />
-		        		        
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/pyramid_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/teleop_pyramid_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/teleop_pyramid_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/teleop_pyramid_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/top_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/teleop_top_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/teleop_top_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/teleop_top_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/middle_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/teleop_middle_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/teleop_middle_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/teleop_middle_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/bottom_goal"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/teleop_bottom_goals_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/teleop_bottom_goals_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/teleop_bottom_goals_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/blocks"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/blocks_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/teleop_blocks_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/teleop_blocks_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/missed_shots"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/teleop_missed_shots_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/teleop_missed_shots_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:layout_centerVertical="true"
-		                android:id="@+id/teleop_missed_shots_decrease"/>
-		        </RelativeLayout>
-		        
-		        <TextView
-		            android:text="@string/end_game_climb"
-		            style="@style/section_title" />
-		        <View
-		            style="@style/red_seperator" />
-		        		        
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <CheckedTextView
-		                android:text="@string/valid_climb"
-		                android:id="@+id/valid_climb"
-		                android:layout_width="match_parent"
-		                android:layout_height="48dp"
-		                android:checkMark="@drawable/btn_check_holo_light"
-		                style="@style/match_scouting_review_title"
-		                android:clickable="true"
-		                android:checked="true"
-		                android:focusable="true"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/final_climb"
-		                style="@style/match_scouting_review_title" />
-		            <Spinner
-		                android:id="@+id/climb_level_review"
-		                style="@style/match_scouting_result_edittable"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/climb_time"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/climb_time_review"
-		                android:inputType="numberDecimal"
-		                style="@style/match_scouting_result_edittable"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:minHeight="48dp">
-		            <TextView
-		                android:text="@string/level_splits"
-		                style="@style/match_scouting_review_title" />
-		            <LinearLayout
-		                android:id="@+id/level_splits_review"
-		                android:layout_alignParentRight="true"
-		                android:paddingTop="16dp"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:orientation="vertical" />
-		        </RelativeLayout>
-		        
-		        <TextView
-		            android:text="@string/penalties"
-		            style="@style/section_title" />
-		        <View
-		            style="@style/red_seperator" />
-		        		        
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/three_point_penalties"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/three_point_penalties_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/three_point_penalties_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:id="@+id/three_point_penalties_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/twenty_point_penalties"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/twenty_point_penalties_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/twenty_point_penalties_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:id="@+id/twenty_point_penalties_decrease"/>
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/thirty_point_penalties"
-		                style="@style/match_scouting_review_title" />
-		            <EditText 
-		                android:id="@+id/thirty_point_penalties_review"
-		                style="@style/match_scouting_result_edittable_stat"/>
-		            <Button
-		                style="@style/match_scouting_increment"
-		                android:id="@+id/thirty_point_penalties_increase"/>
-		            <Button
-		                style="@style/match_scouting_decrement"
-		                android:id="@+id/thirty_point_penalties_decrease"/>
-		        </RelativeLayout>
-		        
-		        <TextView
-		            android:text="@string/penalties"
-		            style="@style/section_title" />
-		        <View
-		            style="@style/red_seperator" />
-		        		        
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/total_points_scored"
-		                style="@style/match_scouting_review_title" />
-		            <TextView 
-		                android:id="@+id/total_points"
-		                android:text="100"
-		                style="@style/match_scouting_result_unedittable" />
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/total_penalties_accumulated"
-		                style="@style/match_scouting_review_title" />
-		            <TextView 
-		                android:id="@+id/total_penalties"
-		                android:text="43"
-		                style="@style/match_scouting_result_unedittable" />
-		        </RelativeLayout>
-		        <View style="@style/thin_seperator" />
-		        <RelativeLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="48dp">
-		            <TextView
-		                android:text="@string/net_point_contribution"
-		                style="@style/match_scouting_review_title" />
-		            <TextView 
-		                android:id="@+id/net_points"
-		                android:text="57"
-		                style="@style/match_scouting_result_unedittable" />
-		        </RelativeLayout>
-		    </LinearLayout>
-	    </ScrollView>
+        android:layout_height="match_parent" >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin" >
+
+                <TextView
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="@string/pre_match_info"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Medium"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp"
+                        android:text="@string/match_number"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/match_number"
+                        android:layout_width="0dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Medium"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp"
+                        android:text="@string/team_number"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/team_number"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="4" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Medium"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp"
+                        android:text="@string/alliance"
+                        android:textStyle="bold" />
+
+                    <com.steelhawks.hawkscout.util.NoDefaultSpinner
+                        android:id="@+id/alliance"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Medium"
+                        android:layout_width="150dp"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical"
+                        android:paddingRight="8dp"
+                        android:text="@string/scouted_by"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/scouted_by"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:inputType="textCapWords" />
+                </LinearLayout>
+
+                <CheckedTextView
+                    android:id="@+id/beginning_possession"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checkMark="@drawable/btn_check_holo_light"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:text="@string/has_possession"
+                    android:textStyle="bold" />
+
+                <CheckedTextView
+                    android:id="@+id/showed_up"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checkMark="@drawable/btn_check_holo_light"
+                    android:clickable="true"
+                    android:checked="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:text="@string/showed_up"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pre_match_notes"
+                    android:inputType="textCapSentences"
+                    android:minHeight="48dp" />
+
+                <FrameLayout
+                    android:id="@+id/field_grid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp" >
+
+                    <ImageView
+                        android:id="@+id/field"
+                        android:layout_width="400dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="field drawing"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_field_drawing" />
+
+                    <View
+                        android:id="@+id/robot"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="#50000000"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/start_match"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:onClick="onClick"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:text="@string/start_match" />
+
+                <TextView
+                    style="@android:style/TextAppearance.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/match_scouting_note"
+                    android:textColor="@android:color/secondary_text_light" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/match_scouting_clock"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="9"
+                        android:textSize="200sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:weightSum="1" >
+
+                        <TextView
+                            android:id="@+id/auton_text"
+                            style="@android:style/TextAppearance.Large"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".2"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@string/autonomous"
+                            android:textAllCaps="true"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tele_op_text"
+                            style="@android:style/TextAppearance.Large"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".2"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@string/tele_operated"
+                            android:textAllCaps="true"
+                            android:textColor="@android:color/secondary_text_dark"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/undo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="8dp"
+                    android:background="@drawable/crimson_background"
+                    android:onClick="onClick"
+                    android:src="@drawable/ic_content_undo" />
+            </RelativeLayout>
+
+            <ViewFlipper
+                android:id="@+id/controls_switch"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:baselineAligned="false" >
+
+                <!-- AUTONOMOUS START -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/auton_low_goal"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/low_goal" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0 / 0 (0 HOT)" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/auton_high_goal"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/high_goal" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0 / 0 (0 HOT)" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/auton_ball_pickup"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/picked_up_ball" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/auton_forward_movement"
+                            style="@style/match_scouting_button_name"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_default_holo_light"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/forward_movement" />
+                    </LinearLayout>
+                </LinearLayout>
+ <!-- AUTONOMOUS END -->
+                <!-- TELEOP POSSESION -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/teleop_low_goal"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/low_goal" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0 / 0" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/teleop_high_goal"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/high_goal" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0 / 0" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/human_player_pass"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/made_pass_to_human_player" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/robot_pass"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/made_pass_to_robot" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/lost_ball"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/lost_ball" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/truss"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/threw_over_truss" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+				<!-- AUTONOMOUS END -->
+                <!-- TELEOP POSSESION -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/blocked_shot"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/blocked_shot" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/deflection"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/deflection" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/pass_from_human_play"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/received_pass_from_human_player" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/pass_from_robot"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/received_pass_from_robot" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <RelativeLayout
+                            android:id="@+id/stray_ball"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_black_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/picked_up_stray_ball" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/catches"
+                            style="@style/match_scouting_button"
+                            android:background="@drawable/btn_default_holo_light" >
+
+                            <TextView
+                                style="@style/match_scouting_button_name"
+                                android:text="@string/caught_ball" />
+
+                            <TextView
+                                style="@style/match_scouting_button_value"
+                                android:layout_alignParentBottom="true"
+                                android:text="0" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ViewFlipper>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/foul_button"
+                    style="@style/match_scouting_foul_button" >
+
+                    <TextView
+                        style="@style/match_scouting_button_name"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="@string/foul" />
+
+                    <TextView
+                        style="@style/match_scouting_foul_value"
+                        android:text="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/technical_foul_button"
+                    style="@style/match_scouting_foul_button" >
+
+                    <TextView
+                        style="@style/match_scouting_button_name"
+                        android:layout_gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:text="@string/technical_foul" />
+
+                    <TextView
+                        style="@style/match_scouting_foul_value"
+                        android:text="0" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_horizontal_margin" >
+
+                <TextView
+                    style="@android:style/TextAppearance.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="@string/post_match_review"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/section_title"
+                    android:text="@string/match_info" />
+
+                <View style="@style/red_seperator" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" >
+
+                    <TextView
+                        style="@style/match_scouting_review_title"
+                        android:text="@string/match_number" />
+
+                    <EditText
+                        android:id="@+id/match_number_review"
+                        style="@style/match_scouting_result_edittable" />
+                </RelativeLayout>
+
+                <View style="@style/thin_seperator" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" >
+
+                    <TextView
+                        style="@style/match_scouting_review_title"
+                        android:text="@string/team_number" />
+
+                    <EditText
+                        android:id="@+id/team_number_review"
+                        style="@style/match_scouting_result_edittable" />
+                </RelativeLayout>
+
+                <View style="@style/thin_seperator" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" >
+
+                    <TextView
+                        style="@style/match_scouting_review_title"
+                        android:text="@string/alliance" />
+
+                    <Spinner
+                        android:id="@+id/alliance_review"
+                        style="@style/match_scouting_result_edittable"
+                        android:dropDownSelector="@drawable/crimson_white_background" />
+                </RelativeLayout>
+
+                <View style="@style/thin_seperator" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" >
+
+                    <TextView
+                        style="@style/match_scouting_review_title"
+                        android:text="@string/scouted_by" />
+
+                    <EditText
+                        android:id="@+id/scouted_by_review"
+                        style="@style/match_scouting_result_edittable"
+                        android:inputType="textCapWords" />
+                </RelativeLayout>
+
+                <View style="@style/thin_seperator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" >
+
+                    <TextView
+                        style="@style/match_scouting_review_title"
+                        android:paddingRight="16dp"
+                        android:text="@string/notes" />
+
+                    <EditText
+                        android:id="@+id/notes_review"
+                        style="@style/match_scouting_result_edittable"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingLeft="8dp" />
+                </LinearLayout>
+
+                <CheckedTextView
+                    android:id="@+id/beginning_possession_review"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checkMark="@drawable/btn_check_holo_light"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:text="@string/had_possession_at_start"
+                    android:textStyle="bold" />
+
+                <CheckedTextView
+                    android:id="@+id/showed_up_review"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:checkMark="@drawable/btn_check_holo_light"
+                    android:clickable="true"
+                    android:checked="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="onClick"
+                    android:text="@string/showed_up"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:id="@+id/field_grid_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp" >
+
+                    <ImageView
+                        android:id="@+id/field_review"
+                        android:layout_width="400dp"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="black pyramid outline"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_field_drawing" />
+
+                    <View
+                        android:id="@+id/robot_review"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="#50000000" />
+                </FrameLayout>
+
+                <TextView
+                    style="@style/section_title"
+                    android:text="@string/autonomous" />
+
+                <View style="@style/red_seperator" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/match_scouting_review_auton" />
+
+<!--                 <RelativeLayout -->
+<!--                     android:layout_width="match_parent" -->
+<!--                     android:layout_height="48dp" > -->
+
+<!--                     <TextView -->
+<!--                         style="@style/match_scouting_review_title" -->
+<!--                         android:text="@string/low_goal" /> -->
+
+<!--                     <EditText -->
+<!--                         android:id="@+id/autonomous_low_goal_review" -->
+<!--                         style="@style/match_scouting_result_edittable_stat" /> -->
+
+<!--                     <Button -->
+<!--                         android:id="@+id/autonomous_low_goal_increase" -->
+<!--                         style="@style/match_scouting_increment" /> -->
+
+<!--                     <Button -->
+<!--                         android:id="@+id/autonomous_low_goals_decrease" -->
+<!--                         style="@style/match_scouting_decrement" /> -->
+<!--                 </RelativeLayout> -->
+
+<!--                 <View style="@style/thin_seperator" /> -->
+
+                <TextView
+                    style="@style/section_title"
+                    android:text="@string/teleop_with_possession" />
+
+                <View style="@style/red_seperator" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/match_scouting_review_teleop_with" />
+
+                <TextView
+                    style="@style/section_title"
+                    android:text="@string/teleop_without_possession" />
+
+                <View style="@style/red_seperator" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/match_scouting_review_teleop_without" />
+                
+                <TextView
+                    style="@style/section_title"
+                    android:text="@string/penalties" />
+
+                <View style="@style/red_seperator" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/match_scouting_review_penalties" />
+            </LinearLayout>
+        </ScrollView>
     </ViewFlipper>
 
 </FrameLayout>
