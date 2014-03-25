@@ -1044,7 +1044,6 @@ public class VerticalViewPager extends ViewGroup {
         }
 
         mAdapter.setPrimaryItem(this, mCurItem, curItem != null ? curItem.object : null);
-
         mAdapter.finishUpdate(this);
 
         // Check width measurement of current pages and drawing sort order.

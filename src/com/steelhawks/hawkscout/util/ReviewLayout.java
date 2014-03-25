@@ -21,6 +21,7 @@ public class ReviewLayout extends RelativeLayout {
 	private MatchScouting context;
 	public int intValue = -1;
 	private boolean booleanValue;
+	private boolean containsInt;
 	private TextView title;
 	private String titleText;
 	private EditText review;
@@ -30,6 +31,7 @@ public class ReviewLayout extends RelativeLayout {
 	
 	public ReviewLayout(MatchScouting context, String titleText, int  value) {
 		super(context);
+		containsInt = true;
 		this.context = (MatchScouting) context;
 		this.titleText = titleText;
 		this.intValue = value;
@@ -49,6 +51,7 @@ public class ReviewLayout extends RelativeLayout {
 	
 	public ReviewLayout(MatchScouting context, String titleText, boolean value) {
 		super(context);
+		containsInt = false;
 		this.context = context;
 		this.titleText = titleText;
 		this.booleanValue = value;
@@ -65,10 +68,18 @@ public class ReviewLayout extends RelativeLayout {
 		else return String.valueOf(intValue);
 	}
 	
+	public String getFinalValue() {
+		if (containsInt) {
+			return review.getText().toString();
+		}
+		else return String.valueOf(toggle.isChecked());
+	}
+	
 	private Button getIncreaseButton() {
 		OnClickListener increase = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				intValue = Integer.parseInt(review.getEditableText().toString());
 				review.setText("" + ++intValue);
 			}
 		};
@@ -92,6 +103,8 @@ public class ReviewLayout extends RelativeLayout {
 		OnClickListener decrease = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				intValue = Integer.parseInt(review.getEditableText().toString());
+				if (intValue == 0) return;
 				review.setText("" + --intValue);
 			}
 		};
@@ -149,7 +162,7 @@ public class ReviewLayout extends RelativeLayout {
 		toggle.setCheckMarkDrawable(getResources().getDrawable(R.drawable.btn_check_holo_light));
 		toggle.setClickable(true);
 		toggle.setGravity(Gravity.CENTER_VERTICAL);
-		toggle.setTypeface(null, Typeface.ITALIC);
+		toggle.setTypeface(null, Typeface.BOLD);
 		toggle.setPadding(Utilities.PX(context, 4),0,0,0);
 		toggle.setTextAppearance(context, android.R.style.TextAppearance_Medium);
 		toggle.setChecked(booleanValue);

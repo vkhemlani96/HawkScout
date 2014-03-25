@@ -1,23 +1,17 @@
 package com.steelhawks.hawkscout;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,11 +19,7 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -46,10 +36,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -64,16 +50,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpResponse;
-import com.google.gdata.data.spreadsheet.ListEntry;
-import com.steelhawks.hawkscout.asynctasks.DeletePitData;
-import com.steelhawks.hawkscout.asynctasks.GetPitMedia;
+import com.steelhawks.hawkscout.Globals.UserTeam.getChildren;
 import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Parameter;
-import com.steelhawks.hawkscout.dialogs.SimpleTextFragment;
-import com.steelhawks.hawkscout.util.ProgressLayout;
+import com.steelhawks.hawkscout.teamactivity.MatchesViewPager;
 import com.steelhawks.hawkscout.util.Utilities;
+import com.steelhawks.hawkscout.util.VerticalViewPager;
 
 public class TeamActivityMain extends FragmentActivity implements
 ActionBar.TabListener {
@@ -99,8 +81,10 @@ ActionBar.TabListener {
 	private static Globals app;
 	CharSequence[] TITLES = {"MATCH DATA", "TEAM INFO", "PIT DATA"};
 	private static final String ACTIVITY_INTENT_1 = "com.steelhawks.hawkscout.TEAM_ACTIVITY_INTENT.TEAM_NUMBER";
+	MatchDataParentFragment frag0;
 	PitDataFragment frag2;
 	private static final int RETURN_FROM_PIT = 466;
+	private static FragmentManager fm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +116,8 @@ ActionBar.TabListener {
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		fm = getSupportFragmentManager();
+		mSectionsPagerAdapter = new SectionsPagerAdapter(fm);
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -149,6 +133,7 @@ ActionBar.TabListener {
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
+		frag0 = new MatchDataParentFragment();
 		frag2 = new PitDataFragment();
 
 		// For each of the sections in the app, add a tab to the action bar.
@@ -163,6 +148,8 @@ ActionBar.TabListener {
 		}
 
 		mViewPager.setCurrentItem(1);
+		
+		List<String> matches = currentComp.getMatchesByTeam(teamNumber);
 	}
 
 	@Override
@@ -255,7 +242,8 @@ ActionBar.TabListener {
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
 			switch(position) {
-			case 0: return new MatchDataFragment();
+			case 0: return new MatchDataParentFragment();
+//			case 1: return new MatchDataParentFragment();
 			case 2: return frag2;
 			}
 			Fragment fragment = new DummySectionFragment();
@@ -331,6 +319,7 @@ ActionBar.TabListener {
 			((ViewGroup) getView()).addView(getNewView());
 		}
 
+		@SuppressLint("NewApi")
 		private View getNewView() {
 			if (data == null) {
 				RelativeLayout wrapper = new RelativeLayout(getActivity());
@@ -794,26 +783,17 @@ ActionBar.TabListener {
 		}		
 	}
 
-	public static class MatchDataFragment extends Fragment {
-		public MatchDataFragment() {
-			
-		}
-		
+	public static class MatchDataParentFragment extends Fragment {
+	
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			final ViewFlipper root = (ViewFlipper) inflater.inflate(R.layout.activity_team_match_review_layout, container, false);
-			root.findViewById(R.id.more).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					System.out.println("CLICKING");
-					root.setInAnimation(getActivity(), R.anim.in_from_left);
-					root.setOutAnimation(getActivity(), R.anim.out_to_right);
-					root.showNext();
-				}
-			});
-			return root;
+			MatchesViewPager rootView = 
+					(MatchesViewPager) inflater.inflate(R.layout.activity_team_match_data, container, false);
+			rootView.setArguments(getActivity(), currentComp, teamNumber, this.getChildFragmentManager());
+			return rootView;
 		}
+		
 	}
+	
 }

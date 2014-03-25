@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import com.steelhawks.hawkscout.competitionmain.TeamAdapter;
 import com.steelhawks.hawkscout.data.Competition;
+import com.steelhawks.hawkscout.data.Indices.MatchIndex;
 import com.steelhawks.hawkscout.util.Utilities;
 
 public class CompetitionMain extends FragmentActivity implements
@@ -390,7 +391,6 @@ public class CompetitionMain extends FragmentActivity implements
 						int arg2, long arg3) {
 					String str = String.valueOf(((TextView) arg1).getText());
 					for(int x=0; x<((TeamAdapter)listView.getAdapter()).getTeams().size(); x++) {
-						System.out.println(((TeamAdapter)listView.getAdapter()).getTeams().get(x)[1]);
 						if (str.equals(((TeamAdapter)listView.getAdapter()).getTeams().get(x)[1].trim())) {
 							Utilities.closeKeyboard(getActivity());
 							listView.setSelection(x);
@@ -427,19 +427,6 @@ public class CompetitionMain extends FragmentActivity implements
 
 			private final Context context;
 			private final List<String[]> list;
-			
-			private class MatchIndex {
-				public static final int TIME = 0;
-				public static final int MATCH_NUMBER = 1;
-				public static final int RED1 = 2;
-				public static final int RED2 = 3;
-				public static final int RED3 = 4;
-				public static final int BLUE1 = 5;
-				public static final int BLUE2 = 6;
-				public static final int BLUE3 = 7;
-				public static final int RED_SCORE = 8;
-				public static final int BLUE_SCORE = 9;
-			}
 			
 			public MatchAdapter(Context c, List<String[]> list) {
 				super(c, R.layout.competitions_matches_layout, list);

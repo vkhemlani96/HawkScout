@@ -1,7 +1,9 @@
 package com.steelhawks.hawkscout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,6 +24,7 @@ import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -60,12 +63,12 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	class UndoKeys {
 		public static final int AUTON_BALL_PICKUP = R.id.auton_ball_pickup;
 		public static final int AUTON_FORWARD_MOVEMENT = R.id.auton_forward_movement;
+		public static final int AUTON_BLOCKS = R.id.auton_blocked_shot;
 		public static final int FOUL = -1;
 		public static final int TECHNICAL_FOUL = -2;
 		public static final int PASS_TO_HUMAN_PLAYER = R.id.human_player_pass;
 		public static final int PASS_TO_ROBOT = R.id.robot_pass;
 		public static final int LOST_BALL = R.id.lost_ball;
-		public static final int TRUSS = R.id.truss;
 		public static final int BLOCKED_SHOT = R.id.blocked_shot;
 		public static final int DEFLECTION = R.id.deflection;
 		public static final int PASS_FROM_HUMAN_PLAYER = R.id.pass_from_human_play;
@@ -84,12 +87,16 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		public static final int TELEOP_LOW_MISSED = -14;
 		public static final int AUTON_FOUL = -3;
 		public static final int AUTON_TECHNICAL_FOUL = -4;
+		public static final int TRUSS = -15;
+		public static final int TRUSS_MISSED = -16;
 	}
 	
 	List<Integer> undoList = new ArrayList<Integer>();
 
 	private boolean showedUp = true;
 	private boolean initialPossession = false;
+	private boolean startsInGoalie = false;
+	private int autonBlocks = 0;
 	private int autonHighGoal = 0;
 	private int autonHighHot = 0;
 	private int autonHighTotal = 0;
@@ -106,10 +113,11 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	private int teleopHighGoalTotal = 0;
 	private int teleopLowGoal = 0;
 	private int teleopLowGoalTotal = 0;
+	private int trussPoints = 0;
+	private int trussTotal = 0;
 	private int passToHP = 0;
 	private int passToRobot = 0;
 	private int ballsLost = 0;
-	private int trussPoints = 0;
 	private int blocks = 0;
 	private int deflections = 0;
 	private int passFromHP = 0;
@@ -121,6 +129,8 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	
 	private RelativeLayout autonHighGoalLayout;
 	private RelativeLayout autonLowGoalLayout;
+	
+	ReviewLayout[][] reviewLayouts;
 	
 
 	@Override
@@ -164,6 +174,10 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			updateButtonText(view, ++autonBallPickup);
 			undoList.add(UndoKeys.AUTON_BALL_PICKUP);
 			return;
+		case R.id.auton_blocked_shot:
+			updateButtonText(view, ++autonBlocks);
+			undoList.add(UndoKeys.AUTON_BLOCKS);
+			return;
 		case R.id.auton_forward_movement:
 			setForwardMovement(view, true);
 			undoList.add(UndoKeys.AUTON_FORWARD_MOVEMENT);
@@ -196,6 +210,10 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			updateButtonText(view, true);
 			undoList.add(UndoKeys.TELEOP_HIGH);
 			break;
+		case R.id.truss:
+			updateButtonText(view, true);
+			undoList.add(UndoKeys.TRUSS);
+			break;
 		case R.id.human_player_pass:
 			updateButtonText(view, ++passToHP);
 			undoList.add(UndoKeys.PASS_TO_HUMAN_PLAYER);
@@ -207,10 +225,6 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		case R.id.lost_ball:
 			updateButtonText(view, ++ballsLost);
 			undoList.add(UndoKeys.LOST_BALL);
-			break;
-		case R.id.truss:
-			updateButtonText(view, ++trussPoints);
-			undoList.add(UndoKeys.TRUSS);
 			break;
 		case R.id.blocked_shot:
 			updateButtonText(view, ++blocks);
@@ -280,6 +294,11 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			undoList.add(UndoKeys.TELEOP_HIGH_MISSED);
 			toggleControls(false);
 			break;
+		case R.id.truss:
+			updateButtonText(view, false);
+			undoList.add(UndoKeys.TRUSS_MISSED);
+			toggleControls(false);
+			break;
 		}
 		return true;
 	}
@@ -334,6 +353,8 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				boolean isRightWhiteZoneEdge = x>=ZONE_WIDTH*2 && x<=ZONE_WIDTH*2+EDGE_BUFFER && lastZone == RIGHT_WHITE_ZONE;
 				boolean isRedGoalieEdge = x>=FIELD_WIDTH-LOW_GOAL_DIMENSION-EDGE_BUFFER && x<=FIELD_WIDTH-LOW_GOAL_DIMENSION && lastZone == RED_GOALIE_ZONE;
 				boolean isEdge = isBlueGoalieEdge || isLeftWhiteZoneEdge || isRightWhiteZoneEdge || isRedGoalieEdge;
+				
+				startsInGoalie = isInBlueGoalieZone || isInRedGoalieZone || isEdge;
 				
 				if (isLeftOfField) x=0;
 				if (isRightOfField) x=FIELD_WIDTH - ROBOT_DIMENSION; 
@@ -474,15 +495,16 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				R.id.auton_high_goal,
 				R.id.auton_low_goal,	
 				R.id.teleop_low_goal,				
-				R.id.teleop_high_goal,				
+				R.id.teleop_high_goal,	
+				R.id.truss,		
 				R.id.auton_forward_movement,
 				R.id.auton_ball_pickup,
+				R.id.auton_blocked_shot,
 				R.id.foul_button,
 				R.id.technical_foul_button,
 				R.id.human_player_pass,
 				R.id.robot_pass,
 				R.id.lost_ball,
-				R.id.truss,
 				R.id.blocked_shot,
 				R.id.deflection,
 				R.id.pass_from_human_play,
@@ -495,7 +517,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				R.id.showed_up_review
 		};
 		for (int i = 2; i<buttonIDs.length; i++) findViewById(buttonIDs[i]).setOnClickListener(this);
-		for (int i = 0; i<4; i++) findViewById(buttonIDs[i]).setOnLongClickListener(this);
+		for (int i = 0; i<5; i++) findViewById(buttonIDs[i]).setOnLongClickListener(this);
 	}
 
 	private void startMatch() {		
@@ -534,6 +556,16 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		
 		getActionBar().hide();
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+		//TODO check for goalie zone blocking.
+		if (!startsInGoalie) {
+			Animation tempAnimOut = controlsFlipper.getOutAnimation();
+			Animation tempAnimIn = controlsFlipper.getInAnimation();
+			controlsFlipper.setInAnimation(null);
+			controlsFlipper.setOutAnimation(null);
+			controlsFlipper.showNext();
+			controlsFlipper.setInAnimation(tempAnimIn);
+			controlsFlipper.setOutAnimation(tempAnimOut);
+		}
 		mViewFlipper.showNext();
 		
 		//Start timer
@@ -584,7 +616,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	
  	private void startTeleOp() {
 //		matchTimer = new FixedCountDownTimer(140*SECONDS, 1000) {
-		matchTimer = new FixedCountDownTimer(1*SECONDS, 1000) {
+		matchTimer = new FixedCountDownTimer(30*SECONDS, 1000) {
 			@Override
 			public void onStart() {
 				mClock.setText("139");				
@@ -603,10 +635,10 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		int autonShotCounter = autonHighTotal + autonLowTotal;
 		boolean initTeleOpPossession = autonShotCounter < autonPossessionCounter;
 		if (initTeleOpPossession) {
-			controlsFlipper.showNext();
+			controlsFlipper.setDisplayedChild(2);
 			possessions.add(new Possession());
 		}
-		else controlsFlipper.setDisplayedChild(2);
+		else controlsFlipper.setDisplayedChild(3);
 		
 		CURRENT_GAME_MODE = initTeleOpPossession ? TELEOP_POSSESSION : TELEOP_NO_POSSESSION;
 		((TextView) findViewById(R.id.auton_text)).setTextColor(
@@ -655,9 +687,12 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		if (parentLayout.getId() == R.id.teleop_high_goal) {
 			if (madeShot) teleopHighGoal++;
 			t.setText("" + teleopHighGoal + " / " + ++teleopHighGoalTotal);
-		} else {
+		} else if (parentLayout.getId() == R.id.teleop_low_goal) {
 			if (madeShot) teleopLowGoal++;
 			t.setText("" + teleopLowGoal + " / " + ++teleopLowGoalTotal);
+		} else {
+			if (madeShot) trussPoints++;
+			t.setText("" + trussPoints + " / " + ++trussTotal);
 		}
 	}
 	
@@ -696,6 +731,8 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			view = findViewById(R.id.teleop_high_goal);
 		else if (key == UndoKeys.TELEOP_LOW || key == UndoKeys.TELEOP_LOW_MISSED)
 			view = findViewById(R.id.teleop_low_goal);
+		else if (key == UndoKeys.TRUSS || key == UndoKeys.TRUSS_MISSED)
+			view = findViewById(R.id.truss);
 		else view = findViewById(key);
 		switch(key) {
 		case UndoKeys.AUTON_BALL_PICKUP:
@@ -703,6 +740,9 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			break;
 		case UndoKeys.AUTON_FORWARD_MOVEMENT:
 			setForwardMovement(view, false);
+			break;
+		case UndoKeys.AUTON_BLOCKS:
+			updateButtonText(view, --autonBlocks);
 			break;
 		case UndoKeys.FOUL:
 			updateButtonText(view, --fouls + autonFouls);
@@ -728,10 +768,6 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			break;
 		case UndoKeys.LOST_BALL:
 			updateButtonText(view, --ballsLost);
-			toggleControls(true);
-			break;
-		case UndoKeys.TRUSS:
-			updateButtonText(view, --trussPoints);
 			toggleControls(true);
 			break;
 		case UndoKeys.BLOCKED_SHOT:
@@ -779,6 +815,13 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			break;
 		case UndoKeys.TELEOP_LOW_MISSED:
 			updateButtonText(view, teleopLowGoal, --teleopLowGoalTotal);
+			break;
+		case UndoKeys.TRUSS:
+			updateButtonText(view, --trussPoints, --trussTotal);
+			toggleControls(true);
+			break;
+		case UndoKeys.TRUSS_MISSED:
+			updateButtonText(view, trussPoints, --trussTotal);
 			break;
 		case UndoKeys.AUTON_FOUL:
 			updateButtonText(view, --autonFouls);
@@ -855,7 +898,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				R.id.match_scouting_review_penalties
 		};
 		
-		ReviewLayout[][] reviewLayouts = getReviewLayouts();
+		reviewLayouts = getReviewLayouts();
 		
 		for (int x=0; x<reviewIds.length; x++) {
 			for (int i=0; i<reviewLayouts[x].length; i++) {
@@ -883,50 +926,59 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				new ReviewLayout(this, "High Goal Shots Made, Hot", autonHighHot),
 				new ReviewLayout(this, "High Goal Shots Missed", autonHighTotal-autonHighGoal),
 				new ReviewLayout(this, "Balls Picked Up", autonBallPickup),
-				new ReviewLayout(this, "Moved Forward?", autonForwardMovement)//15
+				new ReviewLayout(this, "Moved Forward?", autonForwardMovement),//15
+				new ReviewLayout(this, "Blocks", autonBlocks)//16
 			},
 			{
-				new ReviewLayout(this, "Low Goal Shots Made", teleopLowGoal),//16
+				new ReviewLayout(this, "Low Goal Shots Made", teleopLowGoal),//17
 				new ReviewLayout(this, "Low Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
 				new ReviewLayout(this, "High Goal Shots Made", teleopLowGoal),
 				new ReviewLayout(this, "High Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
 				new ReviewLayout(this, "Passes to Other Robots", passToRobot),
 				new ReviewLayout(this, "Passes to Human Players", passToHP),
 				new ReviewLayout(this, "Throws over Truss", trussPoints),
-				new ReviewLayout(this, "Balls Lost", ballsLost)//23
+				new ReviewLayout(this, "Throws over Truss, Missed", trussTotal-trussPoints),
+				new ReviewLayout(this, "Balls Lost", ballsLost)//25
 			},
 			{
-				new ReviewLayout(this, "Blocks", blocks),//24
+				new ReviewLayout(this, "Blocks", blocks),//26
 				new ReviewLayout(this, "Deflections", deflections),
 				new ReviewLayout(this, "Passes from Other Robots", passFromRobot),
 				new ReviewLayout(this, "Passes from Human Players", passFromHP),
 				new ReviewLayout(this, "Catches", catches),
-				new ReviewLayout(this, "Balls Picked Up", ballPickup)//29
+				new ReviewLayout(this, "Balls Picked Up", ballPickup)//31
 			},
 			{
 				new ReviewLayout(this, "Autonomous Fouls (10 Points)", autonFouls),
 				new ReviewLayout(this, "Autonomous Technical Fouls (50 Points)", autonTechFouls),
 				new ReviewLayout(this, "Fouls (10 Points)", fouls),
-				new ReviewLayout(this, "Techinal Fouls (50 Points)", techFouls),//33
+				new ReviewLayout(this, "Technical Fouls (50 Points)", techFouls),//35
 			}
 		};
 		return layout;
 	}
 	
 	public void saveData(MenuItem item) {
-		String[] data = new String[35];
+		String[] data = new String[37];
 			data[0] = ((EditText) findViewById(R.id.match_number_review)).getEditableText().toString();
 			data[1] = ((EditText) findViewById(R.id.team_number_review)).getEditableText().toString();
 			data[2] = ALLIANCE;
-			data[3] = ((EditText) findViewById(R.id.scouted_by_review)).getEditableText().toString();
-			data[4]	= ((EditText) findViewById(R.id.notes_review)).getEditableText().toString();
+			
+			Calendar c = Calendar.getInstance();
+			String s = "Scouted by " + ((EditText) findViewById(R.id.scouted_by_review)).getEditableText().toString() +
+					" at " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + " " + c.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.US) +
+					" on " + c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US) +
+					", " + c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + c.get(Calendar.DATE) + ", " + c.get(Calendar.YEAR);
+			data[3] = s;
+			
+			data[4]	= ((EditText) findViewById(R.id.notes_review)).getEditableText().toString().trim();
 			data[5] = String.valueOf(initialPossession);
 			data[6] = String.valueOf(showedUp);
 			data[7] = findViewById(R.id.robot_review).getX() + "," + findViewById(R.id.robot_review).getY();
 			int index = 8;
-			for (int i = 0; i<getReviewLayouts().length; i++) {
-				for (int j = 0; j<getReviewLayouts()[i].length; j++) {
-					data[index++] = getReviewLayouts()[i][j].getValue();
+			for (int i = 0; i<reviewLayouts.length; i++) {
+				for (int j = 0; j<reviewLayouts[i].length; j++) {
+					data[index++] = reviewLayouts[i][j].getFinalValue();
 				}
 			}
 			data[index] = "";
@@ -983,6 +1035,8 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				return "Lost Ball";
 			case UndoKeys.TRUSS:
 				return "Threw over Truss";
+			case UndoKeys.TRUSS_MISSED:
+				return "Missed Truss";
 			case UndoKeys.PASS_FROM_HUMAN_PLAYER:
 				return "Pass from HP";
 			case UndoKeys.PASS_FROM_ROBOT:

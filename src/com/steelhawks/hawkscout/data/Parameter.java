@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.steelhawks.hawkscout.Globals;
-import com.steelhawks.hawkscout.PitScouting;
 import com.steelhawks.hawkscout.util.MultiSelectSpinner;
 
 public class Parameter {

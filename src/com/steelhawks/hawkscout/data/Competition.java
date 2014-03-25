@@ -2,6 +2,7 @@ package com.steelhawks.hawkscout.data;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,6 @@ public class Competition {
 		MEDIA_PATH = folderPath + "/MEDIA/";
 		PIT_SCOUTING_PARAMS_PATH = new File(folderPath).getParent() + "/PIT_SCOUTING_PARAMS.txt";
 		
-		System.out.println("Competition " + compCode);
 		if (compCode.equals("NYNY")) {
 			date = "April 4th-6th, 2014";
 			location = "New York, NY";
@@ -100,7 +100,6 @@ public class Competition {
 		matchScoutingData = parseMatchScouting();
 		pitScoutingData = parsePitScouting();
 		pitScoutingParams = parsePitScoutingParams();
-		System.out.println(pitScoutingParams.keySet().size() + " categories!");
 		System.out.println("Match Scouting: " + matchScoutingData.size());
 	}
 	
@@ -174,6 +173,9 @@ public class Competition {
 	
 	private Map<String, List<Parameter>> parsePitScoutingParams() {
 		String fileText = FileIO.readTextFile(PIT_SCOUTING_PARAMS_PATH);
+		if (fileText == null) {
+			System.out.println("Params are null");
+		}
 		String[] paramText = fileText.split("\n");
 		Map<String, List<Parameter>> paramMap = new HashMap<String, List<Parameter>>();
 		for (int i=0; i<paramText.length; i++) {
@@ -186,6 +188,13 @@ public class Competition {
 			paramMap.get(category).add(new Parameter(title, type, opts));
 		}
 		return paramMap;
+	}
+	
+	public String[] getMatchInfoByNumber(String matchNumber) {
+		for (int x=0; x<matches.size(); x++) {
+			if (matches.get(x)[1].equals(matchNumber)) return matches.get(x);
+		}
+		return null;
 	}
 	
 	public String[] getPitScoutingForTeam(String teamNumber) {
@@ -201,6 +210,44 @@ public class Competition {
 		for (int x=0; x<mediaPaths.length; x++)
 			if (mediaPaths[x].contains(teamNumber)) foundPaths.add(folderPath + "/MEDIA/" + mediaPaths[x]);
 		return foundPaths;
+	}
+	
+	public List<String> getMatchesByTeam(String teamNumber) {
+		List<String> foundMatches = new ArrayList<String>();
+		for (int i = 0; i<matches.size(); i++) {
+			if (matchContainsTeam(matches.get(i), teamNumber.trim())) foundMatches.add(matches.get(i)[1]);
+		}
+		return foundMatches;
+	}
+	
+	public String[] getMatchScoutingDataForTeam(String matchNumber, String teamNumber) {
+		matchNumber = matchNumber.trim();
+		teamNumber = teamNumber.trim();
+		for (int x = 0; x<matchScoutingData.size(); x++) {
+			if(stringsMatch(matchScoutingData.get(x)[0].trim(), matchNumber) && matchScoutingData.get(x)[1].trim().equals(teamNumber))
+				return matchScoutingData.get(x);
+		}
+		return null;
+	}
+	
+	public boolean stringsMatch(String badString, String goodString) {
+		if (badString.equals(goodString)) return true;
+		Character[] numberChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+		List<Character> goodChars = Arrays.asList(numberChars);
+		return badString.length() == goodString.length() + 1 &&
+				!goodChars.contains(badString.charAt(0)) && 
+				badString.substring(1).equals(goodString);
+				
+	}
+	
+	private boolean matchContainsTeam(String[] match, String teamNumber) {
+		return  match[2].trim().equals(teamNumber) ||
+				match[3].trim().equals(teamNumber) ||
+				match[4].trim().equals(teamNumber) ||
+				match[5].trim().equals(teamNumber) ||
+				match[6].trim().equals(teamNumber) ||
+				match[7].trim().equals(teamNumber);
+		
 	}
 	
 	public List<String[]> getRankings() {

@@ -8,7 +8,7 @@
 
     <requestFocus />
 
-<!--          The following child has to use android:fitsSystemWindows="true". -->
+    <!-- The following child has to use android:fitsSystemWindows="true". -->
 
     <ViewFlipper
         android:id="@+id/match_scouting_view_flipper"
@@ -55,10 +55,10 @@
                     <EditText
                         android:id="@+id/match_number"
                         android:layout_width="0dp"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
                         android:layout_height="48dp"
                         android:layout_weight="1"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:gravity="center"
                         android:inputType="number"
                         android:maxLength="3" />
@@ -108,9 +108,9 @@
                         android:id="@+id/alliance"
                         android:layout_width="0dp"
                         android:layout_height="48dp"
+                        android:layout_weight="1"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:layout_weight="1"
                         android:gravity="center" />
                 </LinearLayout>
 
@@ -132,9 +132,9 @@
                         android:id="@+id/scouted_by"
                         android:layout_width="0dp"
                         android:layout_height="48dp"
+                        android:layout_weight="1"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:inputType="textCapWords" />
                 </LinearLayout>
@@ -158,8 +158,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:checkMark="@drawable/btn_check_holo_light"
-                    android:clickable="true"
                     android:checked="true"
+                    android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:onClick="onClick"
@@ -283,9 +283,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:padding="8dp"
                     android:background="@drawable/crimson_background"
                     android:onClick="onClick"
+                    android:padding="8dp"
                     android:src="@drawable/ic_content_undo" />
             </RelativeLayout>
 
@@ -297,6 +297,23 @@
                 android:baselineAligned="false" >
 
                 <!-- AUTONOMOUS START -->
+
+                <RelativeLayout
+                    android:id="@+id/auton_blocked_shot"
+                    style="@style/match_scouting_button"
+                    android:background="@drawable/btn_black_holo_light"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        style="@style/match_scouting_button_name"
+                        android:text="@string/blocked_shot" />
+
+                    <TextView
+                        style="@style/match_scouting_button_value"
+                        android:layout_alignParentBottom="true"
+                        android:text="0" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -375,7 +392,7 @@
                             android:text="@string/forward_movement" />
                     </LinearLayout>
                 </LinearLayout>
- <!-- AUTONOMOUS END -->
+                <!-- AUTONOMOUS END -->
                 <!-- TELEOP POSSESION -->
 
                 <LinearLayout
@@ -491,11 +508,11 @@
                             <TextView
                                 style="@style/match_scouting_button_value"
                                 android:layout_alignParentBottom="true"
-                                android:text="0" />
+                                android:text="0 / 0" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
-				<!-- AUTONOMOUS END -->
+                <!-- AUTONOMOUS END -->
                 <!-- TELEOP POSSESION -->
 
                 <LinearLayout
@@ -783,8 +800,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:checkMark="@drawable/btn_check_holo_light"
-                    android:clickable="true"
                     android:checked="true"
+                    android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:onClick="onClick"
@@ -816,34 +833,40 @@
                     android:text="@string/autonomous" />
 
                 <View style="@style/red_seperator" />
+
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/match_scouting_review_auton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/match_scouting_review_auton" />
+                    android:orientation="vertical" />
 
-<!--                 <RelativeLayout -->
-<!--                     android:layout_width="match_parent" -->
-<!--                     android:layout_height="48dp" > -->
+                <!-- <RelativeLayout -->
+                <!-- android:layout_width="match_parent" -->
+                <!-- android:layout_height="48dp" > -->
 
-<!--                     <TextView -->
-<!--                         style="@style/match_scouting_review_title" -->
-<!--                         android:text="@string/low_goal" /> -->
 
-<!--                     <EditText -->
-<!--                         android:id="@+id/autonomous_low_goal_review" -->
-<!--                         style="@style/match_scouting_result_edittable_stat" /> -->
+                <!-- <TextView -->
+                <!-- style="@style/match_scouting_review_title" -->
+                <!-- android:text="@string/low_goal" /> -->
 
-<!--                     <Button -->
-<!--                         android:id="@+id/autonomous_low_goal_increase" -->
-<!--                         style="@style/match_scouting_increment" /> -->
 
-<!--                     <Button -->
-<!--                         android:id="@+id/autonomous_low_goals_decrease" -->
-<!--                         style="@style/match_scouting_decrement" /> -->
-<!--                 </RelativeLayout> -->
+                <!-- <EditText -->
+                <!-- android:id="@+id/autonomous_low_goal_review" -->
+                <!-- style="@style/match_scouting_result_edittable_stat" /> -->
 
-<!--                 <View style="@style/thin_seperator" /> -->
+
+                <!-- <Button -->
+                <!-- android:id="@+id/autonomous_low_goal_increase" -->
+                <!-- style="@style/match_scouting_increment" /> -->
+
+
+                <!-- <Button -->
+                <!-- android:id="@+id/autonomous_low_goals_decrease" -->
+                <!-- style="@style/match_scouting_decrement" /> -->
+                <!-- </RelativeLayout> -->
+
+
+                <!-- <View style="@style/thin_seperator" /> -->
 
                 <TextView
                     style="@style/section_title"
@@ -852,10 +875,10 @@
                 <View style="@style/red_seperator" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/match_scouting_review_teleop_with"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/match_scouting_review_teleop_with" />
+                    android:orientation="vertical" />
 
                 <TextView
                     style="@style/section_title"
@@ -864,11 +887,11 @@
                 <View style="@style/red_seperator" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/match_scouting_review_teleop_without"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/match_scouting_review_teleop_without" />
-                
+                    android:orientation="vertical" />
+
                 <TextView
                     style="@style/section_title"
                     android:text="@string/penalties" />
@@ -876,10 +899,10 @@
                 <View style="@style/red_seperator" />
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:id="@+id/match_scouting_review_penalties"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/match_scouting_review_penalties" />
+                    android:orientation="vertical" />
             </LinearLayout>
         </ScrollView>
     </ViewFlipper>

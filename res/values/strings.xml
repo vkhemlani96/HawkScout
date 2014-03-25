@@ -536,5 +536,11 @@
     <string name="title_activity_competition_main">CompetitionMain</string>
     <string name="title_activity_pit_scouting_main">PitScoutingMain</string>
     <string name="title_activity_team_activity_main">TeamActivityMain</string>
+    <string name="match_scouting_suggestion">Match Scouting is a great way to keep track of how other teams have been preforming. To begin taking notes on this match, click the button below.</string>
+    <string name="possession_start">Possession Start</string>
+    <string name="auton_starting_position">Autonomous Starting Position</string>
+    <string name="possession_end">Possession End</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
 
 </resources>

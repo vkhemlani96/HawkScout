@@ -23,9 +23,6 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -37,7 +34,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SpinnerAdapter;
 
-import com.steelhawks.hawkscout.PitScouting;
+import com.steelhawks.hawkscout.PitScoutingMain;
 import com.steelhawks.hawkscout.R;
 import com.steelhawks.hawkscout.dialogs.pitscouting.EditTextFragment;
 
@@ -98,7 +95,7 @@ public class MultiSelectSpinner extends NoDefaultSpinner implements DialogInterf
         	if(_items[which].equals("Other") && isChecked) {
         		_selection[which] = false;
         		frag = new EditTextFragment().newInstance(this);
-        		frag.show(((PitScouting) c).getSupportFragmentManager(), "Other");
+        		frag.show(((PitScoutingMain) c).getSupportFragmentManager(), "Other");
         	}
             _selection[which] = isChecked;
             

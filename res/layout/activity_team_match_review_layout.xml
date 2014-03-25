@@ -51,7 +51,7 @@
 
                     <TextView
                         android:id="@+id/red1"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#10ff0000"
@@ -62,7 +62,7 @@
 
                     <TextView
                         android:id="@+id/red2"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#10ff0000"
@@ -73,7 +73,7 @@
 
                     <TextView
                         android:id="@+id/red3"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#10ff0000"
@@ -89,7 +89,7 @@
 
                     <TextView
                         android:id="@+id/red_score"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.5"
                         android:gravity="center"
@@ -113,7 +113,7 @@
 
                     <TextView
                         android:id="@+id/blue1"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#100000ff"
@@ -124,7 +124,7 @@
 
                     <TextView
                         android:id="@+id/blue2"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#100000ff"
@@ -135,7 +135,7 @@
 
                     <TextView
                         android:id="@+id/blue3"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="#100000ff"
@@ -151,13 +151,22 @@
 
                     <TextView
                         android:id="@+id/blue_score"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="10"
                         android:textSize="20dp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/match_result"
+                android:layout_width="75dp"
+                android:layout_height="72dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:minWidth="72dp"
+                android:textSize="48dp" />
         </LinearLayout>
 
         <TextView
@@ -185,21 +194,21 @@
             </TextView>
 
             <TextView
+                android:id="@+id/auton_high_goal"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="1/2 (1 Hot)" >
+                android:gravity="center" >
             </TextView>
 
             <TextView
+                android:id="@+id/auton_high_goal_points"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="20 Points" >
+                android:gravity="center" >
             </TextView>
 
             <LinearLayout
@@ -210,10 +219,10 @@
                 android:weightSum="1" >
 
                 <View
+                    android:id="@+id/auton_high_goal_bar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".4"
                     android:background="@color/red" />
 
                 <View
@@ -244,21 +253,21 @@
             </TextView>
 
             <TextView
+                android:id="@+id/auton_low_goal"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="0/0 (0 Hot)" >
+                android:gravity="center" >
             </TextView>
 
             <TextView
+                android:id="@+id/auton_low_goal_points"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="0 Points" >
+                android:gravity="center" >
             </TextView>
 
             <LinearLayout
@@ -269,10 +278,10 @@
                 android:weightSum="1" >
 
                 <View
+                    android:id="@+id/auton_low_goal_bar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".1"
                     android:background="@color/red" />
 
                 <View
@@ -308,14 +317,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/forward_movement"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="Yes"
-                    android:textStyle="bold" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -340,12 +348,12 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/auton_blocks"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:text="0" >
+                    android:gravity="center_vertical" >
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
@@ -374,13 +382,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/auton_fouls"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="0" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -405,12 +413,12 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/auton_tech_fouls"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:text="1" >
+                    android:gravity="center_vertical" >
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
@@ -440,21 +448,21 @@
             </TextView>
 
             <TextView
+                android:id="@+id/teleop_high_goal"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="3/5 (60%)" >
+                android:gravity="center" >
             </TextView>
 
             <TextView
+                android:id="@+id/teleop_high_goal_points"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="30 Points" >
+                android:gravity="center" >
             </TextView>
 
             <LinearLayout
@@ -465,10 +473,10 @@
                 android:weightSum="1" >
 
                 <View
+                    android:id="@+id/teleop_high_goal_bar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".33"
                     android:background="@color/red" />
 
                 <View
@@ -499,21 +507,21 @@
             </TextView>
 
             <TextView
+                android:id="@+id/teleop_low_goal"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="1/1 (100%)" >
+                android:gravity="center" >
             </TextView>
 
             <TextView
+                android:id="@+id/teleop_low_goal_points"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="1 Points" >
+                android:gravity="center" >
             </TextView>
 
             <LinearLayout
@@ -524,10 +532,10 @@
                 android:weightSum="1" >
 
                 <View
+                    android:id="@+id/teleop_low_goal_bar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".12"
                     android:background="@color/red" />
 
                 <View
@@ -558,21 +566,21 @@
             </TextView>
 
             <TextView
+                android:id="@+id/truss"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="2/2 (100%)" >
+                android:gravity="center" >
             </TextView>
 
             <TextView
+                android:id="@+id/truss_points"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="20 Points" >
+                android:gravity="center" >
             </TextView>
 
             <LinearLayout
@@ -583,10 +591,10 @@
                 android:weightSum="1" >
 
                 <View
+                    android:id="@+id/truss_bar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".64"
                     android:background="@color/red" />
 
                 <View
@@ -617,21 +625,21 @@
             </TextView>
 
             <TextView
+                android:id="@+id/catches"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="1" >
+                android:gravity="center" >
             </TextView>
 
             <TextView
+                android:id="@+id/catch_points"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="10 Points" >
+                android:gravity="center" >
             </TextView>
 
             <LinearLayout
@@ -642,10 +650,10 @@
                 android:weightSum="1" >
 
                 <View
+                    android:id="@+id/catch_bar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight=".27"
                     android:background="@color/red" />
 
                 <View
@@ -681,13 +689,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/teleop_blocks"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="3" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -712,12 +720,12 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/deflections"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:text="5" >
+                    android:gravity="center_vertical" >
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
@@ -746,13 +754,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/passes_to_robots"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="3" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -777,13 +785,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/passes_to_HP"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="1" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -808,12 +816,12 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/balls_lost"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:text="3" >
+                    android:gravity="center_vertical" >
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
@@ -842,13 +850,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/passes_from_robots"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="3" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -873,13 +881,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/passes_from_hp"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="1" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -904,12 +912,12 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/balls_picked_up"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:text="3" >
+                    android:gravity="center_vertical" >
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
@@ -938,13 +946,13 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/teleop_fouls"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical"
-                    android:paddingRight="8dp"
-                    android:text="0" >
+                    android:paddingRight="8dp" >
                 </TextView>
             </RelativeLayout>
 
@@ -969,12 +977,12 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/teleop_technical_fouls"
                     style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:text="1" >
+                    android:gravity="center_vertical" >
                 </TextView>
             </RelativeLayout>
         </LinearLayout>
@@ -1004,9 +1012,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp" >
+
+        <TextView
+            style="@style/section_title"
+            android:text="@string/auton_starting_position" >
+        </TextView>
+
+        <View style="@style/red_seperator" >
+        </View>
 
         <FrameLayout
             android:id="@+id/field_grid"
@@ -1026,8 +1045,72 @@
                 android:id="@+id/robot"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="#50000000"/>
+                android:background="#50000000" />
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="bottom"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/section_title"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:gravity="left"
+                android:text="@string/possession_start" >
+            </TextView>
+
+            <TextView
+                style="@style/section_title"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:gravity="left"
+                android:text="@string/possession_end" >
+            </TextView>
+
+            <TextView
+                style="@style/section_title"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/end_time" >
+            </TextView>
+        </LinearLayout>
+
+        <View style="@style/red_seperator" >
+        </View>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scrollbarDefaultDelayBeforeFade="300">
+
+            <LinearLayout
+                android:id="@+id/possessions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+        <TextView
+            style="@style/section_title"
+            android:text="@string/notes" >
+        </TextView>
+
+        <View style="@style/red_seperator" >
+        </View>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:id="@id/notes"
+            android:gravity="center_vertical"
+            style="@android:style/TextAppearance.Medium"></TextView>
     </LinearLayout>
 
 </ViewFlipper>
