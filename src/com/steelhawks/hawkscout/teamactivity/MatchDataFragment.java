@@ -1,7 +1,5 @@
 package com.steelhawks.hawkscout.teamactivity;
 
-import java.util.List;
-
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,17 +8,21 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.steelhawks.hawkscout.MatchScouting;
 import com.steelhawks.hawkscout.R;
 import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Indices.MatchIndex;
 import com.steelhawks.hawkscout.data.Indices.MatchScoutingIndex;
 import com.steelhawks.hawkscout.data.Indices.PossessionIndex;
+import com.steelhawks.hawkscout.util.GraphView;
 import com.steelhawks.hawkscout.util.Utilities;
 
 public class MatchDataFragment extends Fragment {
@@ -223,7 +225,10 @@ public class MatchDataFragment extends Fragment {
 			}
 
 		}
-
+		float[] values = {25.f, 75.f};
+		((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), values));
+//		((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity()));
+//		root.findViewById(R.id.score_graph).ref
 
 		TextView noteView = (TextView) root.findViewById(R.id.notes);
 		String notes = data[MatchScoutingIndex.NOTES].trim();
@@ -247,6 +252,15 @@ public class MatchDataFragment extends Fragment {
 				root.showNext();
 			}
 		});
+		root.findViewById(R.id.stats).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				root.setInAnimation(getActivity(), R.anim.in_from_left);
+				root.setOutAnimation(getActivity(), R.anim.out_to_right);
+				root.setDisplayedChild(2);
+			}
+		});
 		return root;
 	}
 
@@ -255,6 +269,14 @@ public class MatchDataFragment extends Fragment {
 		final LinearLayout root = (LinearLayout) inflater.inflate(R.layout.activity_team_match_review_empty_layout, container, false);
 		TextView tv = (TextView) root.findViewById(R.id.match_number);
 		tv.setText(matchNumber);
+		Button b = (Button) root.findViewById(R.id.begin_scouting);
+		b.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				MatchScouting.start(getActivity(), teamNumber.trim(), matchNumber.trim());
+			}
+		});
 		return root;
 	}
 

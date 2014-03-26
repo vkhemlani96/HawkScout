@@ -5,8 +5,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -35,9 +37,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.steelhawks.hawkscout.data.Competition;
+import com.steelhawks.hawkscout.data.Indices.MatchIndex;
 import com.steelhawks.hawkscout.dialogs.SimpleTextFragment;
 import com.steelhawks.hawkscout.util.FixedCountDownTimer;
 import com.steelhawks.hawkscout.util.NoDefaultSpinner;
@@ -51,15 +55,17 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	private TextView mClock;
 	private FixedCountDownTimer matchTimer;
 	private Menu menu;
-	
+
 	private static final int AUTON = 0;
 	private static final int TELEOP_POSSESSION = 1;
 	private static final int TELEOP_NO_POSSESSION = 2;
 	private static int CURRENT_GAME_MODE = AUTON;
 	public static final int SECONDS = 1000;
 	private static String ALLIANCE = "";
+	private static final String ACTIVITY_INTENT_1 = "com.steelhawks.hawkscout.MatchScouting.TEAM_NUMBER";
+	private static final String ACTIVITY_INTENT_2 = "com.steelhawks.hawkscout.MatchScouting.MATCH_NUMBER";
 	private boolean displayMenuItem = false;
-	
+
 	class UndoKeys {
 		public static final int AUTON_BALL_PICKUP = R.id.auton_ball_pickup;
 		public static final int AUTON_FORWARD_MOVEMENT = R.id.auton_forward_movement;
@@ -90,7 +96,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		public static final int TRUSS = -15;
 		public static final int TRUSS_MISSED = -16;
 	}
-	
+
 	List<Integer> undoList = new ArrayList<Integer>();
 
 	private boolean showedUp = true;
@@ -126,34 +132,50 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	private int catches;
 	private List<Possession> possessions = new ArrayList<Possession>();
 	private OnTouchListener pyramidTouch;
-	
+
 	private RelativeLayout autonHighGoalLayout;
 	private RelativeLayout autonLowGoalLayout;
-	
+
 	ReviewLayout[][] reviewLayouts;
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_match_scouting);
-		new Competition(this, "NYNY");
-		
+		Competition currentComp = new Competition(this, "SCMB");
+
 		mViewFlipper = (ViewFlipper) findViewById(R.id.match_scouting_view_flipper);
 		mViewFlipper.setInAnimation(this, R.anim.in_from_right);
-		
+
 		controlsFlipper = (ViewFlipper) findViewById(R.id.controls_switch);
 		controlsFlipper.setInAnimation(this, R.anim.in_from_right);
 		controlsFlipper.setOutAnimation(this, R.anim.out_to_left);
-		
+
 		mClock = (TextView) findViewById(R.id.match_scouting_clock);
- 		mClock.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Clock.otf"));
-		
+		mClock.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Clock.otf"));		
+
 		setupLayout();
 		setupButtonClicks();
+
+		String teamNumber = getIntent().getExtras().getString(ACTIVITY_INTENT_1, "");
+		((EditText) findViewById(R.id.team_number)).setText(teamNumber);
+		String matchNumber = getIntent().getExtras().getString(ACTIVITY_INTENT_2, "");
+		if (matchNumber.equals("")) return;
+		System.out.println("The match number is: " + matchNumber + ".");
+		((EditText) findViewById(R.id.match_number)).setText(matchNumber);
+		String[] matchInfo = currentComp.getMatchInfoByNumber("23");
+		if (matchInfo == null) System.out.println("matchInfo is null");
+
+		if (matchInfo[MatchIndex.BLUE1].trim().equals(teamNumber.trim()) ||
+				matchInfo[MatchIndex.BLUE2].trim().equals(teamNumber.trim()) ||
+				matchInfo[MatchIndex.BLUE3].trim().equals(teamNumber.trim()))
+			((NoDefaultSpinner) findViewById(R.id.alliance)).setSelection(0);
+		else ((NoDefaultSpinner) findViewById(R.id.alliance)).setSelection(1);
+
 	}
-	
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,7 +185,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		menu.findItem(R.id.submit).setVisible(displayMenuItem);
 		return true;
 	}
-	
+
 	public void onClick(View view) {
 		switch(view.getId()) {
 		case R.id.start_match:
@@ -272,7 +294,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		}
 		toggleControls(false);
 	}
-	
+
 	@Override
 	public boolean onLongClick(View view) {
 		switch (view.getId()) {
@@ -302,17 +324,12 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		}
 		return true;
 	}
-	
-	@Override
-	public void onBackPressed() {
-//		saveData();
-	}
-	
+
 	public static float convertPixelsToDp(float px, Context context){
-	    Resources resources = context.getResources();
-	    DisplayMetrics metrics = resources.getDisplayMetrics();
-	    float dp = px / (metrics.densityDpi / 160f);
-	    return dp;
+		Resources resources = context.getResources();
+		DisplayMetrics metrics = resources.getDisplayMetrics();
+		float dp = px / (metrics.densityDpi / 160f);
+		return dp;
 	}
 
 	void setupLayout() {
@@ -332,13 +349,13 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			private final int LEFT_WHITE_ZONE = 1;
 			private final int RIGHT_WHITE_ZONE = 2;
 			private final int RED_GOALIE_ZONE = 3;
-			
+
 			private int lastZone = -1;
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				int x = (int) event.getX() - CENTER_OFFSET;
 				int y = (int) event.getY() - CENTER_OFFSET;
-				
+
 				boolean allianceIsSelected = ALLIANCE.equals("Red") || ALLIANCE.equals("Blue");
 				boolean isLeftOfField = x<0-CENTER_OFFSET;
 				boolean isRightOfField = x>PX(400)-CENTER_OFFSET-ROBOT_DIMENSION;
@@ -353,9 +370,9 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				boolean isRightWhiteZoneEdge = x>=ZONE_WIDTH*2 && x<=ZONE_WIDTH*2+EDGE_BUFFER && lastZone == RIGHT_WHITE_ZONE;
 				boolean isRedGoalieEdge = x>=FIELD_WIDTH-LOW_GOAL_DIMENSION-EDGE_BUFFER && x<=FIELD_WIDTH-LOW_GOAL_DIMENSION && lastZone == RED_GOALIE_ZONE;
 				boolean isEdge = isBlueGoalieEdge || isLeftWhiteZoneEdge || isRightWhiteZoneEdge || isRedGoalieEdge;
-				
+
 				startsInGoalie = isInBlueGoalieZone || isInRedGoalieZone || isEdge;
-				
+
 				if (isLeftOfField) x=0;
 				if (isRightOfField) x=FIELD_WIDTH - ROBOT_DIMENSION; 
 				if ((isInBlueZone || isInRedZone) && !isEdge) return true;
@@ -389,7 +406,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				boolean isBelowField = y>FIELD_HEIGHT + VERTICAL_PADDING + CENTER_OFFSET - ROBOT_DIMENSION;
 				if (isAboveField && !isInRedGoalieZone && !isInBlueGoalieZone) y=VERTICAL_PADDING;
 				if (isBelowField && !isInRedGoalieZone && !isInBlueGoalieZone) y=VERTICAL_PADDING + FIELD_HEIGHT - ROBOT_DIMENSION;
-				
+
 				if (!isEdge) {
 					robotView.setX(x);
 					findViewById(R.id.robot_review).setX(x);
@@ -398,11 +415,11 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				findViewById(R.id.robot_review).setY(y);
 				if (robotView.getVisibility() == View.GONE) robotView.setVisibility(View.VISIBLE);
 				if (findViewById(R.id.robot_review).getVisibility() == View.GONE) findViewById(R.id.robot_review).setVisibility(View.VISIBLE);
-				
+
 				Utilities.closeKeyboard(MatchScouting.this);
 				return true;
 			}
-			
+
 		};
 
 		final ImageView fieldView = (ImageView) findViewById(R.id.field);
@@ -411,9 +428,9 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		reviewFieldView.setOnTouchListener(pyramidTouch);
 		NoDefaultSpinner alliance = (NoDefaultSpinner) findViewById(R.id.alliance);
 		alliance.setPrompt("Select");
-			String entries[] = {"Blue", "Red"};
-			ArrayAdapter<String> a = new ArrayAdapter<String>(this, R.layout.spinner_textview, entries);
-				a.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+		String entries[] = {"Blue", "Red"};
+		ArrayAdapter<String> a = new ArrayAdapter<String>(this, R.layout.spinner_textview, entries);
+		a.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
 		alliance.setAdapter(a);
 		alliance.setOnItemSelectedListener(new OnItemSelectedListener(){
 			@Override
@@ -428,19 +445,19 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 					robotView.setBackgroundColor(Color.parseColor("#50cc0000"));
 				}
 			}
-	
+
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {}
 		});
-		
-		
+
+
 	}
 
 	private void setupButtonClicks() {		
 		autonHighGoalLayout = (RelativeLayout) findViewById(R.id.auton_high_goal);
 		autonLowGoalLayout = (RelativeLayout) findViewById(R.id.auton_low_goal);
-		
-	
+
+
 		OnClickListener highHotGoalListener = new OnClickListener() {
 			boolean singleClick = false;
 			TextView name = (TextView) autonHighGoalLayout.getChildAt(0);
@@ -487,10 +504,10 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				}
 			}
 		};
-	
+
 		autonHighGoalLayout.setOnClickListener(highHotGoalListener);
 		autonLowGoalLayout.setOnClickListener(lowHotGoalListener);
-		
+
 		int[] buttonIDs = {
 				R.id.auton_high_goal,
 				R.id.auton_low_goal,	
@@ -524,36 +541,36 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		String matchNumber = ((EditText) findViewById(R.id.match_number)).getText().toString();
 		String teamNumber = ((EditText) findViewById(R.id.team_number)).getText().toString();
 		String scoutedBy = ((EditText) findViewById(R.id.scouted_by)).getText().toString();
-		
-//		if (matchNumber.equals("")) {
-//			getMissingFieldsFragment("Please enter the match number.")
-//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
-//			findViewById(R.id.match_number).requestFocus();
-//			return;
-//		} else if (teamNumber.equals("")) {
-//			getMissingFieldsFragment("Please enter the team number.")
-//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
-//			findViewById(R.id.team_number).requestFocus();
-//			return;
-//		} else if (ALLIANCE.equals("")) {
-//			getMissingFieldsFragment("Please select an alliance")
-//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
-//			findViewById(R.id.alliance).requestFocus();
-//			return;
-//		} else if (scoutedBy.equals("")) {
-//			getMissingFieldsFragment("Please enter your name in the \"Scouted By\" field.")
-//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
-//			findViewById(R.id.scouted_by).requestFocus();
-//			return;
-//		} else if (!showedUp) {
-//			noShow();
-//			return;
-//		} else if (findViewById(R.id.robot).getVisibility() == View.GONE){
-//			getMissingFieldsFragment("Please indicate the robot's starting position.")
-//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
-//			return;
-//		}
-		
+
+		//		if (matchNumber.equals("")) {
+		//			getMissingFieldsFragment("Please enter the match number.")
+		//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
+		//			findViewById(R.id.match_number).requestFocus();
+		//			return;
+		//		} else if (teamNumber.equals("")) {
+		//			getMissingFieldsFragment("Please enter the team number.")
+		//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
+		//			findViewById(R.id.team_number).requestFocus();
+		//			return;
+		//		} else if (ALLIANCE.equals("")) {
+		//			getMissingFieldsFragment("Please select an alliance")
+		//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
+		//			findViewById(R.id.alliance).requestFocus();
+		//			return;
+		//		} else if (scoutedBy.equals("")) {
+		//			getMissingFieldsFragment("Please enter your name in the \"Scouted By\" field.")
+		//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
+		//			findViewById(R.id.scouted_by).requestFocus();
+		//			return;
+		//		} else if (!showedUp) {
+		//			noShow();
+		//			return;
+		//		} else if (findViewById(R.id.robot).getVisibility() == View.GONE){
+		//			getMissingFieldsFragment("Please indicate the robot's starting position.")
+		//				.show(getSupportFragmentManager(), "MISSING_FIELDS");
+		//			return;
+		//		}
+
 		getActionBar().hide();
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
 		//TODO check for goalie zone blocking.
@@ -567,25 +584,25 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			controlsFlipper.setOutAnimation(tempAnimOut);
 		}
 		mViewFlipper.showNext();
-		
+
 		//Start timer
 		matchTimer = new FixedCountDownTimer(10*SECONDS, 1*SECONDS) {
 			@Override
 			public void onStart() {
 				mClock.setText("9");				
 			}
-			
+
 			@Override
 			public void onTick(long millisUntilFinished) {
 				mClock.setText("" + ((millisUntilFinished/1000) - (millisUntilFinished % 1000 == 0 ? 1 : 0)));
 			}
-			
+
 			@Override
 			public void onFinish() {
 				cancel();
 				startTeleOp();
 			}
-			
+
 		};
 		matchTimer.start();
 	}
@@ -594,28 +611,28 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		return new SimpleTextFragment().newInstance("Missing Fields!"
 				, msg, "OK",
 				new DialogInterface.OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
 					}
 				}, false);
 	}
-	
+
 	private void noShow() {
 		new SimpleTextFragment().newInstance("Missing Fields!"
 				, "Are you sure this robot is not showing up for this match?", "Yes",
 				new DialogInterface.OnClickListener() {
-					
+
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						finish();
 					}
 				}, true).show(getSupportFragmentManager(), "MISSING_FIELDS");
 	}
-	
- 	private void startTeleOp() {
-//		matchTimer = new FixedCountDownTimer(140*SECONDS, 1000) {
+
+	private void startTeleOp() {
+		//		matchTimer = new FixedCountDownTimer(140*SECONDS, 1000) {
 		matchTimer = new FixedCountDownTimer(30*SECONDS, 1000) {
 			@Override
 			public void onStart() {
@@ -630,7 +647,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				endMatch();
 			}
 		}.start();
-		
+
 		int autonPossessionCounter = (initialPossession ? 1 : 0) + autonBallPickup;
 		int autonShotCounter = autonHighTotal + autonLowTotal;
 		boolean initTeleOpPossession = autonShotCounter < autonPossessionCounter;
@@ -639,31 +656,31 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			possessions.add(new Possession());
 		}
 		else controlsFlipper.setDisplayedChild(3);
-		
+
 		CURRENT_GAME_MODE = initTeleOpPossession ? TELEOP_POSSESSION : TELEOP_NO_POSSESSION;
 		((TextView) findViewById(R.id.auton_text)).setTextColor(
 				getResources().getColor(android.R.color.secondary_text_dark));
 		((TextView) findViewById(R.id.tele_op_text)).setTextColor(getResources().getColor(android.R.color.black));
-		
+
 		undoList.clear();
 	}
-	
+
 	private void toggleControls(boolean undo) {
 		if (CURRENT_GAME_MODE == TELEOP_POSSESSION) {
 			CURRENT_GAME_MODE = TELEOP_NO_POSSESSION;
 			controlsFlipper.setInAnimation(this, R.anim.in_from_right);
 			controlsFlipper.setOutAnimation(this, R.anim.out_to_left);
 			controlsFlipper.showNext();
-			
+
 			if (undo) possessions.remove(possessions.size()-1);
 			else possessions.get(possessions.size()-1).finish();
-			
+
 		} else {
 			CURRENT_GAME_MODE = TELEOP_POSSESSION;
 			controlsFlipper.setInAnimation(this, R.anim.in_from_left);
 			controlsFlipper.setOutAnimation(this, R.anim.out_to_right);
 			controlsFlipper.showPrevious();
-			
+
 			if (undo) possessions.get(possessions.size()-1).restartPossession();
 			else possessions.add(new Possession());
 		}
@@ -695,10 +712,10 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			t.setText("" + trussPoints + " / " + ++trussTotal);
 		}
 	}
-	
+
 	private void updateButtonText(View parentLayout, int x, int outOf) {
 		TextView t = (TextView) ((ViewGroup) parentLayout).getChildAt(1);
-			t.setText("" + x + " / " + outOf);
+		t.setText("" + x + " / " + outOf);
 	}
 
 	private void setForwardMovement(View view, boolean completed) {
@@ -714,7 +731,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			button.setText(R.string.forward_movement);
 		}
 	}
-	
+
 	private void undo() {
 		if (undoList.size() == 0) return;
 		int key = undoList.get(undoList.size()-1);
@@ -840,7 +857,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 		displayMenuItem = !displayMenuItem;
 		invalidateOptionsMenu();
 		System.out.println("Visibility " + menu.findItem(R.id.submit).isVisible());
-		
+
 		mViewFlipper.showNext();
 		matchTimer.cancel();
 
@@ -854,12 +871,12 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				((EditText) findViewById(R.id.notes)).getText().toString());
 		((CheckedTextView) findViewById(R.id.beginning_possession_review)).setChecked(initialPossession);
 		((CheckedTextView) findViewById(R.id.showed_up_review)).setChecked(showedUp);
-		
-		
+
+
 		final View robotReview = findViewById(R.id.robot_review);
 		String entries[] = {"Blue", "Red"};
 		ArrayAdapter<String> a = new ArrayAdapter<String>(this, R.layout.spinner_textview, entries);
-			a.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+		a.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
 		Spinner alliance = ((Spinner) findViewById(R.id.alliance_review));
 		alliance.setAdapter(a);
 		alliance.setOnItemSelectedListener(new OnItemSelectedListener(){
@@ -877,7 +894,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				}
 				firstTime = false;
 			}
-	
+
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {}
 		});
@@ -890,16 +907,16 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			robotReview.setBackgroundColor(Color.parseColor("#50cc0000"));
 			robotReview.setVisibility(View.VISIBLE);
 		}
-		
+
 		int[] reviewIds = {
 				R.id.match_scouting_review_auton,
 				R.id.match_scouting_review_teleop_with,
 				R.id.match_scouting_review_teleop_without,
 				R.id.match_scouting_review_penalties
 		};
-		
+
 		reviewLayouts = getReviewLayouts();
-		
+
 		for (int x=0; x<reviewIds.length; x++) {
 			for (int i=0; i<reviewLayouts[x].length; i++) {
 				LinearLayout parent = (LinearLayout) findViewById(reviewIds[x]);
@@ -912,119 +929,133 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				}
 			}
 		}		
-//		recalculateFinalStats();
+		//		recalculateFinalStats();
 	}
-	
-	
+
+
 	private ReviewLayout[][] getReviewLayouts() {
 		ReviewLayout[][] layout = {
-			{
-				new ReviewLayout(this, "Low Goal Shots Made, Not Hot", autonLowGoal-autonLowHot),//8
-				new ReviewLayout(this, "Low Goal Shots Made, Hot", autonLowHot),
-				new ReviewLayout(this, "Low Goal Shots Missed", autonLowTotal-autonLowGoal),
-				new ReviewLayout(this, "High Goal Shots Made, Not Hot", autonHighGoal-autonHighHot),
-				new ReviewLayout(this, "High Goal Shots Made, Hot", autonHighHot),
-				new ReviewLayout(this, "High Goal Shots Missed", autonHighTotal-autonHighGoal),
-				new ReviewLayout(this, "Balls Picked Up", autonBallPickup),
-				new ReviewLayout(this, "Moved Forward?", autonForwardMovement),//15
-				new ReviewLayout(this, "Blocks", autonBlocks)//16
-			},
-			{
-				new ReviewLayout(this, "Low Goal Shots Made", teleopLowGoal),//17
-				new ReviewLayout(this, "Low Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
-				new ReviewLayout(this, "High Goal Shots Made", teleopLowGoal),
-				new ReviewLayout(this, "High Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
-				new ReviewLayout(this, "Passes to Other Robots", passToRobot),
-				new ReviewLayout(this, "Passes to Human Players", passToHP),
-				new ReviewLayout(this, "Throws over Truss", trussPoints),
-				new ReviewLayout(this, "Throws over Truss, Missed", trussTotal-trussPoints),
-				new ReviewLayout(this, "Balls Lost", ballsLost)//25
-			},
-			{
-				new ReviewLayout(this, "Blocks", blocks),//26
-				new ReviewLayout(this, "Deflections", deflections),
-				new ReviewLayout(this, "Passes from Other Robots", passFromRobot),
-				new ReviewLayout(this, "Passes from Human Players", passFromHP),
-				new ReviewLayout(this, "Catches", catches),
-				new ReviewLayout(this, "Balls Picked Up", ballPickup)//31
-			},
-			{
-				new ReviewLayout(this, "Autonomous Fouls (10 Points)", autonFouls),
-				new ReviewLayout(this, "Autonomous Technical Fouls (50 Points)", autonTechFouls),
-				new ReviewLayout(this, "Fouls (10 Points)", fouls),
-				new ReviewLayout(this, "Technical Fouls (50 Points)", techFouls),//35
-			}
+				{
+					new ReviewLayout(this, "Low Goal Shots Made, Not Hot", autonLowGoal-autonLowHot),//8
+					new ReviewLayout(this, "Low Goal Shots Made, Hot", autonLowHot),
+					new ReviewLayout(this, "Low Goal Shots Missed", autonLowTotal-autonLowGoal),
+					new ReviewLayout(this, "High Goal Shots Made, Not Hot", autonHighGoal-autonHighHot),
+					new ReviewLayout(this, "High Goal Shots Made, Hot", autonHighHot),
+					new ReviewLayout(this, "High Goal Shots Missed", autonHighTotal-autonHighGoal),
+					new ReviewLayout(this, "Balls Picked Up", autonBallPickup),
+					new ReviewLayout(this, "Moved Forward?", autonForwardMovement),//15
+					new ReviewLayout(this, "Blocks", autonBlocks)//16
+				},
+				{
+					new ReviewLayout(this, "Low Goal Shots Made", teleopLowGoal),//17
+					new ReviewLayout(this, "Low Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
+					new ReviewLayout(this, "High Goal Shots Made", teleopLowGoal),
+					new ReviewLayout(this, "High Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
+					new ReviewLayout(this, "Passes to Other Robots", passToRobot),
+					new ReviewLayout(this, "Passes to Human Players", passToHP),
+					new ReviewLayout(this, "Throws over Truss", trussPoints),
+					new ReviewLayout(this, "Throws over Truss, Missed", trussTotal-trussPoints),
+					new ReviewLayout(this, "Balls Lost", ballsLost)//25
+				},
+				{
+					new ReviewLayout(this, "Blocks", blocks),//26
+					new ReviewLayout(this, "Deflections", deflections),
+					new ReviewLayout(this, "Passes from Other Robots", passFromRobot),
+					new ReviewLayout(this, "Passes from Human Players", passFromHP),
+					new ReviewLayout(this, "Catches", catches),
+					new ReviewLayout(this, "Balls Picked Up", ballPickup)//31
+				},
+				{
+					new ReviewLayout(this, "Autonomous Fouls (10 Points)", autonFouls),
+					new ReviewLayout(this, "Autonomous Technical Fouls (50 Points)", autonTechFouls),
+					new ReviewLayout(this, "Fouls (10 Points)", fouls),
+					new ReviewLayout(this, "Technical Fouls (50 Points)", techFouls),//35
+				}
 		};
 		return layout;
 	}
-	
+
 	public void saveData(MenuItem item) {
 		String[] data = new String[37];
-			data[0] = ((EditText) findViewById(R.id.match_number_review)).getEditableText().toString();
-			data[1] = ((EditText) findViewById(R.id.team_number_review)).getEditableText().toString();
-			data[2] = ALLIANCE;
-			
-			Calendar c = Calendar.getInstance();
-			String s = "Scouted by " + ((EditText) findViewById(R.id.scouted_by_review)).getEditableText().toString() +
-					" at " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + " " + c.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.US) +
-					" on " + c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US) +
-					", " + c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + c.get(Calendar.DATE) + ", " + c.get(Calendar.YEAR);
-			data[3] = s;
-			
-			data[4]	= ((EditText) findViewById(R.id.notes_review)).getEditableText().toString().trim();
-			data[5] = String.valueOf(initialPossession);
-			data[6] = String.valueOf(showedUp);
-			data[7] = findViewById(R.id.robot_review).getX() + "," + findViewById(R.id.robot_review).getY();
-			int index = 8;
-			for (int i = 0; i<reviewLayouts.length; i++) {
-				for (int j = 0; j<reviewLayouts[i].length; j++) {
-					data[index++] = reviewLayouts[i][j].getFinalValue();
-				}
+		data[0] = ((EditText) findViewById(R.id.match_number_review)).getEditableText().toString();
+		data[1] = ((EditText) findViewById(R.id.team_number_review)).getEditableText().toString();
+		data[2] = ALLIANCE;
+
+		Calendar c = Calendar.getInstance();
+		String s = "Scouted by " + ((EditText) findViewById(R.id.scouted_by_review)).getEditableText().toString() +
+				" at " + c.get(Calendar.HOUR) + ":" + c.get(Calendar.MINUTE) + " " + c.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.US) +
+				" on " + c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US) +
+				", " + c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " " + c.get(Calendar.DATE) + ", " + c.get(Calendar.YEAR);
+		data[3] = s;
+
+		data[4]	= ((EditText) findViewById(R.id.notes_review)).getEditableText().toString().trim();
+		data[5] = String.valueOf(initialPossession);
+		data[6] = String.valueOf(showedUp);
+		data[7] = findViewById(R.id.robot_review).getX() + "," + findViewById(R.id.robot_review).getY();
+		int index = 8;
+		for (int i = 0; i<reviewLayouts.length; i++) {
+			for (int j = 0; j<reviewLayouts[i].length; j++) {
+				data[index++] = reviewLayouts[i][j].getFinalValue();
 			}
-			data[index] = "";
-			for (int i=0; i<possessions.size(); i++) {
-				if (i!=0) data[index] += "||";
-				data[index] += possessions.get(i).print();
-			}
-			System.out.println(data.length + "");
+		}
+		data[index] = "";
+		for (int i=0; i<possessions.size(); i++) {
+			if (i!=0) data[index] += "||";
+			data[index] += possessions.get(i).print();
+		}
+		System.out.println(data.length + "");
 		new Competition(this, "SCMB").addToMatchScouting(data);
+		Toast.makeText(this, "Data stored.", Toast.LENGTH_LONG).show();
+		recreate();
 	}
 
-//	public void recalculateFinalStats() {
-//			int points = autonHighGoal 	* 15 +
-//						autonHighHot 	* 5  +
-//						autonLowGoal 	* 6  +
-//						autonLowHot 	* 5  +
-//						teleopHighGoal 	* 10 +
-//						teleopLowGoal	* 1	 +
-//						catches 		* 10 +
-//						trussPoints 	* 10 +
-//						(autonForwardMovement ? 5 : 0);
-//			((TextView) findViewById(R.id.total_points)).setText("" + points);
-//			
-//			int penalties = (autonFouls + fouls) * 10 +
-//					(techFouls + fouls) * 50;
-//			((TextView) findViewById(R.id.total_penalties)).setText("" + penalties);
-//	
-//			((TextView) findViewById(R.id.net_points)).setText("" + (points-penalties));
-//	}
+	//	public void recalculateFinalStats() {
+	//			int points = autonHighGoal 	* 15 +
+	//						autonHighHot 	* 5  +
+	//						autonLowGoal 	* 6  +
+	//						autonLowHot 	* 5  +
+	//						teleopHighGoal 	* 10 +
+	//						teleopLowGoal	* 1	 +
+	//						catches 		* 10 +
+	//						trussPoints 	* 10 +
+	//						(autonForwardMovement ? 5 : 0);
+	//			((TextView) findViewById(R.id.total_points)).setText("" + points);
+	//			
+	//			int penalties = (autonFouls + fouls) * 10 +
+	//					(techFouls + fouls) * 50;
+	//			((TextView) findViewById(R.id.total_penalties)).setText("" + penalties);
+	//	
+	//			((TextView) findViewById(R.id.net_points)).setText("" + (points-penalties));
+	//	}
 
 	int PX (int dp) {return Utilities.PX(this, dp);}
-	
+
+	public static void start(Activity activity) {
+		Intent i = new Intent(activity, com.steelhawks.hawkscout.MatchScouting.class);
+		activity.startActivity(i);
+	}
+
+	public static void start(Activity activity, String teamNumber, String matchNumber) {
+		Intent i = new Intent(activity, com.steelhawks.hawkscout.MatchScouting.class);
+		i.putExtra(ACTIVITY_INTENT_1, teamNumber);
+		i.putExtra(ACTIVITY_INTENT_2, matchNumber);
+		activity.startActivity(i);
+	}
+
 	class Possession {
-		
+
 		private String gainedPossessionBy;
 		private int startTime = 0;
 		private int finishTime = 0;
 		private String lostPossessionBy;
-		
+
 		public Possession () {
 			gainedPossessionBy =
 					undoList.size() == 0 ? "Autonomous Possession" : getPossessionString(undoList.get(undoList.size()-1));
 			startTime = matchTimer.getSecondsLeft();
 			System.out.println("Gained Possession: " + gainedPossessionBy + " at " + startTime);
 		}
-		
+
 		private String getPossessionString(int key) {
 			switch(key) {
 			case UndoKeys.PASS_TO_HUMAN_PLAYER:
@@ -1056,22 +1087,22 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 			}
 			return "Autonomous Possession";
 		}
-		
+
 		public void finish() {
 			lostPossessionBy = getPossessionString(undoList.get(undoList.size()-1));
 			finishTime = matchTimer.getSecondsLeft();
 			System.out.println("Possession End: " + lostPossessionBy + " at " + finishTime);
 		}
-		
+
 		public void restartPossession() {
 			lostPossessionBy = null;
 			finishTime = 0;
 			System.out.println("Restarting Possession: " + gainedPossessionBy + " at " + startTime);
 		}
-		
+
 		public String print() {
 			return gainedPossessionBy + "|" + lostPossessionBy + "|" + startTime + "|" + finishTime;
 		}
 	}
-	
+
 }

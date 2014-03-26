@@ -192,7 +192,7 @@ public class Competition {
 	
 	public String[] getMatchInfoByNumber(String matchNumber) {
 		for (int x=0; x<matches.size(); x++) {
-			if (matches.get(x)[1].equals(matchNumber)) return matches.get(x);
+			if (matches.get(x)[1].trim().equals(matchNumber.trim())) return matches.get(x);
 		}
 		return null;
 	}

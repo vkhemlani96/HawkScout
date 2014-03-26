@@ -50,12 +50,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.steelhawks.hawkscout.Globals.UserTeam.getChildren;
 import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Parameter;
 import com.steelhawks.hawkscout.teamactivity.MatchesViewPager;
+import com.steelhawks.hawkscout.util.GraphView;
 import com.steelhawks.hawkscout.util.Utilities;
-import com.steelhawks.hawkscout.util.VerticalViewPager;
 
 public class TeamActivityMain extends FragmentActivity implements
 ActionBar.TabListener {
@@ -282,7 +281,7 @@ ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_team_dummy,
+			LinearLayout rootView = (LinearLayout) inflater.inflate(R.layout.fragment_team_dummy,
 					container, false);
 			TextView dummyTextView = (TextView) rootView
 					.findViewById(R.id.section_label);
@@ -290,6 +289,7 @@ ActionBar.TabListener {
 					ARG_SECTION_NUMBER)));
 			return rootView;
 		}
+	    
 	}
 
 	public static class PitDataFragment extends Fragment {

@@ -778,6 +778,10 @@ public class PitScoutingMain extends FragmentActivity {
 		currentComp.addToPitScouting(data);
 		
 	}
+	
+	public static void start(Activity activity) {
+		start(activity, null);
+	}
 
 	public static void start(Activity activity, String teamNumber) {
 		start(activity, teamNumber, null);

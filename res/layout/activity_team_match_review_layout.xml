@@ -987,17 +987,36 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/more"
-            style="@android:style/TextAppearance.Small"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/crimson_gray_background"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="View More" >
-        </TextView>
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/stats"
+                style="@android:style/TextAppearance.Small"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/crimson_gray_background"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="View Stats" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/more"
+                style="@android:style/TextAppearance.Small"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/crimson_gray_background"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="View Match Specifics" >
+            </TextView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -1085,7 +1104,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:scrollbarDefaultDelayBeforeFade="300">
+            android:scrollbarDefaultDelayBeforeFade="300" >
 
             <LinearLayout
                 android:id="@+id/possessions"
@@ -1094,6 +1113,7 @@
                 android:orientation="vertical" >
             </LinearLayout>
         </ScrollView>
+
         <TextView
             style="@style/section_title"
             android:text="@string/notes" >
@@ -1101,16 +1121,174 @@
 
         <View style="@style/red_seperator" >
         </View>
-        
+
         <TextView
+            android:id="@id/notes"
+            style="@android:style/TextAppearance.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:minHeight="48dp"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:id="@id/notes"
-            android:gravity="center_vertical"
-            style="@android:style/TextAppearance.Medium"></TextView>
+            android:paddingRight="16dp" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="210px"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:id="@+id/score_graph"
+                android:layout_width="210px"
+                android:layout_height="210px"
+                android:gravity="center"
+                android:paddingBottom="10px"
+                android:paddingRight="10px" >
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/red" >
+                </TextView>
+
+                <TextView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#ffcccccc" >
+                </TextView>
+
+                <TextView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:text="Autonomous Scored:" >
+                </TextView>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:text="Teleoperated Scored:" >
+                </TextView>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:text="Total Points Scored:" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="25" >
+                </TextView>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="75" >
+                </TextView>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="100" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="25%" >
+                </TextView>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="75%" >
+                </TextView>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="100%" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </ViewFlipper>
