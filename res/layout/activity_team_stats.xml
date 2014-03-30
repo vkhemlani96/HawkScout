@@ -304,7 +304,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -312,12 +312,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/avg_ppm" >
+                    android:id="@+id/avg_ppm"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -325,8 +325,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/avg_fpm">
+                    android:id="@+id/avg_fpm"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -336,7 +336,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -344,12 +344,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/blocks_deflections_per_match" >
+                    android:id="@+id/blocks_deflections_per_match"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -357,8 +357,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/percent_of_total_alliance_score" >
+                    android:id="@+id/percent_of_total_alliance_score"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -368,7 +368,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -376,12 +376,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/possessions_per_match" >
+                    android:id="@+id/possessions_per_match"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -389,8 +389,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/points_per_possession" >
+                    android:id="@+id/points_per_possession"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -400,7 +400,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -408,12 +408,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/auton_high_goal" >
+                    android:id="@+id/auton_high_goal"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -421,8 +421,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/auton_low_goal">
+                    android:id="@+id/auton_low_goal"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -432,7 +432,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -440,12 +440,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/teleop_high_goal" >
+                    android:id="@+id/teleop_high_goal"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -453,8 +453,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/teleop_low_goal" >
+                    android:id="@+id/teleop_low_goal"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -464,7 +464,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -472,12 +472,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/truss_points" >
+                    android:id="@+id/truss_points"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -485,8 +485,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/catches" >
+                    android:id="@+id/catches"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -496,7 +496,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -504,12 +504,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/fouls" >
+                    android:id="@+id/fouls"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -517,8 +517,8 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/tech_fouls" >
+                    android:id="@+id/tech_fouls"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
@@ -528,7 +528,7 @@
 
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -536,12 +536,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/passes_from_hp" >
+                    android:id="@+id/passes_from_hp"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -549,15 +549,17 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/passes_from_robots" >
+                    android:id="@+id/passes_from_robots"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
-        
+
+        <View style="@style/thin_seperator" />
+
         <LinearLayout style="@style/team_row_layout" >
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -565,12 +567,12 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/passes_to_HP" >
+                    android:id="@+id/passes_to_HP"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
 
-            <LinearLayout style="@style/team_column_layout">
+            <LinearLayout style="@style/team_column_layout" >
 
                 <TextView
                     style="@style/team_text_stat_title"
@@ -578,77 +580,245 @@
                 </TextView>
 
                 <TextView
-                    style="@style/team_text_stat"
-                    android:id="@+id/passes_to_robots" >
+                    android:id="@+id/passes_to_robots"
+                    style="@style/team_text_stat" >
                 </TextView>
             </LinearLayout>
         </LinearLayout>
-        
-        <include layout="@layout/activity_team_match_review_stats"/>
-        
-<!--         <TextView style="@style/section_title" -->
-<!--             android:text="1-2-3 Plays"/> -->
-<!--         <View style="@style/red_seperator"></View> -->
-<!--             <LinearLayout -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="48dp" -->
-<!--                 android:orientation="horizontal"> -->
 
-<!--                 <TextView -->
-<!--                     style="@android:style/TextAppearance.Medium" -->
-<!--                     android:layout_width="0dp" -->
-<!--                     android:layout_height="match_parent" -->
-<!--                     android:layout_weight="1" -->
-<!--                     android:gravity="center" -->
-<!--                     android:text="@string/inbound_from_human_player_and_pass_to_robot" -->
-<!--                     android:textStyle="bold" ></TextView> -->
-<!--                 <TextView style="@android:style/TextAppearance.Medium" -->
-<!--                     android:layout_height="match_parent" -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:gravity="center" -->
-<!--                     android:text="2"></TextView> -->
-                    
-<!--             </LinearLayout> -->
-<!--             <LinearLayout -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="48dp" -->
-<!--                 android:orientation="horizontal"> -->
+        <include layout="@layout/activity_team_match_review_stats" />
 
-<!--                 <TextView -->
-<!--                     style="@android:style/TextAppearance.Medium" -->
-<!--                     android:layout_width="0dp" -->
-<!--                     android:layout_height="match_parent" -->
-<!--                     android:layout_weight="1" -->
-<!--                     android:gravity="center" -->
-<!--                     android:text="Pass From Robot and Pass To Robot" -->
-<!--                     android:textStyle="bold" ></TextView> -->
-<!--                 <TextView style="@android:style/TextAppearance.Medium" -->
-<!--                     android:layout_height="match_parent" -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:gravity="center" -->
-<!--                     android:text="2"></TextView> -->
-                    
-<!--             </LinearLayout> -->
-<!--             <LinearLayout -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="48dp" -->
-<!--                 android:orientation="horizontal"> -->
+        <TextView
+            style="@style/section_title"
+            android:text="1-2-3 Plays" />
 
-<!--                 <TextView -->
-<!--                     style="@android:style/TextAppearance.Medium" -->
-<!--                     android:layout_width="0dp" -->
-<!--                     android:layout_height="match_parent" -->
-<!--                     android:layout_weight="1" -->
-<!--                     android:gravity="center" -->
-<!--                     android:text="Pass From Robot Goal" -->
-<!--                     android:textStyle="bold" ></TextView> -->
-<!--                 <TextView style="@android:style/TextAppearance.Medium" -->
-<!--                     android:layout_height="match_parent" -->
-<!--                     android:layout_width="wrap_content" -->
-<!--                     android:gravity="center" -->
-<!--                     android:text="2"></TextView> -->
-                    
-<!--             </LinearLayout> -->
+        <View style="@style/red_seperator" >
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Recieved Pass from Human Player, Passed to Robot" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/HPtoRobot1" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Recieved Pass from Robot, Passed to Robot" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/robotToRobot" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Recieved Pass from Robot, Scored Goal" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/robotToGoal" >
+            </TextView>
+        </LinearLayout>
+
+        <TextView
+            style="@style/section_title"
+            android:text="In-And-Out (Robots 1 and 2)" />
+
+        <View style="@style/red_seperator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Recieved Pass from Human Player, Passed to Robot" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/HPToRobot2" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Recieved Pass from Robot, Shot over Truss" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/robotToTruss" >
+            </TextView>
+        </LinearLayout>
+
+        <TextView
+            style="@style/section_title"
+            android:text="2 Offense - 1 Defense (Robot 1)" />
+
+        <View style="@style/red_seperator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Inbound from Human Player, Shot over Truss" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/HPToTruss" >
+            </TextView>
+        </LinearLayout>
+
+        <TextView
+            style="@style/section_title"
+            android:text="In-And-Out (Robot 3), 2 Offense - 1 Defense (Robot 2)" />
+
+        <View style="@style/red_seperator" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Caught Ball, Scored Goal" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/catchToGoal" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Inbound from Human Player, Scored Goal" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/HPToGoal" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Picked Up Ball, Scored Goal" >
+            </TextView>
+
+            <TextView
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:id="@+id/pickUpToGoal" >
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

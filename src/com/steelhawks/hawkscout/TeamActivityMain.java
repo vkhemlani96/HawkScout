@@ -54,6 +54,7 @@ import android.widget.ViewFlipper;
 import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Indices.MatchIndex;
 import com.steelhawks.hawkscout.data.Indices.MatchScoutingIndex;
+import com.steelhawks.hawkscout.data.Indices.PossessionIndex;
 import com.steelhawks.hawkscout.data.Parameter;
 import com.steelhawks.hawkscout.teamactivity.MatchesViewPager;
 import com.steelhawks.hawkscout.util.GraphView;
@@ -810,7 +811,7 @@ ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			ScrollView root = (ScrollView) inflater.inflate(R.layout.team_activity_stats,
+			ScrollView root = (ScrollView) inflater.inflate(R.layout.activity_team_stats,
 					container, false);
 
 			LayoutParams wrap = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -819,8 +820,11 @@ ActionBar.TabListener {
 			int totalPoints = 0, totalFouls = 0, totalBlocksDeflections = 0, totalAllianceScore = 0, possessionCount = 0, autonHighGoalMade = 0,
 					autonHighGoalHot = 0, autonHighGoalTotal = 0, autonLowGoalMade = 0, autonLowGoalHot = 0, autonLowGoalTotal = 0, teleopHighGoalMade = 0,
 					teleopHighGoalTotal = 0, teleopLowGoalMade = 0, teleopLowGoalTotal = 0, trussMade = 0, trussTotal = 0, catches = 0, fouls = 0, 
-					techFouls = 0, passesFromHP = 0, passesToHP = 0, passesFromRobo = 0, passesToRobo = 0;
-			int HPtoRobot = 0, robotToTruss = 0, HPtoGoal = 0, catchToGoal = 0, robotToRobot = 0; 
+					techFouls = 0, passesFromHP = 0, passesToHP = 0, passesFromRobo = 0, passesToRobo = 0, possessionTime = 0;
+			int HPtoRobot = 0, robotToRobot = 0, robotToGoalHighMade = 0, robotToGoalHighMissed = 0, robotToGoalLowMade = 0, robotToGoalLowMissed = 0, 
+					robotToTruss = 0, robotToTrussMissed = 0, HPtoTruss = 0, HPToTrussMissed = 0, catchToGoalHighMade = 0, catchToGoalHighMissed = 0, catchToGoalLowMissed = 0, catchToGoalLowMade = 0,
+					HPToGoalHighMade = 0, HPToGoalHighMissed = 0, HPToGoalLowMissed = 0, HPToGoalLowMade = 0,
+					pickUpToGoalHighMade = 0, pickUpToGoalHighMissed = 0, pickUpToGoalLowMissed = 0, pickUpToGoalLowMade = 0;
 
 			LinearLayout graph = new LinearLayout(getActivity());
 			RelativeLayout.LayoutParams relativeWrap = new RelativeLayout.LayoutParams(wrap);
@@ -833,6 +837,7 @@ ActionBar.TabListener {
 				String[] data = currentComp.getMatchScoutingDataForTeam(matches.get(x), teamNumber);
 				if (data != null) {
 					totalMatches++;
+					System.out.println(totalMatches);
 					totalPoints += getPointsScoredForMatch(data);
 					totalFouls += getFoulsForMatch(data);
 					totalBlocksDeflections += Integer.parseInt(data[MatchScoutingIndex.TELEOP_BLOCKS].trim()) +
@@ -877,6 +882,7 @@ ActionBar.TabListener {
 
 					LayoutParams wrapWithMargins = (LayoutParams) parent.getLayoutParams();
 					wrapWithMargins.leftMargin = wrapWithMargins.rightMargin = PX(4);
+					wrapWithMargins.gravity = Gravity.BOTTOM;
 					parent.setLayoutParams(wrapWithMargins);
 
 					float pointsScored = getPointsScoredForMatch(data);
@@ -932,7 +938,44 @@ ActionBar.TabListener {
 
 					graph.addView(parent);
 
+					String[] possessions = data[MatchScoutingIndex.POSSESSIONS].trim().split("\\|\\|");
+					for (int y=0; y<possessions.length; y++) {
 
+						String[] possessionPart = possessions[y].trim().split("\\|");
+						if (possessionPart[PossessionIndex.POSSESSION_END].trim().equals("null")) {
+							possessionTime += Integer.parseInt(possessionPart[PossessionIndex.START_TIME].trim());
+						} else {
+							possessionTime += Integer.parseInt(possessionPart[PossessionIndex.START_TIME].trim())
+									- Integer.parseInt(possessionPart[PossessionIndex.END_TIME].trim());
+						}
+						
+						String start = possessionPart[PossessionIndex.POSSESSION_START].trim();
+						String end = possessionPart[PossessionIndex.POSSESSION_END].trim();
+								
+						if (start.equals("Pass from HP") &&	end.equals("Passed to Robot")) HPtoRobot++;
+						else if (start.equals("Pass from Robot") && end.equals("Passed to Robot")) robotToRobot++;
+						else if (start.equals("Pass from Robot") && end.equals("Made High Goal")) robotToGoalHighMade++;
+						else if (start.equals("Pass from Robot") && end.equals("Made Low Goal")) robotToGoalLowMade++;
+						else if (start.equals("Pass from Robot") && end.equals("Missed High Goal")) robotToGoalHighMissed++;
+						else if (start.equals("Pass from Robot") && end.equals("Missed Low Goal")) robotToGoalLowMissed++;
+						else if (start.equals("Pass from HP") && end.equals("Passed to Robot")) HPtoRobot++;
+						else if (start.equals("Pass from Robot") && end.equals("Threw over Truss")) robotToTruss++;
+						else if (start.equals("Pass from Robot") && end.equals("Missed Truss")) robotToTrussMissed++;
+						else if (start.equals("Pass from HP") && end.equals("Threw over Truss")) HPtoTruss++;
+						else if (start.equals("Pass from HP") && end.equals("Missed Truss")) HPToTrussMissed++;
+						else if (start.equals("Caught Ball") && end.equals("Made High Goal")) catchToGoalHighMade++;
+						else if (start.equals("Caught Ball") && end.equals("Made Low Goal")) catchToGoalLowMade++;
+						else if (start.equals("Caught Ball") && end.equals("Missed High Goal")) catchToGoalHighMissed++;
+						else if (start.equals("Caught Ball") && end.equals("Missed Low Goal")) catchToGoalLowMissed++;
+						else if (start.equals("Pass from HP") && end.equals("Made High Goal")) HPToGoalHighMade++;
+						else if (start.equals("Pass from HP") && end.equals("Made Low Goal")) HPToGoalLowMade++;
+						else if (start.equals("Pass from HP") && end.equals("Missed High Goal")) HPToGoalHighMissed++;
+						else if (start.equals("Pass from pickUp") && end.equals("Missed Low Goal")) pickUpToGoalLowMissed++;
+						else if (start.equals("Picked up Stray Ball") && end.equals("Made High Goal")) pickUpToGoalHighMade++;
+						else if (start.equals("Picked up Stray Ball") && end.equals("Made Low Goal")) pickUpToGoalLowMade++;
+						else if (start.equals("Picked up Stray Ball") && end.equals("Missed High Goal")) pickUpToGoalHighMissed++;
+						else if (start.equals("Picked up Stray Ball") && end.equals("Missed Low Goal")) pickUpToGoalLowMissed++;
+					}
 				}
 			}
 			((RelativeLayout) root.findViewById(R.id.graph_parent)).addView(graph);
@@ -961,26 +1004,26 @@ ActionBar.TabListener {
 			((TextView) root.findViewById(R.id.passes_to_HP)).setText(passesToHP + "");
 			((TextView) root.findViewById(R.id.passes_from_robots)).setText(passesFromRobo + "");
 			((TextView) root.findViewById(R.id.passes_to_robots)).setText(passesToRobo + "");
-			
+
 			int autonPoints = autonHighGoalMade * 15 + autonHighGoalHot * 5 + autonLowGoalHot * 5 + autonLowGoalMade * 6;
 			int highGoalPoints = teleopHighGoalMade * 10;
 			int lowGoalPoints = teleopLowGoalMade;
 			int trussPoints = trussMade * 10;
 			int catchPoints = catches * 10;
 			int total = autonPoints + highGoalPoints + lowGoalPoints + trussPoints + catchPoints;
-			
+
 			((TextView) root.findViewById(R.id.autonomous_scored_stat)).setText(autonPoints + "");
 			((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(100*autonPoints/total + "%");
 			if (autonPoints == 0) ((View) root.findViewById(R.id.autonomous_scored_stat).getParent()).setAlpha(.5f);
-			
+
 			((TextView) root.findViewById(R.id.high_goal_scored_stat)).setText(highGoalPoints + "");
 			((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(100*highGoalPoints/total + "%");
 			if (highGoalPoints == 0) ((View) root.findViewById(R.id.high_goal_scored_stat).getParent()).setAlpha(.5f);
-			
+
 			((TextView) root.findViewById(R.id.low_goal_scored_stat)).setText(lowGoalPoints + "");
 			((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(100*lowGoalPoints/total + "%");
 			if (lowGoalPoints == 0) ((View) root.findViewById(R.id.low_goal_scored_stat).getParent()).setAlpha(.5f);
-			
+
 			((TextView) root.findViewById(R.id.truss_scored_stat)).setText(trussPoints + "");
 			((TextView) root.findViewById(R.id.truss_scored_percent)).setText(100*trussPoints/total + "%");
 			if (trussPoints == 0) ((View) root.findViewById(R.id.truss_scored_stat).getParent()).setAlpha(.5f);
@@ -988,14 +1031,14 @@ ActionBar.TabListener {
 			((TextView) root.findViewById(R.id.catch_scored_stat)).setText(catchPoints + "");
 			((TextView) root.findViewById(R.id.catch_scored_percent)).setText(100*catchPoints/total + "%");
 			if (catchPoints == 0) ((View) root.findViewById(R.id.catch_scored_stat).getParent()).setAlpha(.5f);
-			
+
 			float[] distributionValues = {autonPoints, highGoalPoints, lowGoalPoints, trussPoints, catchPoints};
 			((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), distributionValues));
-			
+
 			((TextView) root.findViewById(R.id.high_goal_accuracy_stat)).setText(teleopHighGoalMade + "/"+ teleopHighGoalTotal);
 			((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(100*teleopHighGoalMade/teleopHighGoalTotal + "%");
 			if (teleopHighGoalTotal == 0) ((View) root.findViewById(R.id.high_goal_accuracy_stat).getParent()).setAlpha(.5f);		
-			
+
 			((TextView) root.findViewById(R.id.low_goal_accuracy_stat)).setText(teleopLowGoalMade + "/"+ teleopLowGoalTotal);
 			((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(100*teleopLowGoalMade/teleopLowGoalTotal + "%");
 			if (teleopLowGoalTotal == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
@@ -1003,14 +1046,36 @@ ActionBar.TabListener {
 			((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
 			((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");
 			if (trussTotal == 0) ((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);	
-			
+
 			int totalMade = teleopHighGoalMade + teleopLowGoalMade + trussMade;
 			int totalTaken = teleopHighGoalTotal + teleopLowGoalTotal + trussTotal;
 			((TextView) root.findViewById(R.id.overall_accuracy_stat)).setText(totalMade + "/"+ totalTaken);
 			((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(100*totalMade/totalTaken + "%");	
-			
+
 			float[] accuracyValues = {totalMade, totalTaken-totalMade};
 			((RelativeLayout) root.findViewById(R.id.accuracy_graph)).addView(new GraphView(getActivity(), accuracyValues));
+
+			((TextView) root.findViewById(R.id.time_with_possession_stat)).setText(possessionTime + "s");
+			((TextView) root.findViewById(R.id.time_with_possession_percent)).setText(((int) (100.0*possessionTime/140 + .5)) + "%");
+			((TextView) root.findViewById(R.id.time_without_possession_stat)).setText((int) (140*totalMatches-possessionTime) + "s");
+			((TextView) root.findViewById(R.id.time_without_possession_percent)).setText(((int) (100*(140.0*totalMatches-possessionTime)/(140*totalMatches) + .5)) + "%");
+
+			float[] timeValues = {possessionTime, (int) (140*totalMatches)-possessionTime};
+			((RelativeLayout) root.findViewById(R.id.time_graph)).addView(new GraphView(getActivity(), timeValues));
+
+			((TextView) root.findViewById(R.id.HPtoRobot1)).setText(HPtoRobot + "");	
+			((TextView) root.findViewById(R.id.robotToRobot)).setText(robotToRobot + "");	
+			((TextView) root.findViewById(R.id.robotToGoal)).setText(robotToGoalHighMade + "/" + (robotToGoalHighMade + robotToGoalHighMissed) + " High, " +
+					robotToGoalLowMade + "/" + (robotToGoalLowMade+robotToGoalLowMissed) + " Low");	
+			((TextView) root.findViewById(R.id.HPToRobot2)).setText(HPtoRobot + "");	
+			((TextView) root.findViewById(R.id.robotToTruss)).setText(robotToTruss + "/" + (robotToTruss+robotToTrussMissed) + "");	
+			((TextView) root.findViewById(R.id.HPToTruss)).setText(HPtoTruss + "/" + (HPtoTruss+HPToTrussMissed) + "");	
+			((TextView) root.findViewById(R.id.catchToGoal)).setText(catchToGoalHighMade + "/" + (catchToGoalHighMade + catchToGoalHighMissed) + " High, " +
+					catchToGoalLowMade + "/" + (catchToGoalLowMade+catchToGoalLowMissed) + " Low");	
+			((TextView) root.findViewById(R.id.HPToGoal)).setText(HPToGoalHighMade + "/" + (HPToGoalHighMade + HPToGoalHighMissed) + " High, " +
+					HPToGoalLowMade + "/" + (HPToGoalLowMade+HPToGoalLowMissed) + " Low");	
+			((TextView) root.findViewById(R.id.pickUpToGoal)).setText(pickUpToGoalHighMade + "/" + (pickUpToGoalHighMade + pickUpToGoalHighMissed) + " High, " +
+					pickUpToGoalLowMade + "/" + (pickUpToGoalLowMade+pickUpToGoalLowMissed) + " Low");			
 			
 			root.findViewById(R.id.buttons).setVisibility(View.GONE);
 			return root;
