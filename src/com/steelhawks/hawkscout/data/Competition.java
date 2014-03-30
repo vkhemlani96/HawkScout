@@ -1,6 +1,7 @@
 package com.steelhawks.hawkscout.data;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,6 +42,12 @@ public class Competition {
 		this.compCode = compCode;
 		
 		folderPath = context.getExternalFilesDir(compCode).getPath();
+		try {
+			new File(folderPath).createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		PIT_SCOUTING_PATH = folderPath + "/PIT_SCOUTING.txt";
 		MATCH_SCOUTING_PATH = folderPath  + "/MATCH_SCOUTING.txt";
 		SCHEDULE_PATH = folderPath + "/MATCH_SCHEDULE.txt";
@@ -138,7 +145,8 @@ public class Competition {
 	}
 		
 	private List<String[]> parseRankings() {
-		String[] text = FileIO.readTextFile(RANKINGS_PATH).split("\n");
+		String[] text = FileIO.readTextFile(RANKINGS_PATH)
+				.split("\n");
 		List<String[]> rankings = new ArrayList<String[]>();
 		
 		for (int i = 0; i<text.length; i++) {

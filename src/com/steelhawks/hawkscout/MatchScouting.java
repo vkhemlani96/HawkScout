@@ -158,7 +158,7 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 
 		setupLayout();
 		setupButtonClicks();
-
+		if (getIntent().getExtras() == null) return;
 		String teamNumber = getIntent().getExtras().getString(ACTIVITY_INTENT_1, "");
 		((EditText) findViewById(R.id.team_number)).setText(teamNumber);
 		String matchNumber = getIntent().getExtras().getString(ACTIVITY_INTENT_2, "");
