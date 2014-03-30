@@ -25,7 +25,7 @@ import com.steelhawks.hawkscout.data.Indices.PossessionIndex;
 import com.steelhawks.hawkscout.util.GraphView;
 import com.steelhawks.hawkscout.util.Utilities;
 
-public class MatchDataFragment extends Fragment {
+public class MatchDataFragment extends Fragment implements OnClickListener {
 
 	Competition currentComp;
 	String teamNumber;
@@ -33,6 +33,7 @@ public class MatchDataFragment extends Fragment {
 	String[] matchInfo;
 	String matchNumber;
 	String alliance;
+	ViewFlipper root;
 	public static final String DATA_ID = "DATA_ID";
 	public static final String MATCH_NUMBER_ID = "MATCH_NUMBER_ID";
 	public static final String TEAM_NUMBER_ID = "TEAM_NUMBER_ID";
@@ -49,7 +50,7 @@ public class MatchDataFragment extends Fragment {
 
 		if (data == null) return getEmptyMatchLayout(inflater, container, savedInstanceState);
 
-		final ViewFlipper root = (ViewFlipper) inflater.inflate(R.layout.activity_team_match_review_layout, container, false);
+		root = (ViewFlipper) inflater.inflate(R.layout.activity_team_match_review_layout, container, false);
 		((TextView) root.findViewById(R.id.match_number)).setText(matchNumber);
 
 		int[] ids = {
@@ -197,19 +198,17 @@ public class MatchDataFragment extends Fragment {
 		robot.setBackgroundColor(robotColor);
 
 		String[] possessions = data[MatchScoutingIndex.POSSESSIONS].trim().split("\\|\\|");
+		int possessionTime = 0;
 		for (int x=0; x<possessions.length; x++) {
 
 			String[] possessionPart = possessions[x].trim().split("\\|");
-			if (possessionPart[PossessionIndex.POSSESSION_END].trim().equals("null"))
+			if (possessionPart[PossessionIndex.POSSESSION_END].trim().equals("null")) {
+				possessionTime += Integer.parseInt(possessionPart[PossessionIndex.START_TIME].trim());
 				possessionPart[PossessionIndex.POSSESSION_END] = "Match Ended";
-			if (possessionPart[PossessionIndex.START_TIME].trim().length() == 2) 
-				possessionPart[PossessionIndex.START_TIME] = " " + possessionPart[PossessionIndex.START_TIME].trim();
-			if (possessionPart[PossessionIndex.END_TIME].trim().length() == 2) 
-				possessionPart[PossessionIndex.END_TIME] = possessionPart[PossessionIndex.END_TIME].trim() + " ";
-			if (possessionPart[PossessionIndex.START_TIME].trim().length() == 1) 
-				possessionPart[PossessionIndex.START_TIME] = "  " + possessionPart[PossessionIndex.START_TIME].trim();
-			if (possessionPart[PossessionIndex.END_TIME].trim().length() == 1) 
-				possessionPart[PossessionIndex.END_TIME] = possessionPart[PossessionIndex.END_TIME].trim() + "  ";
+			} else {
+				possessionTime += Integer.parseInt(possessionPart[PossessionIndex.START_TIME].trim())
+						- Integer.parseInt(possessionPart[PossessionIndex.END_TIME].trim());
+			}
 
 			LinearLayout possessionRoot = (LinearLayout) inflater.inflate(R.layout.activity_team_match_review_possession_layout, null, false);
 			((TextView) possessionRoot.findViewById(R.id.possession_start)).setText(possessionPart[PossessionIndex.POSSESSION_START].trim());
@@ -225,10 +224,65 @@ public class MatchDataFragment extends Fragment {
 			}
 
 		}
-		float[] values = {25.f, 75.f};
-		((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), values));
-//		((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity()));
-//		root.findViewById(R.id.score_graph).ref
+		
+		int autonomousPoints = autonHighPoints + autonLowPoints;
+		int total = autonomousPoints + teleopHighPoints + teleopLowPoints + trussPoints + catchPoints;
+
+		((TextView) root.findViewById(R.id.autonomous_scored_stat)).setText(autonomousPoints + "");
+		((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(100*autonomousPoints/total + "%");
+		if (autonomousPoints == 0) ((View) root.findViewById(R.id.autonomous_scored_stat).getParent()).setAlpha(.5f);
+		
+		((TextView) root.findViewById(R.id.high_goal_scored_stat)).setText(teleopHighPoints + "");
+		((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(100*teleopHighPoints/total + "%");
+		if (teleopHighPoints == 0) ((View) root.findViewById(R.id.high_goal_scored_stat).getParent()).setAlpha(.5f);
+		
+		((TextView) root.findViewById(R.id.low_goal_scored_stat)).setText(teleopLowPoints + "");
+		((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(100*teleopLowPoints/total + "%");
+		if (teleopLowPoints == 0) ((View) root.findViewById(R.id.low_goal_scored_stat).getParent()).setAlpha(.5f);
+		
+		((TextView) root.findViewById(R.id.truss_scored_stat)).setText(trussPoints + "");
+		((TextView) root.findViewById(R.id.truss_scored_percent)).setText(100*trussPoints/total + "%");
+		if (trussPoints == 0) ((View) root.findViewById(R.id.truss_scored_stat).getParent()).setAlpha(.5f);
+
+		((TextView) root.findViewById(R.id.catch_scored_stat)).setText(catchPoints + "");
+		((TextView) root.findViewById(R.id.catch_scored_percent)).setText(100*catchPoints/total + "%");
+		if (catchPoints == 0) ((View) root.findViewById(R.id.catch_scored_stat).getParent()).setAlpha(.5f);
+		
+		float[] distributionValues = {autonomousPoints, teleopHighPoints, teleopLowPoints, trussPoints, catchPoints};
+		((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), distributionValues));
+
+		int totalHighMade = teleopHighMade + highMade;
+		int totalHigh = teleopHighTotal + highTotal;
+		((TextView) root.findViewById(R.id.high_goal_accuracy_stat)).setText(totalHighMade + "/"+ totalHigh);
+		((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(100*totalHighMade/totalHigh + "%");
+		if (totalHigh == 0) ((View) root.findViewById(R.id.high_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+
+		int totalLowMade = teleopLowMade + lowMade;
+		int totalLow = teleopLowTotal + lowTotal;
+		((TextView) root.findViewById(R.id.low_goal_accuracy_stat)).setText(totalLowMade + "/"+ totalLow);
+		((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(100*totalLowMade/totalLow + "%");
+		if (totalLow == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+
+		((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
+		((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");
+		if (trussTotal == 0) ((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);		
+		
+		int totalMade = totalHighMade + totalLowMade + trussMade;
+		int totalTaken = totalHigh + totalLow + trussTotal;
+		((TextView) root.findViewById(R.id.overall_accuracy_stat)).setText(totalMade + "/"+ totalTaken);
+		((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(100*totalMade/totalTaken + "%");	
+		
+		float[] accuracyValues = {totalMade, totalTaken-totalMade};
+		((RelativeLayout) root.findViewById(R.id.accuracy_graph)).addView(new GraphView(getActivity(), accuracyValues));
+
+		((TextView) root.findViewById(R.id.time_with_possession_stat)).setText(possessionTime + "s");
+		((TextView) root.findViewById(R.id.time_with_possession_percent)).setText(((int) (100.0*possessionTime/140 + .5)) + "%");
+		((TextView) root.findViewById(R.id.time_without_possession_stat)).setText(140-possessionTime + "s");
+		((TextView) root.findViewById(R.id.time_without_possession_percent)).setText(((int) (100*(140.0-possessionTime)/140 + .5)) + "%");
+		
+		float[] timeValues = {possessionTime, 140-possessionTime};
+		((RelativeLayout) root.findViewById(R.id.time_graph)).addView(new GraphView(getActivity(), timeValues));
+		
 
 		TextView noteView = (TextView) root.findViewById(R.id.notes);
 		String notes = data[MatchScoutingIndex.NOTES].trim();
@@ -243,24 +297,12 @@ public class MatchDataFragment extends Fragment {
 		/*
 		 * Set the "View More" button to switch to the additional information.
 		 */
-		root.findViewById(R.id.more).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				root.setInAnimation(getActivity(), R.anim.in_from_left);
-				root.setOutAnimation(getActivity(), R.anim.out_to_right);
-				root.showNext();
-			}
-		});
-		root.findViewById(R.id.stats).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				root.setInAnimation(getActivity(), R.anim.in_from_left);
-				root.setOutAnimation(getActivity(), R.anim.out_to_right);
-				root.setDisplayedChild(2);
-			}
-		});
+		root.findViewById(R.id.specfics_1).setOnClickListener(this);
+		root.findViewById(R.id.specfics_2).setOnClickListener(this);
+		root.findViewById(R.id.calcs_1).setOnClickListener(this);
+		root.findViewById(R.id.calcs_2).setOnClickListener(this);
+		root.findViewById(R.id.stats_1).setOnClickListener(this);
+		root.findViewById(R.id.stats_2).setOnClickListener(this);
 		return root;
 	}
 
@@ -290,5 +332,32 @@ public class MatchDataFragment extends Fragment {
 		matchNumber = getArguments().getString(MATCH_NUMBER_ID);
 		data = getArguments().getStringArray(DATA_ID);
 		matchInfo = getArguments().getStringArray(MATCH_INFO_ID);
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		root.setInAnimation(getActivity(), R.anim.expand_in);
+		root.setOutAnimation(getActivity(), R.anim.shrink_out);
+		switch(arg0.getId()) {
+		case R.id.calcs_1:
+			root.setDisplayedChild(2);
+			break;
+		case R.id.calcs_2:
+			root.setDisplayedChild(2);
+			break;
+		case R.id.specfics_1:
+			root.setDisplayedChild(1);
+			break;
+		case R.id.specfics_2:
+			root.setDisplayedChild(1);
+			break;
+		case R.id.stats_1:
+			root.setDisplayedChild(0);
+			break;
+		case R.id.stats_2:
+			root.setDisplayedChild(0);
+			break;
+		}
+		
 	}
 }

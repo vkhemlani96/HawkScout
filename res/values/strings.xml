@@ -541,6 +541,44 @@
     <string name="auton_starting_position">Autonomous Starting Position</string>
     <string name="possession_end">Possession End</string>
     <string name="start_time">Start Time</string>
-    <string name="end_time">End Time</string>
-
+    <string name="time">Time</string>
+    <string name="hp_to_truss">Pass from Human Player to Truss Shot:</string>
+	<string name="robot_to_truss">Pass from Robot to Truss Shot:</string>
+	<string name="robot_passes">Received Pass to Made Pass to Robot:</string>
+	<string name="hp_to_goal">Pass from Human Player to Goal:</string>
+	<string name="overall_accuracy">Overall Accuracy:</string>
+	<string name="truss_accuracy">Truss Accuracy:</string>
+	<string name="low_goal_accuracy">Low Goal Accuracy:</string>
+	<string name="high_goal_accuracy">High Goal Accuracy:</string>
+	<string name="catch_points_scored">Catch Points Scored:</string>
+	<string name="truss_points_scored">Truss Points Scored</string>
+	<string name="low_goal_points_scored">Low Goal Points Scored:</string>
+	<string name="high_goal_points_scored">High Goal Points Scored</string>
+	<string name="autonomous_scored">Autonomous Scored:</string>
+	<string name="time_without_possession">Time Without Possession</string>
+	<string name="time_with_possession">Time With Possession</string>
+	<string name="view_calculations">View Calculations</string>
+	<string name="view_match_stats">View Match Statistics</string>
+	<string name="view_match_specifics">View Match Specifics</string>
+	<string name="avg_points_per_match">AVG Points Per Match</string>
+	<string name="avg_fouls_per_match">AVG Fouls Per Match</string>
+	<string name="blocks_deflections_per_match">Blocks/Deflections Per Match</string>
+	<string name="percent_of_total_alliance_score">Percent of Total Alliance Score</string>
+	<string name="possessions_per_match">Possessions Per Match</string>
+	<string name="points_per_possession">Points Per Possession</string>
+	<string name="autonomous_high_goal">Autonomous High Goal</string>
+	<string name="autonomous_low_goal">Autonomous Low Goal</string>
+	<string name="teleoperated_high_goal">Teleoperated High Goal</string>
+	<string name="teleoperated_low_goal">Teleoperated Low Goal</string>
+	<string name="truss_shots">Truss Shots</string>
+	<string name="catches">Catches</string>
+	<string name="fouls">Fouls</string>
+	<string name="technical_fouls">Technical Fouls</string>
+	<string name="passes_recieved_from_hp">Passes Recieved From HP</string>
+	<string name="passes_recieved_from_robots">Passes Recieved From Robots</string>
+	<string name="passes_made_to_hp">Passes Made to HP</string>
+	<string name="passes_made_to_robots">Passes Made to Robots</string>
+	<string name="inbound_from_human_player_and_pass_to_robot">Inbound From Human Player and Pass to Robot:</string>
+	<string name="possession_distribution">Possession Distribution</string>
+    
 </resources>
