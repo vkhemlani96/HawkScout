@@ -183,12 +183,28 @@
         <item name="android:textAllCaps">true</item>
     </style>
     
+    <style name="team_axis" parent="android:style/TextAppearance.Small">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center_vertical|right</item>
+    </style>
+    
+    <style name="team_graph_horizontal_spacer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+    
     <style name="thin_seperator">
         <item name="android:layout_height">1px</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@android:drawable/divider_horizontal_bright</item>
     </style>
 
+    
+    <style name="dark_thin_seperator" parent="style/thin_seperator">
+        <item name="android:background">#50000000</item>
+    </style>
+    
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
 <!--         <item name="android:windowContentOverlay">@null</item> -->
 <!--         <item name="android:windowBackground">@null</item> -->
@@ -256,5 +272,30 @@
 	    <item name="android:minHeight">16dip</item>
 	    <item name="android:maxHeight">16dip</item>
 	</style>
-
+	<style name="team_row_layout">
+	    <item name="android:layout_marginTop">4dp</item>
+	    <item name="android:layout_marginBottom">4dp</item>
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">48dp</item>
+	    <item name="android:orientation">horizontal</item>
+	    <item name="android:baselineAligned">false</item>
+	</style>
+	<style name="team_column_layout">
+	    <item name="android:layout_width">0dp</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:layout_gravity">center_vertical</item>
+	    <item name="android:layout_weight">1</item>
+	    <item name="android:orientation">vertical</item>
+	</style>
+	<style name="team_text_stat" parent="@android:style/TextAppearance.Medium">
+	    <item name="android:layout_width">match_parent</item>
+	    <item name="android:layout_height">wrap_content</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:includeFontPadding">false</item>
+	</style>
+	<style name="team_text_stat_title" parent="@style/section_title">
+	    <item name="android:includeFontPadding">false</item>
+	    <item name="android:paddingBottom">0dp</item>
+	    <item name="android:gravity">center</item>
+	</style>
 </resources>

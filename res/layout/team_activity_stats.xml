@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp" >
+
+        <TextView
+            android:id="@+id/team_name"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Steel Hawks"
+            android:textSize="40sp" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/team_number"
+            style="@android:style/TextAppearance.Large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Team 2601 | Pit Number 4" >
+        </TextView>
+
+        <RelativeLayout
+            android:id="@+id/graph_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:gravity="center_vertical|right"
+                        android:text="100" >
+                    </TextView>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical|left"
+                        android:text="100" >
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:gravity="center_vertical|right"
+                        android:text="80" >
+                    </TextView>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical|left"
+                        android:text="80" >
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:gravity="center_vertical|right"
+                        android:text="60" >
+                    </TextView>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical|left"
+                        android:text="60" >
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:gravity="center_vertical|right"
+                        android:text="40" >
+                    </TextView>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical|left"
+                        android:text="40" >
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:gravity="center_vertical|right"
+                        android:text="20" >
+                    </TextView>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent" >
+                    </View>
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical|left"
+                        android:text="20" >
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="4dp"
+                        android:gravity="center_vertical|right"
+                        android:text="0" >
+                    </TextView>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="24dp"
+                        android:layout_gravity="top" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="0dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+                    </View>
+
+                    <View
+                        style="@style/dark_thin_seperator"
+                        android:layout_width="1px"
+                        android:layout_height="24dp"
+                        android:layout_gravity="top" >
+                    </View>
+
+                    <TextView
+                        style="@android:style/TextAppearance.Small"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical|left"
+                        android:text="0" >
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/avg_points_per_match" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/avg_ppm" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/avg_fouls_per_match" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/avg_fpm">
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/blocks_deflections_per_match" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/blocks_deflections_per_match" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/percent_of_total_alliance_score" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/percent_of_total_alliance_score" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/possessions_per_match" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/possessions_per_match" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/points_per_possession" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/points_per_possession" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/autonomous_high_goal" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/auton_high_goal" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/autonomous_low_goal" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/auton_low_goal">
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/teleoperated_high_goal" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/teleop_high_goal" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/teleoperated_low_goal" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/teleop_low_goal" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/truss_shots" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/truss_points" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/catches" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/catches" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/fouls" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/fouls" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/technical_fouls" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/tech_fouls" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/thin_seperator" >
+        </View>
+
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/passes_recieved_from_hp" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/passes_from_hp" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/passes_recieved_from_robots" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/passes_from_robots" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout style="@style/team_row_layout" >
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/passes_made_to_hp" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/passes_to_HP" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout style="@style/team_column_layout">
+
+                <TextView
+                    style="@style/team_text_stat_title"
+                    android:text="@string/passes_made_to_robots" >
+                </TextView>
+
+                <TextView
+                    style="@style/team_text_stat"
+                    android:id="@+id/passes_to_robots" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+        
+        <include layout="@layout/activity_team_match_review_stats"/>
+        
+<!--         <TextView style="@style/section_title" -->
+<!--             android:text="1-2-3 Plays"/> -->
+<!--         <View style="@style/red_seperator"></View> -->
+<!--             <LinearLayout -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="48dp" -->
+<!--                 android:orientation="horizontal"> -->
+
+<!--                 <TextView -->
+<!--                     style="@android:style/TextAppearance.Medium" -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:layout_height="match_parent" -->
+<!--                     android:layout_weight="1" -->
+<!--                     android:gravity="center" -->
+<!--                     android:text="@string/inbound_from_human_player_and_pass_to_robot" -->
+<!--                     android:textStyle="bold" ></TextView> -->
+<!--                 <TextView style="@android:style/TextAppearance.Medium" -->
+<!--                     android:layout_height="match_parent" -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:gravity="center" -->
+<!--                     android:text="2"></TextView> -->
+                    
+<!--             </LinearLayout> -->
+<!--             <LinearLayout -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="48dp" -->
+<!--                 android:orientation="horizontal"> -->
+
+<!--                 <TextView -->
+<!--                     style="@android:style/TextAppearance.Medium" -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:layout_height="match_parent" -->
+<!--                     android:layout_weight="1" -->
+<!--                     android:gravity="center" -->
+<!--                     android:text="Pass From Robot and Pass To Robot" -->
+<!--                     android:textStyle="bold" ></TextView> -->
+<!--                 <TextView style="@android:style/TextAppearance.Medium" -->
+<!--                     android:layout_height="match_parent" -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:gravity="center" -->
+<!--                     android:text="2"></TextView> -->
+                    
+<!--             </LinearLayout> -->
+<!--             <LinearLayout -->
+<!--                 android:layout_width="match_parent" -->
+<!--                 android:layout_height="48dp" -->
+<!--                 android:orientation="horizontal"> -->
+
+<!--                 <TextView -->
+<!--                     style="@android:style/TextAppearance.Medium" -->
+<!--                     android:layout_width="0dp" -->
+<!--                     android:layout_height="match_parent" -->
+<!--                     android:layout_weight="1" -->
+<!--                     android:gravity="center" -->
+<!--                     android:text="Pass From Robot Goal" -->
+<!--                     android:textStyle="bold" ></TextView> -->
+<!--                 <TextView style="@android:style/TextAppearance.Medium" -->
+<!--                     android:layout_height="match_parent" -->
+<!--                     android:layout_width="wrap_content" -->
+<!--                     android:gravity="center" -->
+<!--                     android:text="2"></TextView> -->
+                    
+<!--             </LinearLayout> -->
+    </LinearLayout>
+
+</ScrollView>

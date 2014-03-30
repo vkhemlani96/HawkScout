@@ -632,8 +632,8 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 	}
 
 	private void startTeleOp() {
-		//		matchTimer = new FixedCountDownTimer(140*SECONDS, 1000) {
-		matchTimer = new FixedCountDownTimer(30*SECONDS, 1000) {
+		//matchTimer = new FixedCountDownTimer(30*SECONDS, 1000) {
+		matchTimer = new FixedCountDownTimer(140*SECONDS, 1000) {
 			@Override
 			public void onStart() {
 				mClock.setText("139");				

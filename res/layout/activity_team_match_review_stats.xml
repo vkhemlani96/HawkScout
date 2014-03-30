@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/section_title"
+        android:text="Scoring Distribution" >
+    </TextView>
+
+    <View style="@style/red_seperator" >
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/score_graph"
+            android:layout_width="210px"
+            android:layout_height="210px"
+            android:layout_gravity="center"
+            android:layout_marginRight="10px" >
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/red" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/autonomous_scored" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/autonomous_scored_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/autonomous_scored_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#cccccc" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="High Goal Points Scored:" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/high_goal_scored_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/high_goal_scored_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#888888" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/low_goal_points_scored" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/low_goal_scored_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/low_goal_scored_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#000000" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/truss_points_scored" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/truss_scored_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/truss_scored_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#0000cc" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/catch_points_scored" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/catch_scored_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/catch_scored_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        style="@style/section_title"
+        android:text="Scoring Accuracy" >
+    </TextView>
+
+    <View style="@style/red_seperator" >
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/high_goal_accuracy" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/high_goal_accuracy_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/high_goal_accuracy_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/low_goal_accuracy" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/low_goal_accuracy_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/low_goal_accuracy_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/truss_accuracy" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/truss_accuracy_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/truss_accuracy_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#cc0000" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/overall_accuracy" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/overall_accuracy_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/overall_accuracy_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/accuracy_graph"
+            android:layout_width="210px"
+            android:layout_height="210px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10px" >
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        style="@style/section_title"
+        android:text="Possession Distribution" >
+    </TextView>
+
+    <View style="@style/red_seperator" >
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="210px"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/time_graph"
+            android:layout_width="210px"
+            android:layout_height="210px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10px" >
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#cc0000" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/time_with_possession" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/time_with_possession_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/time_with_possession_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#cccccc" >
+                </View>
+
+                <TextView
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/time_without_possession" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/time_without_possession_stat"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/time_without_possession_percent"
+                    style="@android:style/TextAppearance.Medium"
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:gravity="center" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:id="@+id/buttons"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/stats_1"
+            style="@android:style/TextAppearance.Small"
+            android:layout_width="0dp"
+            android:layout_height="39px"
+            android:layout_weight="1"
+            android:background="@drawable/crimson_gray_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="@string/view_match_stats" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/specfics_2"
+            style="@android:style/TextAppearance.Small"
+            android:layout_width="0dp"
+            android:layout_height="39px"
+            android:layout_weight="1"
+            android:background="@drawable/crimson_gray_background"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="@string/view_match_specifics" >
+        </TextView>
+    </LinearLayout>
+
+</LinearLayout>

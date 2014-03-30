@@ -1,6 +1,7 @@
 package com.steelhawks.hawkscout;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +52,8 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.steelhawks.hawkscout.data.Competition;
+import com.steelhawks.hawkscout.data.Indices.MatchIndex;
+import com.steelhawks.hawkscout.data.Indices.MatchScoutingIndex;
 import com.steelhawks.hawkscout.data.Parameter;
 import com.steelhawks.hawkscout.teamactivity.MatchesViewPager;
 import com.steelhawks.hawkscout.util.GraphView;
@@ -80,8 +83,7 @@ ActionBar.TabListener {
 	private static Globals app;
 	CharSequence[] TITLES = {"MATCH DATA", "TEAM INFO", "PIT DATA"};
 	private static final String ACTIVITY_INTENT_1 = "com.steelhawks.hawkscout.TEAM_ACTIVITY_INTENT.TEAM_NUMBER";
-	MatchDataParentFragment frag0;
-	PitDataFragment frag2;
+	Fragment[] frag = new Fragment[3];
 	private static final int RETURN_FROM_PIT = 466;
 	private static FragmentManager fm;
 
@@ -132,8 +134,9 @@ ActionBar.TabListener {
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
-		frag0 = new MatchDataParentFragment();
-		frag2 = new PitDataFragment();
+		frag[0] = new MatchDataParentFragment();
+		frag[1]	= new TeamFragment();
+		frag[2] = new PitDataFragment();
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -147,7 +150,7 @@ ActionBar.TabListener {
 		}
 
 		mViewPager.setCurrentItem(1);
-		
+
 		List<String> matches = currentComp.getMatchesByTeam(teamNumber);
 	}
 
@@ -185,7 +188,7 @@ ActionBar.TabListener {
 			else if (resultCode == Activity.RESULT_CANCELED)
 				Toast.makeText(this, "Data was not uploaded.", Toast.LENGTH_SHORT).show();
 			else Toast.makeText(this, "A problem has occurred.\nData was not uploaded.", Toast.LENGTH_SHORT).show();
-			frag2.refresh();
+			((PitDataFragment) frag[2]).refresh();
 		}
 	}
 
@@ -206,22 +209,22 @@ ActionBar.TabListener {
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
-	
+
 	public static void start(Activity activity, String teamNumber) {
 		Intent i = new Intent(activity, com.steelhawks.hawkscout.TeamActivityMain.class);
-			i.putExtra(ACTIVITY_INTENT_1, teamNumber);
+		i.putExtra(ACTIVITY_INTENT_1, teamNumber);
 		activity.startActivity(i);
 	}
 
 	public void refreshFragment(int i) {
 		switch(i) {
-		case 2: frag2.refresh();
+		case 2: ((PitDataFragment) frag[2]).refresh();
 		break;
 		}
 	}
-	
+
 	protected void onResume() {
-//		frag2.refresh();
+		//		frag2.refresh();
 		super.onResume();
 	}
 
@@ -240,10 +243,8 @@ ActionBar.TabListener {
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			switch(position) {
-			case 0: return new MatchDataParentFragment();
-//			case 1: return new MatchDataParentFragment();
-			case 2: return frag2;
+			if (position < frag.length) {
+				return frag[position];
 			}
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
@@ -289,7 +290,7 @@ ActionBar.TabListener {
 					ARG_SECTION_NUMBER)));
 			return rootView;
 		}
-	    
+
 	}
 
 	public static class PitDataFragment extends Fragment {
@@ -383,17 +384,17 @@ ActionBar.TabListener {
 				header.setOrientation(LinearLayout.HORIZONTAL);
 				header.setBackgroundDrawable(getResources().getDrawable(R.drawable.card_background));
 				//TODO fix time
-//							Date date = new Date(data.getEdited().getValue());
-//							Calendar c = Calendar.getInstance();
-//								c.setTime(date);
+				//							Date date = new Date(data.getEdited().getValue());
+				//							Calendar c = Calendar.getInstance();
+				//								c.setTime(date);
 				TextView scouter = new TextView(getActivity());
 				scouter.setText("Scouted by " + scoutedBy);
-//										+ System.getProperty("line.separator")
-//										+ (c.get(Calendar.HOUR) == 0 ? "12" : c.get(Calendar.HOUR)) + ":"
-//										+ (c.get(Calendar.MINUTE)<10 ? "0" + c.get(Calendar.MINUTE) : c.get(Calendar.MINUTE))
-//										+ " " + c.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.US) + " on "
-//										+ c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " "
-//										+ c.get(Calendar.DATE) + ", " + c.get(Calendar.YEAR));
+				//										+ System.getProperty("line.separator")
+				//										+ (c.get(Calendar.HOUR) == 0 ? "12" : c.get(Calendar.HOUR)) + ":"
+				//										+ (c.get(Calendar.MINUTE)<10 ? "0" + c.get(Calendar.MINUTE) : c.get(Calendar.MINUTE))
+				//										+ " " + c.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.US) + " on "
+				//										+ c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US) + " "
+				//										+ c.get(Calendar.DATE) + ", " + c.get(Calendar.YEAR));
 				scouter.setTextColor(getResources().getColor(R.color.gray));
 				scouter.setTextSize(14);
 				scouter.setPadding(PX(10), 0, 0, 0);
@@ -543,7 +544,7 @@ ActionBar.TabListener {
 				return wrapper;
 			}
 		}
-		
+
 
 		//		private OnClickListener deleteListener = new OnClickListener(){
 		//			@Override
@@ -565,7 +566,7 @@ ActionBar.TabListener {
 			}
 			return "COULDNT FIND IT";
 		}
-		
+
 		private OnClickListener getEditListener(String[] data) {
 			final String[] finalData = data;
 			OnClickListener editListener = new OnClickListener(){
@@ -784,7 +785,7 @@ ActionBar.TabListener {
 	}
 
 	public static class MatchDataParentFragment extends Fragment {
-	
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -793,7 +794,267 @@ ActionBar.TabListener {
 			rootView.setArguments(getActivity(), currentComp, teamNumber, this.getChildFragmentManager());
 			return rootView;
 		}
-		
+
 	}
-	
+
+	public static class TeamFragment extends Fragment {
+		/**
+		 * The fragment argument representing the section number for this
+		 * fragment.
+		 */
+		public static final String ARG_SECTION_NUMBER = "section_number";
+
+		public TeamFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			ScrollView root = (ScrollView) inflater.inflate(R.layout.team_activity_stats,
+					container, false);
+
+			LayoutParams wrap = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+			float totalMatches = 0.f;
+			int totalPoints = 0, totalFouls = 0, totalBlocksDeflections = 0, totalAllianceScore = 0, possessionCount = 0, autonHighGoalMade = 0,
+					autonHighGoalHot = 0, autonHighGoalTotal = 0, autonLowGoalMade = 0, autonLowGoalHot = 0, autonLowGoalTotal = 0, teleopHighGoalMade = 0,
+					teleopHighGoalTotal = 0, teleopLowGoalMade = 0, teleopLowGoalTotal = 0, trussMade = 0, trussTotal = 0, catches = 0, fouls = 0, 
+					techFouls = 0, passesFromHP = 0, passesToHP = 0, passesFromRobo = 0, passesToRobo = 0;
+			int HPtoRobot = 0, robotToTruss = 0, HPtoGoal = 0, catchToGoal = 0, robotToRobot = 0; 
+
+			LinearLayout graph = new LinearLayout(getActivity());
+			RelativeLayout.LayoutParams relativeWrap = new RelativeLayout.LayoutParams(wrap);
+			relativeWrap.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			relativeWrap.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			graph.setLayoutParams(relativeWrap);
+
+			List<String> matches = currentComp.getMatchesByTeam(teamNumber);
+			for (int x=0; x<matches.size(); x++) {
+				String[] data = currentComp.getMatchScoutingDataForTeam(matches.get(x), teamNumber);
+				if (data != null) {
+					totalMatches++;
+					totalPoints += getPointsScoredForMatch(data);
+					totalFouls += getFoulsForMatch(data);
+					totalBlocksDeflections += Integer.parseInt(data[MatchScoutingIndex.TELEOP_BLOCKS].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_BLOCKS].trim()) + 
+							Integer.parseInt(data[MatchScoutingIndex.DEFLECTIONS].trim());
+					totalAllianceScore += getAllianceScore(data);
+					possessionCount += data[MatchScoutingIndex.POSSESSIONS].trim().split("\\|\\|").length;
+					autonHighGoalMade += Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_COLD].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_HOT].trim());
+					autonHighGoalHot += Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_HOT].trim());
+					autonHighGoalTotal += Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_COLD].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_HOT].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_MISSED].trim());
+					autonLowGoalMade += Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_COLD].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_HOT].trim());
+					autonLowGoalHot += Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_HOT].trim());
+					autonLowGoalTotal += Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_COLD].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_HOT].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_MISSED].trim());
+					teleopHighGoalMade += Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MADE].trim());
+					teleopHighGoalTotal += Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MADE].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MISSED].trim());
+					teleopLowGoalMade += Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MADE].trim());
+					teleopLowGoalTotal += Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MADE].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MISSED].trim());
+					trussMade += Integer.parseInt(data[MatchScoutingIndex.TRUSS].trim());
+					trussTotal += Integer.parseInt(data[MatchScoutingIndex.TRUSS].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.TRUSS_MISSED].trim());
+					catches += Integer.parseInt(data[MatchScoutingIndex.CATCHES].trim());
+					fouls += Integer.parseInt(data[MatchScoutingIndex.FOULS].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_FOULS].trim());	
+					techFouls += Integer.parseInt(data[MatchScoutingIndex.TECH_FOULS].trim()) +
+							Integer.parseInt(data[MatchScoutingIndex.AUTON_TECH_FOULS].trim());
+					passesFromHP += Integer.parseInt(data[MatchScoutingIndex.PASSES_FROM_HP].trim());
+					passesFromRobo += Integer.parseInt(data[MatchScoutingIndex.PASSES_FROM_ROBOT].trim());
+					passesToHP += Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_HP].trim());
+					passesToRobo += Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_ROBOT].trim());
+
+					LinearLayout parent = new LinearLayout(getActivity());
+					parent.setOrientation(LinearLayout.VERTICAL);
+					parent.setLayoutParams(wrap);
+
+					LayoutParams wrapWithMargins = (LayoutParams) parent.getLayoutParams();
+					wrapWithMargins.leftMargin = wrapWithMargins.rightMargin = PX(4);
+					parent.setLayoutParams(wrapWithMargins);
+
+					float pointsScored = getPointsScoredForMatch(data);
+					float foulsAccumulated = getFoulsForMatch(data);
+					foulsAccumulated = foulsAccumulated == 0 ? .7f : foulsAccumulated; 
+
+					LinearLayout bars = new LinearLayout(getActivity());
+					bars.setGravity(Gravity.BOTTOM);
+					bars.setLayoutParams(wrap);
+					bars.setOrientation(LinearLayout.HORIZONTAL);
+
+					LinearLayout pointsBar = new LinearLayout(getActivity());
+					pointsBar.setOrientation(LinearLayout.VERTICAL);
+
+					TextView pointsNumber = new TextView(getActivity(), null, android.R.style.TextAppearance_Small);
+					pointsNumber.setText(((int)pointsScored) + "");
+					pointsNumber.setLayoutParams(new LayoutParams(PX(24), LayoutParams.WRAP_CONTENT));
+					pointsNumber.setSingleLine();
+					pointsNumber.setGravity(Gravity.CENTER_HORIZONTAL);
+					pointsBar.addView(pointsNumber);
+
+					View points = new View(getActivity());
+					points.setLayoutParams(new LayoutParams(PX(24), PX((int) (pointsScored/20.0 * 48 + .5))));
+					points.setBackgroundColor(Color.parseColor("#cc0000"));
+					pointsBar.addView(points);
+					bars.addView(pointsBar);
+
+					LinearLayout foulsBar = new LinearLayout(getActivity());
+					foulsBar.setGravity(Gravity.CENTER_HORIZONTAL);
+					foulsBar.setOrientation(LinearLayout.VERTICAL);
+
+					TextView foulsNumber = new TextView(getActivity(), null, android.R.style.TextAppearance_Small);
+					foulsNumber.setLayoutParams(new LayoutParams(PX(24), LayoutParams.WRAP_CONTENT));
+					foulsNumber.setGravity(Gravity.CENTER_HORIZONTAL);
+					foulsNumber.setSingleLine();
+					if (foulsAccumulated == .07f) foulsNumber.setText(0 + "");
+					else foulsNumber.setText(((int) foulsAccumulated) + "");
+					foulsBar.addView(foulsNumber);
+
+					View foulsView = new View(getActivity());
+					foulsView.setLayoutParams(new LayoutParams(PX(24), PX((int) (foulsAccumulated/20.0 * 48 + .5))));
+					foulsView.setBackgroundColor(Color.parseColor("#0000cc"));
+					foulsBar.addView(foulsView);
+					bars.addView(foulsBar);
+
+					parent.addView(bars);
+
+					TextView matchNumber = new TextView(getActivity(), null, android.R.style.TextAppearance_Small);
+					matchNumber.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, PX(24)));
+					matchNumber.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
+					matchNumber.setText(data[MatchScoutingIndex.MATCH_NUMBER].trim());
+					parent.addView(matchNumber);
+
+					graph.addView(parent);
+
+
+				}
+			}
+			((RelativeLayout) root.findViewById(R.id.graph_parent)).addView(graph);
+			DecimalFormat df = new DecimalFormat("###.#");
+			((TextView) root.findViewById(R.id.avg_ppm)).setText(df.format(totalPoints/totalMatches));
+			((TextView) root.findViewById(R.id.avg_fpm)).setText(df.format(totalFouls/totalMatches));
+			((TextView) root.findViewById(R.id.blocks_deflections_per_match)).setText(df.format(totalBlocksDeflections/totalMatches));
+			((TextView) root.findViewById(R.id.percent_of_total_alliance_score)).setText(df.format(totalPoints*100.f/totalAllianceScore) +"%");
+			((TextView) root.findViewById(R.id.possessions_per_match)).setText(df.format(possessionCount/totalMatches));
+			((TextView) root.findViewById(R.id.points_per_possession)).setText(df.format(totalPoints*1.f/possessionCount));
+			((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHighGoalMade + "/" + autonHighGoalTotal + ", " + autonHighGoalHot + " Hot (" +
+					autonHighGoalMade*100/autonHighGoalTotal + "%)");
+			((TextView) root.findViewById(R.id.auton_low_goal)).setText(autonLowGoalMade + "/" + autonLowGoalTotal + ", " + autonLowGoalHot + " Hot (" +
+					autonLowGoalMade*100/autonLowGoalTotal + "%)");
+			((TextView) root.findViewById(R.id.teleop_high_goal)).setText(teleopHighGoalMade + "/" + teleopHighGoalTotal + " (" +
+					teleopHighGoalMade*100/teleopHighGoalTotal + "%)");
+			((TextView) root.findViewById(R.id.teleop_low_goal)).setText(teleopLowGoalMade + "/" + teleopLowGoalTotal + " (" +
+					teleopLowGoalMade*100/teleopLowGoalTotal + "%)");
+			((TextView) root.findViewById(R.id.truss_points)).setText(trussMade + "/" + trussTotal + " (" +
+					trussMade*100/trussTotal + "%)");
+			((TextView) root.findViewById(R.id.catches)).setText(catches + "");
+			((TextView) root.findViewById(R.id.fouls)).setText(fouls + "");
+			((TextView) root.findViewById(R.id.tech_fouls)).setText(techFouls + "");
+			((TextView) root.findViewById(R.id.catches)).setText(catches + "");
+			((TextView) root.findViewById(R.id.passes_from_hp)).setText(passesFromHP + "");
+			((TextView) root.findViewById(R.id.passes_to_HP)).setText(passesToHP + "");
+			((TextView) root.findViewById(R.id.passes_from_robots)).setText(passesFromRobo + "");
+			((TextView) root.findViewById(R.id.passes_to_robots)).setText(passesToRobo + "");
+			
+			int autonPoints = autonHighGoalMade * 15 + autonHighGoalHot * 5 + autonLowGoalHot * 5 + autonLowGoalMade * 6;
+			int highGoalPoints = teleopHighGoalMade * 10;
+			int lowGoalPoints = teleopLowGoalMade;
+			int trussPoints = trussMade * 10;
+			int catchPoints = catches * 10;
+			int total = autonPoints + highGoalPoints + lowGoalPoints + trussPoints + catchPoints;
+			
+			((TextView) root.findViewById(R.id.autonomous_scored_stat)).setText(autonPoints + "");
+			((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(100*autonPoints/total + "%");
+			if (autonPoints == 0) ((View) root.findViewById(R.id.autonomous_scored_stat).getParent()).setAlpha(.5f);
+			
+			((TextView) root.findViewById(R.id.high_goal_scored_stat)).setText(highGoalPoints + "");
+			((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(100*highGoalPoints/total + "%");
+			if (highGoalPoints == 0) ((View) root.findViewById(R.id.high_goal_scored_stat).getParent()).setAlpha(.5f);
+			
+			((TextView) root.findViewById(R.id.low_goal_scored_stat)).setText(lowGoalPoints + "");
+			((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(100*lowGoalPoints/total + "%");
+			if (lowGoalPoints == 0) ((View) root.findViewById(R.id.low_goal_scored_stat).getParent()).setAlpha(.5f);
+			
+			((TextView) root.findViewById(R.id.truss_scored_stat)).setText(trussPoints + "");
+			((TextView) root.findViewById(R.id.truss_scored_percent)).setText(100*trussPoints/total + "%");
+			if (trussPoints == 0) ((View) root.findViewById(R.id.truss_scored_stat).getParent()).setAlpha(.5f);
+
+			((TextView) root.findViewById(R.id.catch_scored_stat)).setText(catchPoints + "");
+			((TextView) root.findViewById(R.id.catch_scored_percent)).setText(100*catchPoints/total + "%");
+			if (catchPoints == 0) ((View) root.findViewById(R.id.catch_scored_stat).getParent()).setAlpha(.5f);
+			
+			float[] distributionValues = {autonPoints, highGoalPoints, lowGoalPoints, trussPoints, catchPoints};
+			((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), distributionValues));
+			
+			((TextView) root.findViewById(R.id.high_goal_accuracy_stat)).setText(teleopHighGoalMade + "/"+ teleopHighGoalTotal);
+			((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(100*teleopHighGoalMade/teleopHighGoalTotal + "%");
+			if (teleopHighGoalTotal == 0) ((View) root.findViewById(R.id.high_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+			
+			((TextView) root.findViewById(R.id.low_goal_accuracy_stat)).setText(teleopLowGoalMade + "/"+ teleopLowGoalTotal);
+			((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(100*teleopLowGoalMade/teleopLowGoalTotal + "%");
+			if (teleopLowGoalTotal == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+
+			((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
+			((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");
+			if (trussTotal == 0) ((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);	
+			
+			int totalMade = teleopHighGoalMade + teleopLowGoalMade + trussMade;
+			int totalTaken = teleopHighGoalTotal + teleopLowGoalTotal + trussTotal;
+			((TextView) root.findViewById(R.id.overall_accuracy_stat)).setText(totalMade + "/"+ totalTaken);
+			((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(100*totalMade/totalTaken + "%");	
+			
+			float[] accuracyValues = {totalMade, totalTaken-totalMade};
+			((RelativeLayout) root.findViewById(R.id.accuracy_graph)).addView(new GraphView(getActivity(), accuracyValues));
+			
+			root.findViewById(R.id.buttons).setVisibility(View.GONE);
+			return root;
+		}
+
+		private int getAllianceScore(String[] data) {
+			String matchNumber = data[MatchScoutingIndex.MATCH_NUMBER];
+			String[] matchData = currentComp.getMatchInfoByNumber(matchNumber.trim());
+			String alliance = getAllianceByMatchAndTeam(matchData, teamNumber);
+			if (alliance.equals("Blue")) return Integer.parseInt(matchData[MatchIndex.BLUE_SCORE].trim());
+			else return Integer.parseInt(matchData[MatchIndex.RED_SCORE].trim());
+		}
+
+		private String getAllianceByMatchAndTeam(String[] matchData, String teamNumber) {
+			if (matchData[MatchIndex.BLUE1].equals(teamNumber) ||
+					matchData[MatchIndex.BLUE2].equals(teamNumber) ||
+					matchData[MatchIndex.BLUE3].equals(teamNumber)) return "Blue";
+			return "Red";
+		}
+
+		private int getPointsScoredForMatch(String[] data) {
+			return Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_HOT].trim()) 	* 20 +
+					Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_COLD].trim()) 	* 15 +
+					Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_HOT].trim()) 	* 11 +
+					Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_COLD].trim())	* 6 +
+					Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MADE].trim()) 		* 10 +
+					Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MADE].trim()) 		* 1 +
+					Integer.parseInt(data[MatchScoutingIndex.TRUSS].trim()) 				* 15 +
+					Integer.parseInt(data[MatchScoutingIndex.CATCHES].trim()) 				* 15 +
+					(Boolean.parseBoolean(data[MatchScoutingIndex.AUTON_MOVED_FORWARD].trim()) ? 5 : 0);
+		}
+
+		private int getFoulsForMatch(String[] data) {
+			return Integer.parseInt(data[MatchScoutingIndex.AUTON_FOULS].trim()) * 20 +
+					Integer.parseInt(data[MatchScoutingIndex.FOULS].trim()) * 20 +
+					Integer.parseInt(data[MatchScoutingIndex.AUTON_TECH_FOULS].trim()) * 50 +
+					Integer.parseInt(data[MatchScoutingIndex.TECH_FOULS].trim()) * 50;
+
+		}
+
+		private int PX(int dp) {
+			return Utilities.PX(getActivity(), dp);
+		}
+
+	}
+
 }
