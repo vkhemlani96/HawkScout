@@ -79,6 +79,7 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 		 * for later use.
 		 */
 		for (int x=0; x<ids.length; x++) {
+			if (indices[x]>=matchInfo.length) continue;
 			String s = matchInfo[indices[x]].trim();
 			if (indices[x] != MatchIndex.RED_SCORE && indices[x] != MatchIndex.BLUE_SCORE && s.equals(teamNumber)) {
 				if (indices[x] == MatchIndex.RED1 || indices[x] == MatchIndex.RED2 || indices[x] == MatchIndex.RED3) alliance = "RED";
@@ -137,7 +138,7 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 
 		int trussMade = Integer.parseInt(data[MatchScoutingIndex.TRUSS].trim());
 		int trussTotal = trussMade + Integer.parseInt(data[MatchScoutingIndex.TRUSS_MISSED]);
-		String truss = trussMade + "/" + trussTotal + " (" + (trussMade*100/trussTotal) + "%)";
+		String truss = trussTotal != 0 ? trussMade + "/" + trussTotal + " (" + (trussMade*100/trussTotal) + "%)" : trussMade + "/" + trussTotal + " (0%)" ;
 		int trussPoints = trussMade*10;
 
 		int catches = Integer.parseInt(data[MatchScoutingIndex.CATCHES].trim());
@@ -264,8 +265,10 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 		if (totalLow == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
 
 		((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
-		((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");
-		if (trussTotal == 0) ((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);		
+		if (trussTotal == 0) {
+			((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);
+			((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText("0%");	
+		} else ((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");		
 		
 		int totalMade = totalHighMade + totalLowMade + trussMade;
 		int totalTaken = totalHigh + totalLow + trussTotal;

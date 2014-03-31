@@ -62,4 +62,36 @@ public class Indices {
 		public static final int END_TIME = 3;
 	}
 	
+	public class PitScoutingIndex {
+		public static final int TEAM_NUMBER = 0;
+		public static final int TEAM_NAME = 1;
+		public static final int PIT_NUMBER = 2;
+		public static final int SCOUTED_BY = 3;
+	}
+	
+	public class StatsIndex {
+		public static final int TEAM_NUMBER = 0;
+		public static final int POINTS_PER_MATCH = 1;
+		public static final int FOULS_PER_MATCH = 2;
+		public static final int BLOCKS_PER_MATCH = 3;
+		public static final int POINTS_PER_POSSESSION = 4;
+		public static final int POSSESSIONS_PER_MATCH = 5;
+		public static final int HIGH_GOAL_TOTAL = 6;
+		public static final int LOW_GOAL_TOTAL = 7;
+		public static final int TRUSS_TOTAL = 8;
+		public static final int CATCHES_TOTAL = 9;
+		public static final int FOULS_TOTAL = 10;
+		public static final int TECHNICAL_FOULS_TOTAL = 11;
+		public static final int AUTON_HIGH_GOAL_ACCURACY = 12;
+		public static final int AUTON_LOW_GOAL_ACCURACY = 13;
+		public static final int TELE_HIGH_GOAL_ACCURACY = 14;
+		public static final int TELE_LOW_GOAL_ACCURACY = 15;
+		public static final int TELE_TRUSS_ACCURACY = 16;
+		public static final int PASS_FROM_HP = 17;
+		public static final int PASS_FROM_ROBOT = 18;
+		public static final int PASS_TO_HP = 19;
+		public static final int PASS_TO_ROBOT = 20;
+		public static final int SIZE = 21;
+	}
+	
 }

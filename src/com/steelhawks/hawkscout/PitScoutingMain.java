@@ -776,7 +776,7 @@ public class PitScoutingMain extends FragmentActivity {
 			x++;
 		}
 		currentComp.addToPitScouting(data);
-		
+		finish();
 	}
 	
 	public static void start(Activity activity) {

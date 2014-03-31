@@ -54,6 +54,7 @@ import android.widget.ViewFlipper;
 import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Indices.MatchIndex;
 import com.steelhawks.hawkscout.data.Indices.MatchScoutingIndex;
+import com.steelhawks.hawkscout.data.Indices.PitScoutingIndex;
 import com.steelhawks.hawkscout.data.Indices.PossessionIndex;
 import com.steelhawks.hawkscout.data.Parameter;
 import com.steelhawks.hawkscout.teamactivity.MatchesViewPager;
@@ -78,8 +79,8 @@ ActionBar.TabListener {
 	 */
 	ViewPager mViewPager;
 	private static String teamNumber;
-	private static int teamIndex;
-	private static int compIndex;
+	private static int team;
+	private static int comp;
 	private static Competition currentComp;
 	private static Globals app;
 	CharSequence[] TITLES = {"MATCH DATA", "TEAM INFO", "PIT DATA"};
@@ -316,7 +317,7 @@ ActionBar.TabListener {
 
 		public void refresh() {
 			data = currentComp.getPitScoutingForTeam(teamNumber);
-			if (data != null) params = app.getTeams().get(teamIndex).getScoutingParams().getParameterLists();
+			if (data != null) params = app.getTeams().get(team).getScoutingParams().getParameterLists();
 			if (getView() != null) ((ViewGroup) getView()).removeAllViews();
 			((ViewGroup) getView()).addView(getNewView());
 		}
@@ -811,7 +812,8 @@ ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			ScrollView root = (ScrollView) inflater.inflate(R.layout.activity_team_stats,
+			List<String> matches = currentComp.getMatchesByTeam(teamNumber);
+			ViewGroup root = (ViewGroup) inflater.inflate(R.layout.activity_team_stats,
 					container, false);
 
 			LayoutParams wrap = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -822,7 +824,8 @@ ActionBar.TabListener {
 					teleopHighGoalTotal = 0, teleopLowGoalMade = 0, teleopLowGoalTotal = 0, trussMade = 0, trussTotal = 0, catches = 0, fouls = 0, 
 					techFouls = 0, passesFromHP = 0, passesToHP = 0, passesFromRobo = 0, passesToRobo = 0, possessionTime = 0;
 			int HPtoRobot = 0, robotToRobot = 0, robotToGoalHighMade = 0, robotToGoalHighMissed = 0, robotToGoalLowMade = 0, robotToGoalLowMissed = 0, 
-					robotToTruss = 0, robotToTrussMissed = 0, HPtoTruss = 0, HPToTrussMissed = 0, catchToGoalHighMade = 0, catchToGoalHighMissed = 0, catchToGoalLowMissed = 0, catchToGoalLowMade = 0,
+					robotToTruss = 0, robotToTrussMissed = 0, HPtoTruss = 0, HPToTrussMissed = 0, catchToGoalHighMade = 0, catchToGoalHighMissed = 0,
+					catchToGoalLowMissed = 0, catchToGoalLowMade = 0,
 					HPToGoalHighMade = 0, HPToGoalHighMissed = 0, HPToGoalLowMissed = 0, HPToGoalLowMade = 0,
 					pickUpToGoalHighMade = 0, pickUpToGoalHighMissed = 0, pickUpToGoalLowMissed = 0, pickUpToGoalLowMade = 0;
 
@@ -832,7 +835,6 @@ ActionBar.TabListener {
 			relativeWrap.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 			graph.setLayoutParams(relativeWrap);
 
-			List<String> matches = currentComp.getMatchesByTeam(teamNumber);
 			for (int x=0; x<matches.size(); x++) {
 				String[] data = currentComp.getMatchScoutingDataForTeam(matches.get(x), teamNumber);
 				if (data != null) {
@@ -948,10 +950,10 @@ ActionBar.TabListener {
 							possessionTime += Integer.parseInt(possessionPart[PossessionIndex.START_TIME].trim())
 									- Integer.parseInt(possessionPart[PossessionIndex.END_TIME].trim());
 						}
-						
+
 						String start = possessionPart[PossessionIndex.POSSESSION_START].trim();
 						String end = possessionPart[PossessionIndex.POSSESSION_END].trim();
-								
+
 						if (start.equals("Pass from HP") &&	end.equals("Passed to Robot")) HPtoRobot++;
 						else if (start.equals("Pass from Robot") && end.equals("Passed to Robot")) robotToRobot++;
 						else if (start.equals("Pass from Robot") && end.equals("Made High Goal")) robotToGoalHighMade++;
@@ -978,6 +980,20 @@ ActionBar.TabListener {
 					}
 				}
 			}
+			if (totalMatches == 0) root = (ViewGroup) inflater.inflate(R.layout.activity_team_stats_empty,
+					container, false);
+
+			String[] pitScoutingData = currentComp.getPitScoutingForTeam(teamNumber.trim());
+			if (pitScoutingData != null) {
+				((TextView) root.findViewById(R.id.team_name)).setText(pitScoutingData[PitScoutingIndex.TEAM_NAME].trim());
+				((TextView) root.findViewById(R.id.team_number)).setText("Team " + teamNumber + " | Pit " + pitScoutingData[PitScoutingIndex.PIT_NUMBER].trim());
+			} else {
+				((TextView) root.findViewById(R.id.team_name)).setText("Team " + teamNumber.trim());
+				root.findViewById(R.id.team_number).setVisibility(View.GONE);
+			}
+			
+			if (totalMatches == 0) return root;
+			
 			((RelativeLayout) root.findViewById(R.id.graph_parent)).addView(graph);
 			DecimalFormat df = new DecimalFormat("###.#");
 			((TextView) root.findViewById(R.id.avg_ppm)).setText(df.format(totalPoints/totalMatches));
@@ -986,16 +1002,21 @@ ActionBar.TabListener {
 			((TextView) root.findViewById(R.id.percent_of_total_alliance_score)).setText(df.format(totalPoints*100.f/totalAllianceScore) +"%");
 			((TextView) root.findViewById(R.id.possessions_per_match)).setText(df.format(possessionCount/totalMatches));
 			((TextView) root.findViewById(R.id.points_per_possession)).setText(df.format(totalPoints*1.f/possessionCount));
-			((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHighGoalMade + "/" + autonHighGoalTotal + ", " + autonHighGoalHot + " Hot (" +
+			if(autonHighGoalTotal != 0)((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHighGoalMade + "/" + autonHighGoalTotal + ", " + autonHighGoalHot + " Hot (" +
 					autonHighGoalMade*100/autonHighGoalTotal + "%)");
-			((TextView) root.findViewById(R.id.auton_low_goal)).setText(autonLowGoalMade + "/" + autonLowGoalTotal + ", " + autonLowGoalHot + " Hot (" +
+			else ((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHighGoalMade + "/" + autonHighGoalTotal + ", " + autonHighGoalHot + " Hot (0%)");
+			if(autonLowGoalTotal != 0)((TextView) root.findViewById(R.id.auton_low_goal)).setText(autonLowGoalMade + "/" + autonLowGoalTotal + ", " + autonLowGoalHot + " Hot (" +
 					autonLowGoalMade*100/autonLowGoalTotal + "%)");
-			((TextView) root.findViewById(R.id.teleop_high_goal)).setText(teleopHighGoalMade + "/" + teleopHighGoalTotal + " (" +
+			else ((TextView) root.findViewById(R.id.auton_low_goal)).setText(autonLowGoalMade + "/" + autonLowGoalTotal + ", " + autonLowGoalHot + " Hot (0%)");
+			if (teleopHighGoalTotal != 0) ((TextView) root.findViewById(R.id.teleop_high_goal)).setText(teleopHighGoalMade + "/" + teleopHighGoalTotal + " (" +
 					teleopHighGoalMade*100/teleopHighGoalTotal + "%)");
-			((TextView) root.findViewById(R.id.teleop_low_goal)).setText(teleopLowGoalMade + "/" + teleopLowGoalTotal + " (" +
+			else ((TextView) root.findViewById(R.id.teleop_high_goal)).setText(teleopHighGoalMade + "/" + teleopHighGoalTotal + " (0%)");
+			if (teleopLowGoalTotal != 0) ((TextView) root.findViewById(R.id.teleop_low_goal)).setText(teleopLowGoalMade + "/" + teleopLowGoalTotal + " (" +
 					teleopLowGoalMade*100/teleopLowGoalTotal + "%)");
-			((TextView) root.findViewById(R.id.truss_points)).setText(trussMade + "/" + trussTotal + " (" +
+			else ((TextView) root.findViewById(R.id.teleop_low_goal)).setText(teleopLowGoalMade + "/" + teleopLowGoalTotal + " (0%)");
+			if (trussTotal != 0) ((TextView) root.findViewById(R.id.truss_points)).setText(trussMade + "/" + trussTotal + " (" +
 					trussMade*100/trussTotal + "%)");
+			else ((TextView) root.findViewById(R.id.truss_points)).setText(trussMade + "/" + trussTotal + " (0%)");
 			((TextView) root.findViewById(R.id.catches)).setText(catches + "");
 			((TextView) root.findViewById(R.id.fouls)).setText(fouls + "");
 			((TextView) root.findViewById(R.id.tech_fouls)).setText(techFouls + "");
@@ -1044,13 +1065,16 @@ ActionBar.TabListener {
 			if (teleopLowGoalTotal == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
 
 			((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
-			((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");
-			if (trussTotal == 0) ((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);	
+			if (trussTotal == 0) {
+				((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);	
+				((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText("0%");
+			} else ((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");
 
 			int totalMade = teleopHighGoalMade + teleopLowGoalMade + trussMade;
 			int totalTaken = teleopHighGoalTotal + teleopLowGoalTotal + trussTotal;
 			((TextView) root.findViewById(R.id.overall_accuracy_stat)).setText(totalMade + "/"+ totalTaken);
-			((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(100*totalMade/totalTaken + "%");	
+			if (totalTaken != 0) ((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(100*totalMade/totalTaken + "%");	
+			else ((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText("0%");	
 
 			float[] accuracyValues = {totalMade, totalTaken-totalMade};
 			((RelativeLayout) root.findViewById(R.id.accuracy_graph)).addView(new GraphView(getActivity(), accuracyValues));
@@ -1076,7 +1100,7 @@ ActionBar.TabListener {
 					HPToGoalLowMade + "/" + (HPToGoalLowMade+HPToGoalLowMissed) + " Low");	
 			((TextView) root.findViewById(R.id.pickUpToGoal)).setText(pickUpToGoalHighMade + "/" + (pickUpToGoalHighMade + pickUpToGoalHighMissed) + " High, " +
 					pickUpToGoalLowMade + "/" + (pickUpToGoalLowMade+pickUpToGoalLowMissed) + " Low");			
-			
+
 			root.findViewById(R.id.buttons).setVisibility(View.GONE);
 			return root;
 		}
@@ -1084,6 +1108,7 @@ ActionBar.TabListener {
 		private int getAllianceScore(String[] data) {
 			String matchNumber = data[MatchScoutingIndex.MATCH_NUMBER];
 			String[] matchData = currentComp.getMatchInfoByNumber(matchNumber.trim());
+			if (matchData.length == 8) return 0;
 			String alliance = getAllianceByMatchAndTeam(matchData, teamNumber);
 			if (alliance.equals("Blue")) return Integer.parseInt(matchData[MatchIndex.BLUE_SCORE].trim());
 			else return Integer.parseInt(matchData[MatchIndex.RED_SCORE].trim());
