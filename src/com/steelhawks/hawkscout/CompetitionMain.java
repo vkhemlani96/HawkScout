@@ -23,9 +23,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
@@ -33,6 +35,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.steelhawks.hawkscout.competitionmain.StatsAdapter;
 import com.steelhawks.hawkscout.competitionmain.TeamAdapter;
 import com.steelhawks.hawkscout.data.Competition;
 import com.steelhawks.hawkscout.data.Indices.MatchIndex;
@@ -364,6 +367,11 @@ public class CompetitionMain extends FragmentActivity implements
 		public final static int AUTON = 4;
 		public final static int TRUSS = 5;
 		public final static int TELE = 6;
+		public final static int PPM = 7;
+		public final static int FPM = 8;
+		public final static int BPM = 9;
+		public final static int PPP = 10;
+		public final static int PSPM = 11;
 	}
 	
 	public static class RankingsFragment extends Fragment {
@@ -378,6 +386,7 @@ public class CompetitionMain extends FragmentActivity implements
 			final ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.competitions_rankings_layout, null);
 			listView = (ListView) rootView.findViewById(R.id.rankings);
 			listView.setAdapter(new TeamAdapter(getActivity(), comp.getRankings(), SortBy.QUAL));
+//			listView.setAdapter(new StatsAdapter(getActivity(), comp.getStatistics(), SortBy.PPM));
 			listView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -423,6 +432,21 @@ public class CompetitionMain extends FragmentActivity implements
 			final ArrayAdapter<String> rankingsTypeAdapter = new ArrayAdapter<String> (getActivity(),
 					R.layout.spinner_text_dark, rankingsEntries);
 			rankingsTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			rankingsType.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					//listView.setAdapter(new StatsAdapter(getActivity(), comp.getStatistics(), SortBy.PPM));
+					
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 			rankingsType.setAdapter(rankingsTypeAdapter);
 			return rootView;
 		}		

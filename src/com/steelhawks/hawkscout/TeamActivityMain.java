@@ -828,6 +828,7 @@ ActionBar.TabListener {
 					catchToGoalLowMissed = 0, catchToGoalLowMade = 0,
 					HPToGoalHighMade = 0, HPToGoalHighMissed = 0, HPToGoalLowMissed = 0, HPToGoalLowMade = 0,
 					pickUpToGoalHighMade = 0, pickUpToGoalHighMissed = 0, pickUpToGoalLowMissed = 0, pickUpToGoalLowMade = 0;
+			boolean hasAllMatchData = true;
 
 			LinearLayout graph = new LinearLayout(getActivity());
 			RelativeLayout.LayoutParams relativeWrap = new RelativeLayout.LayoutParams(wrap);
@@ -845,6 +846,7 @@ ActionBar.TabListener {
 					totalBlocksDeflections += Integer.parseInt(data[MatchScoutingIndex.TELEOP_BLOCKS].trim()) +
 							Integer.parseInt(data[MatchScoutingIndex.AUTON_BLOCKS].trim()) + 
 							Integer.parseInt(data[MatchScoutingIndex.DEFLECTIONS].trim());
+					if (getAllianceScore(data) == -1) hasAllMatchData = false;
 					totalAllianceScore += getAllianceScore(data);
 					possessionCount += data[MatchScoutingIndex.POSSESSIONS].trim().split("\\|\\|").length;
 					autonHighGoalMade += Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_COLD].trim()) +
@@ -999,9 +1001,10 @@ ActionBar.TabListener {
 			((TextView) root.findViewById(R.id.avg_ppm)).setText(df.format(totalPoints/totalMatches));
 			((TextView) root.findViewById(R.id.avg_fpm)).setText(df.format(totalFouls/totalMatches));
 			((TextView) root.findViewById(R.id.blocks_deflections_per_match)).setText(df.format(totalBlocksDeflections/totalMatches));
-			((TextView) root.findViewById(R.id.percent_of_total_alliance_score)).setText(df.format(totalPoints*100.f/totalAllianceScore) +"%");
+			((TextView) root.findViewById(R.id.percent_of_total_alliance_score))
+				.setText((hasAllMatchData ? df.format(totalPoints*100.f/totalAllianceScore) + "%" : "Cannot Be Calculated"));
 			((TextView) root.findViewById(R.id.possessions_per_match)).setText(df.format(possessionCount/totalMatches));
-			((TextView) root.findViewById(R.id.points_per_possession)).setText(df.format(totalPoints*1.f/possessionCount));
+			((TextView) root.findViewById(R.id.points_per_possession)).setText(possessionCount != 0 ? df.format(totalPoints*1.f/possessionCount) : "0");
 			if(autonHighGoalTotal != 0)((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHighGoalMade + "/" + autonHighGoalTotal + ", " + autonHighGoalHot + " Hot (" +
 					autonHighGoalMade*100/autonHighGoalTotal + "%)");
 			else ((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHighGoalMade + "/" + autonHighGoalTotal + ", " + autonHighGoalHot + " Hot (0%)");
@@ -1034,35 +1037,46 @@ ActionBar.TabListener {
 			int total = autonPoints + highGoalPoints + lowGoalPoints + trussPoints + catchPoints;
 
 			((TextView) root.findViewById(R.id.autonomous_scored_stat)).setText(autonPoints + "");
-			((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(100*autonPoints/total + "%");
+			int accuracy = (total != 0 ? 100*autonPoints/total : 0);
+			((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(accuracy + "%");
 			if (autonPoints == 0) ((View) root.findViewById(R.id.autonomous_scored_stat).getParent()).setAlpha(.5f);
 
 			((TextView) root.findViewById(R.id.high_goal_scored_stat)).setText(highGoalPoints + "");
-			((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(100*highGoalPoints/total + "%");
+			accuracy = (total != 0 ? 100*highGoalPoints/total : 0);
+			((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(accuracy + "%");
 			if (highGoalPoints == 0) ((View) root.findViewById(R.id.high_goal_scored_stat).getParent()).setAlpha(.5f);
 
 			((TextView) root.findViewById(R.id.low_goal_scored_stat)).setText(lowGoalPoints + "");
-			((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(100*lowGoalPoints/total + "%");
+			accuracy = (total != 0 ? 100*lowGoalPoints/total : 0);
+			((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(accuracy + "%");
 			if (lowGoalPoints == 0) ((View) root.findViewById(R.id.low_goal_scored_stat).getParent()).setAlpha(.5f);
 
 			((TextView) root.findViewById(R.id.truss_scored_stat)).setText(trussPoints + "");
-			((TextView) root.findViewById(R.id.truss_scored_percent)).setText(100*trussPoints/total + "%");
+			accuracy = (total != 0 ? 100*trussPoints/total : 0);
+			((TextView) root.findViewById(R.id.truss_scored_percent)).setText(accuracy + "%");
 			if (trussPoints == 0) ((View) root.findViewById(R.id.truss_scored_stat).getParent()).setAlpha(.5f);
 
 			((TextView) root.findViewById(R.id.catch_scored_stat)).setText(catchPoints + "");
-			((TextView) root.findViewById(R.id.catch_scored_percent)).setText(100*catchPoints/total + "%");
+			accuracy = (total != 0 ? 100*catchPoints/total : 0);
+			((TextView) root.findViewById(R.id.catch_scored_percent)).setText(accuracy + "%");
 			if (catchPoints == 0) ((View) root.findViewById(R.id.catch_scored_stat).getParent()).setAlpha(.5f);
 
 			float[] distributionValues = {autonPoints, highGoalPoints, lowGoalPoints, trussPoints, catchPoints};
 			((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), distributionValues));
 
 			((TextView) root.findViewById(R.id.high_goal_accuracy_stat)).setText(teleopHighGoalMade + "/"+ teleopHighGoalTotal);
-			((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(100*teleopHighGoalMade/teleopHighGoalTotal + "%");
-			if (teleopHighGoalTotal == 0) ((View) root.findViewById(R.id.high_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+			if (teleopHighGoalTotal == 0) {
+				((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText("0%");
+				((View) root.findViewById(R.id.high_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+			} else 
+				((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(100*teleopHighGoalMade/teleopHighGoalTotal + "%");
 
 			((TextView) root.findViewById(R.id.low_goal_accuracy_stat)).setText(teleopLowGoalMade + "/"+ teleopLowGoalTotal);
-			((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(100*teleopLowGoalMade/teleopLowGoalTotal + "%");
-			if (teleopLowGoalTotal == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+			if (teleopLowGoalTotal == 0) {
+				((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText("0%");
+				((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
+			} else
+				((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(100*teleopLowGoalMade/teleopLowGoalTotal + "%");
 
 			((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
 			if (trussTotal == 0) {
@@ -1108,7 +1122,7 @@ ActionBar.TabListener {
 		private int getAllianceScore(String[] data) {
 			String matchNumber = data[MatchScoutingIndex.MATCH_NUMBER];
 			String[] matchData = currentComp.getMatchInfoByNumber(matchNumber.trim());
-			if (matchData.length == 8) return 0;
+			if (matchData.length == 8) return -1;
 			String alliance = getAllianceByMatchAndTeam(matchData, teamNumber);
 			if (alliance.equals("Blue")) return Integer.parseInt(matchData[MatchIndex.BLUE_SCORE].trim());
 			else return Integer.parseInt(matchData[MatchIndex.RED_SCORE].trim());

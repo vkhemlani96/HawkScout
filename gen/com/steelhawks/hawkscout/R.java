@@ -603,6 +603,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pre_match_info=0x7f08002f;
         public static final int pre_match_notes=0x7f080038;
         public static final int pyramid_goal=0x7f080024;
+        public static final int question_marks=0x7f080086;
         public static final int received_pass_from_human_player=0x7f080047;
         public static final int received_pass_from_robot=0x7f080046;
         public static final int robot_passes=0x7f080062;

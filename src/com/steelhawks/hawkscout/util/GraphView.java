@@ -80,7 +80,7 @@ public class GraphView extends View {
 			total+=data[i];
 		}
 		for(int i=0;i<data.length;i++) {
-			data[i]=360*(data[i]/total);            
+			data[i]= total != 0 ? 360*(data[i]/total) : 0;            
 		}
 		return data;
 

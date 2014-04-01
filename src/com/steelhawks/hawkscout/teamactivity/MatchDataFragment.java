@@ -128,12 +128,14 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 
 		int teleopLowMade = Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MADE].trim());
 		int teleopLowTotal = teleopLowMade + Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MISSED].trim());
-		String teleopLow = teleopLowMade + "/" + teleopLowTotal + " (" + (teleopLowMade*100/teleopLowTotal) + "%)";
+		String teleopLow = teleopLowTotal != 0 ? teleopLowMade + "/" + teleopLowTotal + " (" + (teleopLowMade*100/teleopLowTotal) + "%)" :
+			teleopLowMade + "/" + teleopLowTotal + " (0%)";
 		int teleopLowPoints = teleopLowMade;
 
 		int teleopHighMade = Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MADE].trim());
 		int teleopHighTotal = teleopHighMade + Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MISSED].trim());
-		String teleopHigh = teleopHighMade + "/" + teleopHighTotal + " (" + (teleopHighMade*100/teleopHighTotal) + "%)";
+		String teleopHigh = teleopHighTotal != 0 ? teleopHighMade + "/" + teleopHighTotal + " (" + (teleopHighMade*100/teleopHighTotal) + "%)" :
+			teleopHighMade + "/" + teleopHighTotal + " (0%)";
 		int teleopHighPoints = teleopHighMade*10;
 
 		int trussMade = Integer.parseInt(data[MatchScoutingIndex.TRUSS].trim());
@@ -149,27 +151,41 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 
 		((TextView) root.findViewById(R.id.auton_high_goal)).setText(autonHigh);
 		((TextView) root.findViewById(R.id.auton_high_goal_points)).setText(autonHighPoints + " Points");
-		root.findViewById(R.id.auton_high_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, autonHighPoints/totalPoints));
+		if (totalPoints != 0)
+			root.findViewById(R.id.auton_high_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, autonHighPoints/totalPoints));
+		else root.findViewById(R.id.auton_high_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT));
 
 		((TextView) root.findViewById(R.id.auton_low_goal)).setText(autonLow);
 		((TextView) root.findViewById(R.id.auton_low_goal_points)).setText(autonLowPoints + " Points");	
-		root.findViewById(R.id.auton_low_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, autonLowPoints/totalPoints));
+		if (totalPoints != 0)
+			root.findViewById(R.id.auton_low_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, autonLowPoints/totalPoints));
+		else root.findViewById(R.id.auton_low_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT));
 
 		((TextView) root.findViewById(R.id.teleop_high_goal)).setText(teleopHigh);
 		((TextView) root.findViewById(R.id.teleop_high_goal_points)).setText(teleopHighPoints + " Points");
-		root.findViewById(R.id.teleop_high_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, teleopHighPoints/totalPoints));
+		if (totalPoints != 0)
+			root.findViewById(R.id.teleop_high_goal_bar).setLayoutParams(
+					new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, teleopHighPoints/totalPoints));
+		else root.findViewById(R.id.teleop_high_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT));
+
 
 		((TextView) root.findViewById(R.id.teleop_low_goal)).setText(teleopLow);
 		((TextView) root.findViewById(R.id.teleop_low_goal_points)).setText(teleopLowPoints + " Points");
-		root.findViewById(R.id.teleop_low_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, teleopLowPoints/totalPoints));
-
+		if (totalPoints != 0)
+			root.findViewById(R.id.teleop_low_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, teleopLowPoints/totalPoints));
+		else root.findViewById(R.id.teleop_low_goal_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT));
+		
 		((TextView) root.findViewById(R.id.truss)).setText(truss);
 		((TextView) root.findViewById(R.id.truss_points)).setText(trussPoints + " Points");
-		root.findViewById(R.id.truss_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, trussPoints/totalPoints));
-
+		if (totalPoints != 0)
+			root.findViewById(R.id.truss_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, trussPoints/totalPoints));
+		else root.findViewById(R.id.truss_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT));
+		
 		((TextView) root.findViewById(R.id.catches)).setText(catches + "");
 		((TextView) root.findViewById(R.id.catch_points)).setText(catchPoints + " Points");
-		root.findViewById(R.id.catch_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, catchPoints/totalPoints));
+		if (totalPoints != 0)
+			root.findViewById(R.id.catch_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, catchPoints/totalPoints));
+		else root.findViewById(R.id.catch_bar).setLayoutParams(new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT));
 
 		((TextView) root.findViewById(R.id.forward_movement)).setText(forwardMovement ? "Yes" : "No");
 		((TextView) root.findViewById(R.id.auton_blocks)).setText(data[MatchScoutingIndex.AUTON_BLOCKS].trim());
@@ -225,43 +241,51 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 			}
 
 		}
-		
+
 		int autonomousPoints = autonHighPoints + autonLowPoints;
 		int total = autonomousPoints + teleopHighPoints + teleopLowPoints + trussPoints + catchPoints;
+		int accuracy = 0;
 
 		((TextView) root.findViewById(R.id.autonomous_scored_stat)).setText(autonomousPoints + "");
-		((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(100*autonomousPoints/total + "%");
+		accuracy = total != 0 ? 100*autonomousPoints/total : 0;
+		((TextView) root.findViewById(R.id.autonomous_scored_percent)).setText(accuracy + "%");
 		if (autonomousPoints == 0) ((View) root.findViewById(R.id.autonomous_scored_stat).getParent()).setAlpha(.5f);
-		
+
 		((TextView) root.findViewById(R.id.high_goal_scored_stat)).setText(teleopHighPoints + "");
-		((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(100*teleopHighPoints/total + "%");
+		accuracy = total != 0 ? 100*teleopHighPoints/total : 0;
+		((TextView) root.findViewById(R.id.high_goal_scored_percent)).setText(accuracy + "%");
 		if (teleopHighPoints == 0) ((View) root.findViewById(R.id.high_goal_scored_stat).getParent()).setAlpha(.5f);
-		
+
 		((TextView) root.findViewById(R.id.low_goal_scored_stat)).setText(teleopLowPoints + "");
-		((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(100*teleopLowPoints/total + "%");
+		accuracy = total != 0 ? 100*teleopLowPoints/total : 0;
+		((TextView) root.findViewById(R.id.low_goal_scored_percent)).setText(accuracy + "%");
 		if (teleopLowPoints == 0) ((View) root.findViewById(R.id.low_goal_scored_stat).getParent()).setAlpha(.5f);
-		
+
 		((TextView) root.findViewById(R.id.truss_scored_stat)).setText(trussPoints + "");
-		((TextView) root.findViewById(R.id.truss_scored_percent)).setText(100*trussPoints/total + "%");
+		accuracy = total != 0 ? 100*trussPoints/total : 0;
+		((TextView) root.findViewById(R.id.truss_scored_percent)).setText(accuracy + "%");
 		if (trussPoints == 0) ((View) root.findViewById(R.id.truss_scored_stat).getParent()).setAlpha(.5f);
 
 		((TextView) root.findViewById(R.id.catch_scored_stat)).setText(catchPoints + "");
-		((TextView) root.findViewById(R.id.catch_scored_percent)).setText(100*catchPoints/total + "%");
+		accuracy = total != 0 ? 100*catchPoints/total : 0;
+		((TextView) root.findViewById(R.id.catch_scored_percent)).setText(accuracy + "%");
 		if (catchPoints == 0) ((View) root.findViewById(R.id.catch_scored_stat).getParent()).setAlpha(.5f);
-		
+
 		float[] distributionValues = {autonomousPoints, teleopHighPoints, teleopLowPoints, trussPoints, catchPoints};
 		((RelativeLayout) root.findViewById(R.id.score_graph)).addView(new GraphView(getActivity(), distributionValues));
 
 		int totalHighMade = teleopHighMade + highMade;
 		int totalHigh = teleopHighTotal + highTotal;
 		((TextView) root.findViewById(R.id.high_goal_accuracy_stat)).setText(totalHighMade + "/"+ totalHigh);
-		((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(100*totalHighMade/totalHigh + "%");
+		accuracy = totalHigh != 0 ? 100*totalHighMade/totalHigh : 0;
+		((TextView) root.findViewById(R.id.high_goal_accuracy_percent)).setText(accuracy + "%");
 		if (totalHigh == 0) ((View) root.findViewById(R.id.high_goal_accuracy_stat).getParent()).setAlpha(.5f);		
 
 		int totalLowMade = teleopLowMade + lowMade;
 		int totalLow = teleopLowTotal + lowTotal;
 		((TextView) root.findViewById(R.id.low_goal_accuracy_stat)).setText(totalLowMade + "/"+ totalLow);
-		((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(100*totalLowMade/totalLow + "%");
+		accuracy = totalLow != 0 ? 100*totalLowMade/totalLow : 0;
+		((TextView) root.findViewById(R.id.low_goal_accuracy_percent)).setText(accuracy + "%");
 		if (totalLow == 0) ((View) root.findViewById(R.id.low_goal_accuracy_stat).getParent()).setAlpha(.5f);		
 
 		((TextView) root.findViewById(R.id.truss_accuracy_stat)).setText(trussMade + "/"+ trussTotal);
@@ -269,12 +293,13 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 			((View) root.findViewById(R.id.truss_accuracy_stat).getParent()).setAlpha(.5f);
 			((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText("0%");	
 		} else ((TextView) root.findViewById(R.id.truss_accuracy_percent)).setText(100*trussMade/trussTotal + "%");		
-		
+
 		int totalMade = totalHighMade + totalLowMade + trussMade;
 		int totalTaken = totalHigh + totalLow + trussTotal;
+		accuracy = total != 0 ? 100*totalMade/totalTaken : 0;
 		((TextView) root.findViewById(R.id.overall_accuracy_stat)).setText(totalMade + "/"+ totalTaken);
-		((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(100*totalMade/totalTaken + "%");	
-		
+		((TextView) root.findViewById(R.id.overall_accuracy_percent)).setText(accuracy + "%");	
+
 		float[] accuracyValues = {totalMade, totalTaken-totalMade};
 		((RelativeLayout) root.findViewById(R.id.accuracy_graph)).addView(new GraphView(getActivity(), accuracyValues));
 
@@ -282,10 +307,10 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 		((TextView) root.findViewById(R.id.time_with_possession_percent)).setText(((int) (100.0*possessionTime/140 + .5)) + "%");
 		((TextView) root.findViewById(R.id.time_without_possession_stat)).setText(140-possessionTime + "s");
 		((TextView) root.findViewById(R.id.time_without_possession_percent)).setText(((int) (100*(140.0-possessionTime)/140 + .5)) + "%");
-		
+
 		float[] timeValues = {possessionTime, 140-possessionTime};
 		((RelativeLayout) root.findViewById(R.id.time_graph)).addView(new GraphView(getActivity(), timeValues));
-		
+
 
 		TextView noteView = (TextView) root.findViewById(R.id.notes);
 		String notes = data[MatchScoutingIndex.NOTES].trim();
@@ -316,7 +341,7 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 		tv.setText(matchNumber);
 		Button b = (Button) root.findViewById(R.id.begin_scouting);
 		b.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				MatchScouting.start(getActivity(), teamNumber.trim(), matchNumber.trim());
@@ -361,6 +386,6 @@ public class MatchDataFragment extends Fragment implements OnClickListener {
 			root.setDisplayedChild(0);
 			break;
 		}
-		
+
 	}
 }

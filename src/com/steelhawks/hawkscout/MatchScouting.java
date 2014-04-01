@@ -949,8 +949,8 @@ public class MatchScouting extends FragmentActivity implements OnClickListener, 
 				{
 					new ReviewLayout(this, "Low Goal Shots Made", teleopLowGoal),//17
 					new ReviewLayout(this, "Low Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
-					new ReviewLayout(this, "High Goal Shots Made", teleopLowGoal),
-					new ReviewLayout(this, "High Goal Shots, Missed", teleopLowGoalTotal-teleopLowGoal),
+					new ReviewLayout(this, "High Goal Shots Made", teleopHighGoal),
+					new ReviewLayout(this, "High Goal Shots, Missed", teleopHighGoalTotal-teleopHighGoal),
 					new ReviewLayout(this, "Passes to Other Robots", passToRobot),
 					new ReviewLayout(this, "Passes to Human Players", passToHP),
 					new ReviewLayout(this, "Throws over Truss", trussPoints),

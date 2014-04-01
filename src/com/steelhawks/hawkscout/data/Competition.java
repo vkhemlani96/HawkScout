@@ -10,6 +10,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 
 import com.steelhawks.hawkscout.data.Indices.MatchScoutingIndex;
 import com.steelhawks.hawkscout.data.Indices.PossessionIndex;
@@ -42,7 +43,7 @@ public class Competition {
 	private List<String[]> pitScoutingData;
 	private static Map<String, List<Parameter>> pitScoutingParams;
 	private generateStats statsTask;
-	private float[][] stats;
+	private List<float[]> stats;
 
 	public Competition (Context context, String compCode) {		
 		this.compCode = compCode;
@@ -109,7 +110,8 @@ public class Competition {
 		matchScoutingData = parseMatchScouting();
 		pitScoutingData = parsePitScouting();
 		pitScoutingParams = parsePitScoutingParams();
-		System.out.println("Match Scouting: " + matchScoutingData.size());
+		statsTask = new generateStats();
+		statsTask.execute();
 	}
 
 	public void addToMatchScouting(String[] data) {
@@ -146,8 +148,12 @@ public class Competition {
 		return matches;
 	}
 
-	public void getStatistics() {
-
+	public List<float[]> getStatistics() {
+		System.out.println("Task is running?" + String.valueOf(statsTask.getStatus() == Status.RUNNING));
+		System.out.println("Task is finished?" + String.valueOf(statsTask.getStatus() == Status.FINISHED));
+		System.out.println("Stats is null? " + String.valueOf(stats == null));
+		while (statsTask.getStatus() == Status.RUNNING) System.out.println("Still running");
+		return stats;
 	}
 
 	private List<String[]> parseRankings() {
@@ -319,7 +325,7 @@ public class Competition {
 
 	private class generateStats extends AsyncTask<String[], Void, Void> {
 
-		float[][] stats = new float[teams.length][StatsIndex.SIZE];
+		List<float[]> stats = new ArrayList<float[]>();
 
 		@Override
 		protected Void doInBackground(String[]... arg0) {
@@ -332,7 +338,7 @@ public class Competition {
 						totalTeleopLowGoalMade = 0, totalTeleopLowGoalTaken = 0, totalTruss = 0, totalTrussTaken = 0, totalCatches = 0, totalFouls = 0,
 						totalTechFouls = 0, passesFromHP = 0, passesFromRobo = 0, passesToHP = 0, passesToRobo = 0;
 				for (int y=0; y<matches.size(); y++) {
-					String[] data = getMatchScoutingDataForTeam(matches.get(x), teamNumber);
+					String[] data = getMatchScoutingDataForTeam(matches.get(y), teamNumber);
 					if(data == null) continue;
 					matchesPlayed++;
 					pointsScored += getPointsScoredForMatch(data);
@@ -367,29 +373,29 @@ public class Competition {
 					passesToHP += Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_HP]);
 					passesToRobo += Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_ROBOT]);
 				}
-				float[] teamStats = stats[x];
+				float[] teamStats = new float[StatsIndex.SIZE];
 				teamStats[StatsIndex.TEAM_NUMBER] = Integer.parseInt(teamNumber.trim());
-				teamStats[StatsIndex.POINTS_PER_MATCH] = pointsScored / matchesPlayed;
-				teamStats[StatsIndex.FOULS_PER_MATCH] = foulsScored / matchesPlayed;
-				teamStats[StatsIndex.BLOCKS_PER_MATCH] = blocksAndDeflections / matchesPlayed;
-				teamStats[StatsIndex.POINTS_PER_POSSESSION] = pointsScored / totalPossessions;
-				teamStats[StatsIndex.POSSESSIONS_PER_MATCH] = totalPossessions / matchesPlayed;
+				teamStats[StatsIndex.POINTS_PER_MATCH] = matchesPlayed != 0 ? pointsScored / matchesPlayed : 0;
+				teamStats[StatsIndex.FOULS_PER_MATCH] = matchesPlayed != 0 ? foulsScored / matchesPlayed : 0;
+				teamStats[StatsIndex.BLOCKS_PER_MATCH] = matchesPlayed != 0 ? blocksAndDeflections / matchesPlayed :0;
+				teamStats[StatsIndex.POINTS_PER_POSSESSION] = totalPossessions != 0 ? pointsScored / totalPossessions : 0;
+				teamStats[StatsIndex.POSSESSIONS_PER_MATCH] = matchesPlayed != 0 ? totalPossessions / matchesPlayed : 0;
 				teamStats[StatsIndex.HIGH_GOAL_TOTAL] = totalAutonHighGoalMade + totalTeleopHighGoalMade;
 				teamStats[StatsIndex.LOW_GOAL_TOTAL] = totalAutonLowGoalMade + totalAutonLowGoalMade;
 				teamStats[StatsIndex.TRUSS_TOTAL] = totalTruss;
 				teamStats[StatsIndex.CATCHES_TOTAL] = totalCatches;
 				teamStats[StatsIndex.FOULS_TOTAL] = totalFouls;
 				teamStats[StatsIndex.TECHNICAL_FOULS_TOTAL] = totalTechFouls;
-				teamStats[StatsIndex.AUTON_HIGH_GOAL_ACCURACY] = 100 * totalAutonHighGoalMade / totalAutonHighGoalTaken;
-				teamStats[StatsIndex.AUTON_LOW_GOAL_ACCURACY] = 100 * totalAutonLowGoalMade / totalAutonLowGoalTaken;
-				teamStats[StatsIndex.TELE_HIGH_GOAL_ACCURACY] = 100 * totalTeleopHighGoalMade / totalTeleopHighGoalTaken;
-				teamStats[StatsIndex.TELE_LOW_GOAL_ACCURACY] = 100 * totalTeleopLowGoalMade / totalTeleopLowGoalTaken;
-				teamStats[StatsIndex.TELE_TRUSS_ACCURACY] = 100 * totalTruss / totalTrussTaken;
+				teamStats[StatsIndex.AUTON_HIGH_GOAL_ACCURACY] = totalAutonHighGoalTaken != 0 ? 100 * totalAutonHighGoalMade / totalAutonHighGoalTaken : 0;
+				teamStats[StatsIndex.AUTON_LOW_GOAL_ACCURACY] = totalAutonLowGoalTaken != 0 ? 100 * totalAutonLowGoalMade / totalAutonLowGoalTaken : 0;
+				teamStats[StatsIndex.TELE_HIGH_GOAL_ACCURACY] = totalTeleopHighGoalTaken != 0 ? 100 * totalTeleopHighGoalMade / totalTeleopHighGoalTaken : 0;
+				teamStats[StatsIndex.TELE_LOW_GOAL_ACCURACY] = totalTeleopLowGoalTaken != 0 ? 100 * totalTeleopLowGoalMade / totalTeleopLowGoalTaken : 0;
+				teamStats[StatsIndex.TELE_TRUSS_ACCURACY] = totalTrussTaken != 0 ? 100 * totalTruss / totalTrussTaken : 0;
 				teamStats[StatsIndex.PASS_FROM_HP] = passesFromHP;
 				teamStats[StatsIndex.PASS_FROM_ROBOT] = passesFromRobo;
 				teamStats[StatsIndex.PASS_TO_HP] = passesToHP;
 				teamStats[StatsIndex.PASS_TO_ROBOT] = passesToRobo;
-				
+				stats.add(teamStats);
 			}
 			return null;
 		}

@@ -580,5 +580,6 @@
 	<string name="passes_made_to_robots">Passes Made to Robots</string>
 	<string name="inbound_from_human_player_and_pass_to_robot">Inbound From Human Player and Pass to Robot:</string>
 	<string name="possession_distribution">Possession Distribution</string>
+	<string name="question_marks">\???</string>
     
 </resources>
