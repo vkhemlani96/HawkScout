@@ -323,6 +323,31 @@ public class Competition {
 
 	}
 
+	private int getOverallScore(String[] data) {
+		return Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_COLD].trim()) 	* 5  +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_HOT].trim()) 	* 5  +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_HOT].trim()) 	* 10 +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_COLD].trim())	* 15 +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_HOT].trim()) 	* 15 +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_HOT].trim()) 	* 10 +
+				(Boolean.parseBoolean(data[MatchScoutingIndex.AUTON_MOVED_FORWARD].trim()) ? 2 : 0) +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_LOW_GOAL_MISSED].trim())	* -3 +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_HIGH_GOAL_MISSED].trim())* -6 +
+				Integer.parseInt(data[MatchScoutingIndex.CATCHES].trim())				* 20 +
+				Integer.parseInt(data[MatchScoutingIndex.PASSES_FROM_ROBOT].trim())		* 15 +
+				Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_ROBOT].trim())		* 15 +
+				Integer.parseInt(data[MatchScoutingIndex.TRUSS].trim())					* 15 +
+				Integer.parseInt(data[MatchScoutingIndex.TRUSS_MISSED].trim())			* -5 +
+				Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MADE].trim())		*  3 +
+				Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MADE].trim())		* 10 +
+				Integer.parseInt(data[MatchScoutingIndex.TELEOP_LOW_MISSED].trim())		* -8 +
+				Integer.parseInt(data[MatchScoutingIndex.TELEOP_HIGH_MISSED].trim())	* -5 +
+				Integer.parseInt(data[MatchScoutingIndex.FOULS].trim())					* -8 +
+				Integer.parseInt(data[MatchScoutingIndex.TECH_FOULS].trim())			*-15 +
+				Integer.parseInt(data[MatchScoutingIndex.AUTON_BLOCKS].trim())			*  5 +
+				Integer.parseInt(data[MatchScoutingIndex.TELEOP_BLOCKS].trim())			*  5;
+	}
+
 	private class generateStats extends AsyncTask<String[], Void, Void> {
 
 		List<float[]> stats = new ArrayList<float[]>();
@@ -336,7 +361,7 @@ public class Competition {
 				int pointsScored = 0, foulsScored = 0, blocksAndDeflections = 0, totalPossessions = 0, totalAutonHighGoalMade = 0, totalAutonHighGoalTaken = 0,
 						totalTeleopHighGoalMade = 0, totalTeleopHighGoalTaken = 0, totalAutonLowGoalMade = 0, totalAutonLowGoalTaken = 0,
 						totalTeleopLowGoalMade = 0, totalTeleopLowGoalTaken = 0, totalTruss = 0, totalTrussTaken = 0, totalCatches = 0, totalFouls = 0,
-						totalTechFouls = 0, passesFromHP = 0, passesFromRobo = 0, passesToHP = 0, passesToRobo = 0;
+						totalTechFouls = 0, passesFromHP = 0, passesFromRobo = 0, passesToHP = 0, passesToRobo = 0, overallScore = 0;
 				for (int y=0; y<matches.size(); y++) {
 					String[] data = getMatchScoutingDataForTeam(matches.get(y), teamNumber);
 					if(data == null) continue;
@@ -367,11 +392,12 @@ public class Competition {
 					totalTrussTaken += Integer.parseInt(data[MatchScoutingIndex.TRUSS]) + Integer.parseInt(data[MatchScoutingIndex.TRUSS_MISSED]);
 					totalCatches += Integer.parseInt(data[MatchScoutingIndex.CATCHES]);
 					totalFouls += Integer.parseInt(data[MatchScoutingIndex.FOULS]) + Integer.parseInt(data[MatchScoutingIndex.AUTON_FOULS]);
-					totalFouls += Integer.parseInt(data[MatchScoutingIndex.TECH_FOULS]) + Integer.parseInt(data[MatchScoutingIndex.AUTON_TECH_FOULS]);
+					totalTechFouls += Integer.parseInt(data[MatchScoutingIndex.TECH_FOULS]) + Integer.parseInt(data[MatchScoutingIndex.AUTON_TECH_FOULS]);
 					passesFromHP += Integer.parseInt(data[MatchScoutingIndex.PASSES_FROM_HP]);
 					passesFromRobo += Integer.parseInt(data[MatchScoutingIndex.PASSES_FROM_ROBOT]);
 					passesToHP += Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_HP]);
 					passesToRobo += Integer.parseInt(data[MatchScoutingIndex.PASSES_TO_ROBOT]);
+					overallScore += getOverallScore(data);
 				}
 				float[] teamStats = new float[StatsIndex.SIZE];
 				teamStats[StatsIndex.TEAM_NUMBER] = Integer.parseInt(teamNumber.trim());
@@ -381,7 +407,7 @@ public class Competition {
 				teamStats[StatsIndex.POINTS_PER_POSSESSION] = totalPossessions != 0 ? pointsScored / totalPossessions : 0;
 				teamStats[StatsIndex.POSSESSIONS_PER_MATCH] = matchesPlayed != 0 ? totalPossessions / matchesPlayed : 0;
 				teamStats[StatsIndex.HIGH_GOAL_TOTAL] = totalAutonHighGoalMade + totalTeleopHighGoalMade;
-				teamStats[StatsIndex.LOW_GOAL_TOTAL] = totalAutonLowGoalMade + totalAutonLowGoalMade;
+				teamStats[StatsIndex.LOW_GOAL_TOTAL] = totalAutonLowGoalMade + totalTeleopLowGoalMade;
 				teamStats[StatsIndex.TRUSS_TOTAL] = totalTruss;
 				teamStats[StatsIndex.CATCHES_TOTAL] = totalCatches;
 				teamStats[StatsIndex.FOULS_TOTAL] = totalFouls;
@@ -395,11 +421,12 @@ public class Competition {
 				teamStats[StatsIndex.PASS_FROM_ROBOT] = passesFromRobo;
 				teamStats[StatsIndex.PASS_TO_HP] = passesToHP;
 				teamStats[StatsIndex.PASS_TO_ROBOT] = passesToRobo;
+				teamStats[StatsIndex.OVERALL_SCORE] = overallScore;
 				stats.add(teamStats);
 			}
 			return null;
 		}
-		
+
 		public void onPostExecute(Void arg0) {
 			super.onPostExecute(arg0);
 			Competition.this.stats = this.stats;

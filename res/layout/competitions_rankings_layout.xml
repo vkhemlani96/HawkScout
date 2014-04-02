@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
+        android:id="@+id/rankings_header"
         android:background="@android:color/white">
     	<TextView
     	    android:layout_width="0dp"
@@ -16,15 +17,12 @@
     	    android:gravity="center"
     	    android:textSize="20dp"
     	    android:textStyle="bold"
-    	    android:text="TEAM"
+    	    android:text="@string/team"
     	    android:id="@+id/team_header"
     	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
     	    android:clickable="true"
     	    android:onClick="sortRankings" />
-<!--     	<View  -->
-<!--     	    android:layout_width="2px" -->
-<!--     	    android:layout_height="match_parent" -->
-<!--     	    android:background="@android:color/darker_gray"/> -->
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
@@ -37,12 +35,9 @@
     	    android:id="@+id/qp_header"
     	    android:background="@drawable/crimson_background"
     	    android:drawableBottom="@drawable/rankings_sort_ascending"
+    	    android:longClickable="true"
     	    android:clickable="true"
     	    android:onClick="sortRankings" />
-<!--     	<View  -->
-<!--     	    android:layout_width="2px" -->
-<!--     	    android:layout_height="match_parent" -->
-<!--     	    android:background="@android:color/darker_gray"/> -->
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
@@ -54,12 +49,9 @@
     	    android:text="ASSIST"
     	    android:id="@+id/assistp_header"
     	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
     	    android:clickable="true"
     	    android:onClick="sortRankings"  />
-<!--     	<View  -->
-<!--     	    android:layout_width="2px" -->
-<!--     	    android:layout_height="match_parent" -->
-<!--     	    android:background="@android:color/darker_gray"/> -->
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
@@ -71,12 +63,9 @@
     	    android:text="AUTON"
     	    android:id="@+id/ap_header"
     	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
     	    android:clickable="true"
     	    android:onClick="sortRankings"  />
-<!--     	<View  -->
-<!--     	    android:layout_width="2px" -->
-<!--     	    android:layout_height="match_parent" -->
-<!--     	    android:background="@android:color/darker_gray"/> -->
     	<TextView
     	    android:layout_width="0dp"
     	    android:layout_height="match_parent"
@@ -85,9 +74,10 @@
     	    android:gravity="center"
     	    android:textSize="20dp"
     	    android:textStyle="bold"
-    	    android:text="TRUSS"
+    	    android:text="@string/truss"
     	    android:id="@+id/trussp_header"
     	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
     	    android:clickable="true"
     	    android:onClick="sortRankings"  />
     	<TextView
@@ -101,9 +91,397 @@
     	    android:text="TELE"
     	    android:id="@+id/tp_header"
     	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
     	    android:clickable="true"
     	    android:onClick="sortRankings"  />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:id="@+id/calcs_header"
+        android:visibility="gone"
+        android:background="@android:color/white">
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="7"
+       		android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/team"
+    	    android:id="@+id/team_header2"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="2.833333"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/ppm"
+    	    android:id="@+id/ppm_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:drawableBottom="@drawable/rankings_sort_ascending"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc"/>
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="2.833333"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/fpm"
+    	    android:id="@+id/fpm_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="2.833333"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/bpm"
+    	    android:id="@+id/bpm_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="2.833333"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/ppp"
+    	    android:id="@+id/ppp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="2.833333"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/pspm"
+    	    android:id="@+id/pspm_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="2.833333"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/ovrl"
+    	    android:id="@+id/ovrl_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsCalc"  />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:id="@+id/acc_header"
+        android:visibility="gone"
+        android:background="@android:color/white">
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="7"
+       		android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/team"
+    	    android:id="@+id/team_header4"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsAcc" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/ahg"
+    	    android:id="@+id/ahg_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:drawableBottom="@drawable/rankings_sort_ascending"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsAcc"/>
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/alg"
+    	    android:id="@+id/alg_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsAcc" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/thg"
+    	    android:id="@+id/thg_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsAcc"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/tlg"
+    	    android:id="@+id/tlg_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsAcc"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/truss"
+    	    android:id="@+id/truss_acc_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsAcc"  />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:id="@+id/stats_header"
+        android:visibility="gone"
+        android:background="@android:color/white">
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="7.99167"
+       		android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/team"
+    	    android:id="@+id/team_header3"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/high"
+    	    android:id="@+id/high_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:drawableBottom="@drawable/rankings_sort_ascending"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat"/>
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/low"
+    	    android:id="@+id/low_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/trs"
+    	    android:id="@+id/trs_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/ctch"
+    	    android:id="@+id/ctch_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/foul"
+    	    android:id="@+id/foul_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="3.4"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/tech"
+    	    android:id="@+id/tech_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsStat"  />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:id="@+id/passing_header"
+        android:visibility="gone"
+        android:background="@android:color/white">
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="7"
+       		android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/team"
+    	    android:id="@+id/team_header5"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsPass" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="4.25"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/pfhp"
+    	    android:id="@+id/pfhp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:drawableBottom="@drawable/rankings_sort_ascending"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsPass"/>
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="4.25"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/pfrbt"
+    	    android:id="@+id/pfrbt_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsPass" />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="4.25"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/pthp"
+    	    android:id="@+id/pthp_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsPass"  />
+    	<TextView
+    	    android:layout_width="0dp"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="4.25"
+        	android:padding="4dp"
+    	    android:gravity="center"
+    	    android:textSize="20dp"
+    	    android:textStyle="bold"
+    	    android:text="@string/ptrbt"
+    	    android:id="@+id/ptrbt_header"
+    	    android:background="@drawable/crimson_background"
+    	    android:longClickable="true"
+    	    android:clickable="true"
+    	    android:onClick="sortRankingsPass"  />
+    </LinearLayout>
+    
     <View 
         android:layout_width="match_parent"
         android:layout_height="2px"

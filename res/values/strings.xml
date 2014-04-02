@@ -509,7 +509,7 @@
     </string-array>
 
     <string name="high_goal">High Goal</string>
-    <string name="foul">Foul</string>
+    <string name="foul">FOUL</string>
     <string name="technical_foul">Technical Foul</string>
     <string name="forward_movement">Forward Movement?</string>
     <string name="picked_up_ball">Picked Up Ball</string>
@@ -581,5 +581,29 @@
 	<string name="inbound_from_human_player_and_pass_to_robot">Inbound From Human Player and Pass to Robot:</string>
 	<string name="possession_distribution">Possession Distribution</string>
 	<string name="question_marks">\???</string>
+	<string name="team">TEAM</string>
+	<string name="ppm">PPM</string>
+	<string name="fpm">FPM</string>
+	<string name="bpm">BPM</string>
+	<string name="ppp">PPP</string>
+	<string name="pspm">PSPM</string>
+	<string name="hg">HG</string>
+	<string name="lg">LG</string>
+	<string name="high">HIGH</string>
+	<string name="low">LOW</string>
+	<string name="trs">TRS</string>
+	<string name="ctch">CTCH</string>
+	<string name="tech">TECH</string>
+	<string name="ahg">AHG</string>
+	<string name="lgh">LGH</string>
+	<string name="alg">ALG</string>
+	<string name="thg">THG</string>
+	<string name="tlg">TLG</string>
+	<string name="truss">TRUSS</string>
+	<string name="pfhp">PFHP</string>
+	<string name="pfrbt">PFRBT</string>
+	<string name="pthp">PTHP</string>
+	<string name="ptrbt">PTRBT</string>
+	<string name="ovrl">OVRL</string>
     
 </resources>

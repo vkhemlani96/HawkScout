@@ -46,7 +46,8 @@
         </activity>
         <activity
             android:name="com.steelhawks.hawkscout.CompetitionMain"
-            android:label="@string/title_activity_hawk_scout" >
+            android:label="@string/title_activity_hawk_scout"
+            android:screenOrientation="sensorPortrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

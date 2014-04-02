@@ -91,7 +91,8 @@ public class Indices {
 		public static final int PASS_FROM_ROBOT = 18;
 		public static final int PASS_TO_HP = 19;
 		public static final int PASS_TO_ROBOT = 20;
-		public static final int SIZE = 21;
+		public static final int OVERALL_SCORE = 21;
+		public static final int SIZE = 22;
 	}
 	
 }

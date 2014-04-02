@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.steelhawks.hawkscout.CompetitionMain.SortBy;
 import com.steelhawks.hawkscout.R;
+import com.steelhawks.hawkscout.data.Indices.StatsIndex;
 import com.steelhawks.hawkscout.util.Utilities;
 
 public class TeamAdapter extends ArrayAdapter<String[]> {
 
 	private Activity activity;
 	private List<String[]> teams;
+	private List<float[]> data;
 	public int sort;
 	private boolean reverse;
 
@@ -121,6 +123,7 @@ public class TeamAdapter extends ArrayAdapter<String[]> {
 		this.activity = a;
 		this.teams = teams;
 		this.sort = sort;
+		this.data = data;
 		dupsList.clear();
 		dups.clear();
 		switch(sort) {
