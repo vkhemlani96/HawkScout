@@ -13,5 +13,4 @@ Created in 2014, HawkScout is an Android app used for FRC's "Aerial Assist". The
 **Screenshots:**<br>
 <img src="/images/screenshot1.png" alt="alt text" width="200">
 <img src="/images/screenshot2.png" alt="alt text" width="200">
-<img src="/images/screenshot3.png" alt="alt text" width="200">
 <img src="/images/screenshot4.png" alt="alt text" width="200">
